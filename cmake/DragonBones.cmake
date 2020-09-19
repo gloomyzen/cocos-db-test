@@ -77,11 +77,26 @@ add_library(dragonbones_target STATIC
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones/src/dragonBones/parser/DataParser.h
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones/src/dragonBones/parser/JSONDataParser.cpp
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones/src/dragonBones/parser/JSONDataParser.h
+
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones/src/dragonBones/DragonBonesHeaders.h
+        )
+
+add_library(dragonbones_cc_target STATIC
+        #Cocos2d-x
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCArmatureDisplay.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCArmatureDisplay.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCDragonBonesHeaders.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCFactory.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCFactory.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCSlot.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCSlot.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCTextureAtlasData.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCTextureAtlasData.h
         )
 
 target_include_directories(dragonbones_target INTERFACE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones/src/>
         )
-
-target_compile_features(dragonbones_target PUBLIC cxx_std_17)
-target_compile_options(dragonbones_target PUBLIC -Wall)
+target_include_directories(dragonbones_cc_target INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/>
+        )
