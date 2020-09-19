@@ -49,7 +49,9 @@ protected:
         _armatureDisplay->setPosition(0.0f, -100.0f);
         _boundingBoxTester->setPosition(0.0f, -200.0f);
         _targetA->getArmature()->inheritAnimation = false;
+		_targetA->debugDraw = true;
         _targetB->getArmature()->inheritAnimation = false;
+        _targetB->debugDraw = true;
         _line->offsetMode = dragonBones::OffsetMode::Override;
         _pointA->offsetMode = dragonBones::OffsetMode::Override;
         _pointB->offsetMode = dragonBones::OffsetMode::Override;

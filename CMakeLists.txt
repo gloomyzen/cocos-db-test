@@ -32,26 +32,34 @@ endif()
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
         Classes/AppDelegate.cpp
-        Classes/CoreElement.cpp
-        Classes/DragHelper.cpp
+        Classes/HelloWorldScene.cpp
      )
 list(APPEND GAME_HEADER
-        Classes/BoundingBox.h
-        Classes/CoreElement.h
-        Classes/ReplaceAnimation.h
-        Classes/BoneOffset.h
         Classes/AppDelegate.h
-        Classes/HelloDragonBones.h
-        Classes/AnimationLayer.h
-        Classes/PerformanceTest.h
-        Classes/ReplaceSkin.h
-        Classes/AnimationBase.h
-        Classes/DragonBonesEvent.h
-        Classes/DragHelper.h
-        Classes/BaseDemo.h
-        Classes/ReplaceSlotDisplay.h
-        Classes/InverseKinematics.h
+        Classes/HelloWorldScene.h
      )
+#list(APPEND GAME_SOURCE
+#        Classes/AppDelegate.cpp
+#        Classes/CoreElement.cpp
+#        Classes/DragHelper.cpp
+#        )
+#list(APPEND GAME_HEADER
+#        Classes/BoundingBox.h
+#        Classes/CoreElement.h
+#        Classes/ReplaceAnimation.h
+#        Classes/BoneOffset.h
+#        Classes/AppDelegate.h
+#        Classes/HelloDragonBones.h
+#        Classes/AnimationLayer.h
+#        Classes/PerformanceTest.h
+#        Classes/ReplaceSkin.h
+#        Classes/AnimationBase.h
+#        Classes/DragonBonesEvent.h
+#        Classes/DragHelper.h
+#        Classes/BaseDemo.h
+#        Classes/ReplaceSlotDisplay.h
+#        Classes/InverseKinematics.h
+#        )
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml

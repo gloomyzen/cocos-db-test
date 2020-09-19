@@ -27,7 +27,7 @@ public:
 
     void enableDrag(cocos2d::Node* displayObject)
     {
-        const auto listener = cocos2d::EventListenerMouse::create();
+        auto listener = cocos2d::EventListenerMouse::create();
         listener->onMouseDown = CC_CALLBACK_1(DragHelper::_mouseDownHandler, this);
         listener->onMouseUp = CC_CALLBACK_1(DragHelper::_mouseUpHandler, this);
         listener->onMouseMove = CC_CALLBACK_1(DragHelper::_mouseMovedHandler, this);
@@ -42,7 +42,7 @@ public:
 private:
     void _mouseDownHandler(cocos2d::EventMouse* event)
     {
-        if (_dragDisplayObject) 
+        if (_dragDisplayObject != nullptr)
         {
             return;
         }
