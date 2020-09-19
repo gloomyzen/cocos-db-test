@@ -31,12 +31,26 @@ endif()
 
 # add cross-platforms source files and header files 
 list(APPEND GAME_SOURCE
-     Classes/AppDelegate.cpp
-     Classes/HelloWorldScene.cpp
+        Classes/AppDelegate.cpp
+        Classes/CoreElement.cpp
+        Classes/DragHelper.cpp
      )
 list(APPEND GAME_HEADER
-     Classes/AppDelegate.h
-     Classes/HelloWorldScene.h
+        Classes/BoundingBox.h
+        Classes/CoreElement.h
+        Classes/ReplaceAnimation.h
+        Classes/BoneOffset.h
+        Classes/AppDelegate.h
+        Classes/HelloDragonBones.h
+        Classes/AnimationLayer.h
+        Classes/PerformanceTest.h
+        Classes/ReplaceSkin.h
+        Classes/AnimationBase.h
+        Classes/DragonBonesEvent.h
+        Classes/DragHelper.h
+        Classes/BaseDemo.h
+        Classes/ReplaceSlotDisplay.h
+        Classes/InverseKinematics.h
      )
 
 if(ANDROID)
@@ -104,18 +118,13 @@ else()
     target_link_libraries(${APP_NAME} -Wl,--whole-archive cpp_android_spec -Wl,--no-whole-archive)
 endif()
 
+
 include(${CMAKE_SOURCE_DIR}/lib/project_dependency.cmake)
-target_link_libraries(${APP_NAME} project_dependency cocos2d)
+target_link_libraries(${APP_NAME} cocos2d project_dependency)
 target_include_directories(${APP_NAME}
         PRIVATE Classes
         PRIVATE ${COCOS2DX_ROOT_PATH}/cocos/audio/include/
 )
-
-#------------------------------------------------------------------------------
-#                        Include section
-#------------------------------------------------------------------------------
-
-#target_link_libraries(${APP_NAME} INTERFACE project_dependency)
 
 # mark app resources
 setup_cocos_app_config(${APP_NAME})

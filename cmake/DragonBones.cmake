@@ -14,17 +14,19 @@ add_library(dragonbones_target STATIC
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/WorldClock.cpp
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/WorldClock.h
         #armature
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/Animation.cpp
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/Animation.h
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/AnimationState.cpp
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/AnimationState.h
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/BaseTimelineState.cpp
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/BaseTimelineState.h
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/IAnimatable.h
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/TimelineState.cpp
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/TimelineState.h
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/WorldClock.cpp
-        ${CMAKE_SOURCE_DIR}/lib/dragonBones/animation/WorldClock.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Armature.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Armature.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Bone.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Bone.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Constraint.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Constraint.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/DeformVertices.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/DeformVertices.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/IArmatureProxy.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Slot.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/Slot.h
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/TransformObject.cpp
+        ${CMAKE_SOURCE_DIR}/lib/dragonBones/armature/TransformObject.h
         #core
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/core/BaseObject.cpp
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/core/BaseObject.h
@@ -87,23 +89,3 @@ add_library(dragonbones_target STATIC
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/cocos2dx/CCTextureAtlasData.cpp
         ${CMAKE_SOURCE_DIR}/lib/dragonBones/cocos2dx/CCTextureAtlasData.h
         )
-
-#add_library(dragonbones_cc_target STATIC
-#        #Cocos2d-x
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCArmatureDisplay.cpp
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCArmatureDisplay.h
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCDragonBonesHeaders.h
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCFactory.cpp
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCFactory.h
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCSlot.cpp
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCSlot.h
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCTextureAtlasData.cpp
-#        ${CMAKE_SOURCE_DIR}/lib/dragonBones/Cocos2DX_3.x/src/dragonBones/cocos2dx/CCTextureAtlasData.h
-#        )
-
-target_include_directories(dragonbones_target INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/dragonBones/>
-        )
-#target_include_directories(dragonbones_cc_target INTERFACE
-#        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/dragonBones/cocos2dx/>
-#        )

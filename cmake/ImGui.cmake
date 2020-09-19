@@ -1,5 +1,5 @@
 # Конфигурайия для подключения ImGui
-# На выжоде будет таргет project_dependency и флаг IMGUI_ENABLED для подклчюения зависимости
+# На выходе будет таргет project_dependency и флаг IMGUI_ENABLED для подклчюения зависимости
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(IMGUI_ENABLED 1 CACHE INTERNAL "")
