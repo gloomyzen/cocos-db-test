@@ -71,10 +71,10 @@ target_link_libraries(project_dependency INTERFACE rapidjson_target)
 #------------------------------------------------------------------------------
 #                               DragonBones
 #------------------------------------------------------------------------------
-if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBones)
-    message(FATAL_ERROR "DragonBones not found, download lib/dragonBones or use 'git submodules update'.")
+if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/dragonBones/DragonBonesHeaders.h)
+    message(FATAL_ERROR "DragonBones not found, download lib/dragonBones.")
 endif()
 include(${CMAKE_SOURCE_DIR}/cmake/DragonBones.cmake)
 target_link_libraries(dragonbones_target rapidjson_target cocos2d external)
-target_link_libraries(dragonbones_cc_target dragonbones_target rapidjson_target cocos2d external)
-target_link_libraries(project_dependency INTERFACE dragonbones_cc_target cocos2d external)
+#target_link_libraries(dragonbones_cc_target dragonbones_target rapidjson_target cocos2d external)
+target_link_libraries(project_dependency INTERFACE dragonbones_target)
