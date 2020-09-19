@@ -137,4 +137,3 @@ proj.win32/Release.*/
 *cmake_install.cmake
 *.ser
 *Makefile
-lib/
