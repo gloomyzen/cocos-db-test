@@ -3,4 +3,4 @@
 	url = https://github.com/Tencent/rapidjson.git
 [submodule "lib/imgui"]
 	path = lib/imgui
-	url = git@github.com:gloomyzen/cocos2dx-ImGui.git
+	url = https://github.com/gloomyzen/cocos2d-x-imgui
