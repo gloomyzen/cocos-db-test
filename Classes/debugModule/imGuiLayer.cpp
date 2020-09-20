@@ -19,10 +19,6 @@ void imGuiLayer::_onStart() {
 		static bool engineInfoOpened = false;
 		static bool devicesListOpened = false;
 
-//		if (nodeEditorOpened) showNodeEditor(&nodeEditorOpened);
-//		if (engineInfoOpened) showEngineInfo(&engineInfoOpened);
-//		if (devicesListOpened) showDevicesList(&devicesListOpened);
-
 		if (ImGui::Button("Debug")) {
 			nodeEditorOpened = !nodeEditorOpened;
 		}
@@ -33,7 +29,11 @@ void imGuiLayer::_onStart() {
 			devicesListOpened = !devicesListOpened;
 		}
 
-		if (nodeEditorOpened) {
+		if (nodeEditorOpened) showNodeEditor(&nodeEditorOpened);
+//		if (engineInfoOpened) showEngineInfo(&engineInfoOpened);
+//		if (devicesListOpened) showDevicesList(&devicesListOpened);
+
+		/*if (nodeEditorOpened) {
 			CCIMGUI::getInstance()->addCallback([=](){
 				ImGui::Text("Hello, world!");
 				// create button with Sprite, auto pushID / popID with texture id
@@ -41,7 +41,7 @@ void imGuiLayer::_onStart() {
 			}, "hello");
 		} else {
 			CCIMGUI::getInstance()->removeCallback("hello");
-		}
+		}*/
 	}, "buttons");
 
 
@@ -82,12 +82,13 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 
 ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 	const ImRect nodeRect = ImRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
-//	if (lastTarget == 0u) {
+	if (lastTarget == 0u) {
 //		lastTarget = n.front()->getChilds().front()->getUid();
-//	}
+	}
 	for (auto &node : n) {
 		ImGui::AlignTextToFramePadding();
 //		const std::string name = node->getId() + (node->isActive() ? "" : " #inactive");
+		const std::string name = node->getName() + (node->isVisible() ? "" : " #inactive");
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
 									   ImGuiTreeNodeFlags_SpanAvailWidth;
 //		if (lastTarget == node->getUid()) {
