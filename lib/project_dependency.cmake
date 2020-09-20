@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------
 #                       General Projects Settings
 #------------------------------------------------------------------------------
-include(${CMAKE_SOURCE_DIR}/cmake/StandardProjectSettings.cmake)
+#include(${CMAKE_SOURCE_DIR}/cmake/StandardProjectSettings.cmake)
 # General dependency target
 add_library(project_dependency INTERFACE)
 
@@ -9,21 +9,21 @@ add_library(project_dependency INTERFACE)
 #                         CMake modules and options
 #------------------------------------------------------------------------------
 
-include(ExternalProject)
+#include(ExternalProject)
 
 # enable cache system
 include(${CMAKE_SOURCE_DIR}/cmake/Cache.cmake)
 
 # sanitizer options if supported by compiler
-include(${CMAKE_SOURCE_DIR}/cmake/Sanitizers.cmake)
-enable_sanitizers(project_options)
+#include(${CMAKE_SOURCE_DIR}/cmake/Sanitizers.cmake)
+#enable_sanitizers(project_options)
 
 # enable doxygen
-include(${CMAKE_SOURCE_DIR}/cmake/Doxygen.cmake)
-enable_doxygen()
+#include(${CMAKE_SOURCE_DIR}/cmake/Doxygen.cmake)
+#enable_doxygen()
 
 # allow for static analysis options
-include(${CMAKE_SOURCE_DIR}/cmake/StaticAnalyzers.cmake)
+#include(${CMAKE_SOURCE_DIR}/cmake/StaticAnalyzers.cmake)
 
 #TODO change target to project files
 # Add as many warning as possible:
@@ -51,6 +51,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/imgui/CMakeLists.txt)
         message(FATAL_ERROR "ImGui not found, download lib/imgui or use 'git submodules update'.")
     endif ()
+    SET(imgui_lib_path  "${CMAKE_SOURCE_DIR}/lib/imgui" CACHE INTERNAL "imgui_lib_path")
     include(${CMAKE_SOURCE_DIR}/lib/imgui/CMakeLists.txt)
     add_definitions(-DIMGUI_ENABLED) # <- new cast definition
     target_link_libraries(project_dependency INTERFACE cc_imgui)
