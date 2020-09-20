@@ -2,7 +2,9 @@
 #define COCOS_DB_IMGUILAYER_H
 
 #include <imgui.h>
+#include <imgui_internal.h>
 #include <CCIMGUI.h>
+#include <vector>
 #include "cocos2d.h"
 #include "CCImGuiLayer.h"
 
@@ -12,28 +14,7 @@ namespace mercenaryBattles {
 		protected:
 			cocos2d::Sprite *_background;
 
-			virtual void _onStart() {
-				std::string layerName = "ImGUILayer";
-				auto order = INT_MAX;
-				auto layer = ImGuiLayer::create();
-				this->addChild(layer, order, layerName);
-
-				// enable docking
-				auto& io = ImGui::GetIO();
-				io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-				auto sp = cocos2d::Sprite::create("HelloWorld.png");
-				layer->addChild(sp);
-				// add ui callbacks
-				CCIMGUI::getInstance()->addCallback([=](){
-					ImGui::Text("Hello, world!");
-					// create button with Sprite, auto pushID / popID with texture id
-					CCIMGUI::getInstance()->imageButton(sp, ImVec2(0, 0));
-				}, "hello");
-				// remove ui callbacks to stop rendering
-				CCIMGUI::getInstance()->removeCallback("hello");
-				// add chinese font
-//				io.Fonts->AddFontFromFileTTF("path/to/font.ttf", 16.0f, 0, io.Fonts->GetGlyphRangesChineseFull());
-			}
+			void _onStart();
 
 		public:
 			CREATE_FUNC(imGuiLayer);
@@ -83,6 +64,25 @@ namespace mercenaryBattles {
 				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
 				return stageSize.height;
 			}
+
+		private:
+			/// Node editor
+			void showNodeEditor(bool *p_open);
+			ImRect renderTree(cocos2d::Vector<Node*> n);
+			ImRect renderPreferences(Node *);
+
+			/***
+		 	 * Debug button properties
+		 	 */
+			int debugBtnW = 65;
+			int debugBtnH = 80;
+
+			/***
+			 * Node editor window
+			 */
+			int nodeEditorW = 430;
+			int nodeEditorH = 450;
+			unsigned int lastTarget = 0u;
 		};
 	}
 }

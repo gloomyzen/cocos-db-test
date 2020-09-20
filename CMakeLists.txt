@@ -34,6 +34,7 @@ list(APPEND GAME_SOURCE
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
         #DebugModule
+        Classes/debugModule/imGuiLayer.cpp
      )
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
