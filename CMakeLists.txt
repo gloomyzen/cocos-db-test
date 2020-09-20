@@ -33,10 +33,13 @@ endif()
 list(APPEND GAME_SOURCE
         Classes/AppDelegate.cpp
         Classes/HelloWorldScene.cpp
+        #DebugModule
      )
 list(APPEND GAME_HEADER
         Classes/AppDelegate.h
         Classes/HelloWorldScene.h
+        #DebugModule
+        Classes/debugModule/imGuiLayer.h
      )
 #list(APPEND GAME_SOURCE
 #        Classes/AppDelegate.cpp
