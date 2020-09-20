@@ -47,14 +47,14 @@ include(${CMAKE_SOURCE_DIR}/cmake/StaticAnalyzers.cmake)
 #------------------------------------------------------------------------------
 #                        ImGui, included for debugging only
 #------------------------------------------------------------------------------
-if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/imgui/imgui.cpp)
-    message(FATAL_ERROR "ImGui not found, download lib/imgui or use 'git submodules update'.")
-endif()
-include(${CMAKE_SOURCE_DIR}/cmake/ImGui.cmake)
-if(IMGUI_ENABLED)
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/imgui/CMakeLists.txt)
+        message(FATAL_ERROR "ImGui not found, download lib/imgui or use 'git submodules update'.")
+    endif ()
+    include(${CMAKE_SOURCE_DIR}/lib/imgui/CMakeLists.txt)
     add_definitions(-DIMGUI_ENABLED) # <- new cast definition
-    target_link_libraries(project_dependency INTERFACE imgui_target)
-endif()
+    target_link_libraries(project_dependency INTERFACE cc_imgui)
+endif ()
 
 #------------------------------------------------------------------------------
 #                               Rapidjson
