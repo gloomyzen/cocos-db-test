@@ -70,7 +70,9 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 	ImGui::Columns(2);
 	ImGui::Separator();
 
-	renderTree(this->getChildren());
+	//auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
+
+	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
 //	ImGui::NextColumn();
 //	renderPreferences(GET_NODE()->findNode(lastTarget));
 
@@ -83,32 +85,31 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 	const ImRect nodeRect = ImRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
 	if (lastTarget == 0u) {
-//		lastTarget = n.front()->getChilds().front()->getUid();
+		lastTarget = n.front()->_ID;
 	}
 	for (auto &node : n) {
 		ImGui::AlignTextToFramePadding();
-//		const std::string name = node->getId() + (node->isActive() ? "" : " #inactive");
 		const std::string name = node->getName() + (node->isVisible() ? "" : " #inactive");
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
 									   ImGuiTreeNodeFlags_SpanAvailWidth;
-//		if (lastTarget == node->getUid()) {
-//			nodeFlags |= ImGuiTreeNodeFlags_Selected;
-//		}
-//		if (!node->hasChilds()) {
-//			nodeFlags |= ImGuiTreeNodeFlags_Leaf;
-//		}
-//		bool nodeOpen = ImGui::TreeNodeEx((void *) (intptr_t) node->getUid(), nodeFlags, "%s", name.c_str());
+		if (lastTarget == node->_ID) {
+			nodeFlags |= ImGuiTreeNodeFlags_Selected;
+		}
+		if (node->getChildren().empty()) {
+			nodeFlags |= ImGuiTreeNodeFlags_Leaf;
+		}
+		bool nodeOpen = ImGui::TreeNodeEx((void *) (intptr_t) node->_ID, nodeFlags, "%s", name.c_str());
 		if (ImGui::IsItemClicked()) {
 			//id of clicked element
-//			lastTarget = node->getUid();
+			lastTarget = node->_ID;
 		}
-//		if (nodeOpen) {
-//			ImGui::PushID(node->getUid());
+		if (nodeOpen) {
+			ImGui::PushID(node->_ID);
 
-//			renderTree(node->getChilds());
-//			ImGui::PopID();
-//			ImGui::TreePop();
-//		}
+			renderTree(node->getChildren());
+			ImGui::PopID();
+			ImGui::TreePop();
+		}
 	}
 
 
