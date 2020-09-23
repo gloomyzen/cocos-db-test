@@ -29,41 +29,10 @@ if(APPLE OR WINDOWS)
     cocos_mark_multi_resources(common_res_files RES_TO "Resources" FOLDERS ${GAME_RES_FOLDER})
 endif()
 
-# add cross-platforms source files and header files 
-list(APPEND GAME_SOURCE
-        Classes/AppDelegate.cpp
-        Classes/HelloWorldScene.cpp
-        #DebugModule
-        Classes/debugModule/imGuiLayer.cpp
-     )
-list(APPEND GAME_HEADER
-        Classes/AppDelegate.h
-        Classes/HelloWorldScene.h
-        #DebugModule
-        Classes/debugModule/imGuiLayer.h
-     )
-#list(APPEND GAME_SOURCE
-#        Classes/AppDelegate.cpp
-#        Classes/CoreElement.cpp
-#        Classes/DragHelper.cpp
-#        )
-#list(APPEND GAME_HEADER
-#        Classes/BoundingBox.h
-#        Classes/CoreElement.h
-#        Classes/ReplaceAnimation.h
-#        Classes/BoneOffset.h
-#        Classes/AppDelegate.h
-#        Classes/HelloDragonBones.h
-#        Classes/AnimationLayer.h
-#        Classes/PerformanceTest.h
-#        Classes/ReplaceSkin.h
-#        Classes/AnimationBase.h
-#        Classes/DragonBonesEvent.h
-#        Classes/DragHelper.h
-#        Classes/BaseDemo.h
-#        Classes/ReplaceSlotDisplay.h
-#        Classes/InverseKinematics.h
-#        )
+# add cross-platforms source files and header files
+file(GLOB_RECURSE GAME_HEADER Classes/*.h include/*.hpp)
+file(GLOB_RECURSE GAME_SOURCE Classes/*.cpp)
+
 
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
