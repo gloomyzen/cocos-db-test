@@ -9,10 +9,6 @@ void imGuiLayer::_onStart() {
 	auto layer = ImGuiLayer::create();
 	this->addChild(layer, order, layerName);
 
-	// enable docking
-	ImGuiIO &io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
 	//Buttons
 	CCIMGUI::getInstance()->addCallback([this](){
 		static bool nodeEditorOpened = false;
@@ -43,19 +39,6 @@ void imGuiLayer::_onStart() {
 			CCIMGUI::getInstance()->removeCallback("hello");
 		}*/
 	}, "buttons");
-
-
-	/*CCIMGUI::getInstance()->addCallback([this](){
-		if (ImGui::Button("Debug")) {
-//			nodeEditorOpened = !nodeEditorOpened;
-		}
-		if (ImGui::Button("Engine")) {
-//			engineInfoOpened = !engineInfoOpened;
-		}
-		if (ImGui::Button("Devices")) {
-//			devicesListOpened = !devicesListOpened;
-		}
-	}, "hello");*/
 }
 
 void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
@@ -70,7 +53,6 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 	ImGui::Columns(2);
 	ImGui::Separator();
 
-	auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
 	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
 	ImGui::NextColumn();
 	renderPreferences(lastTarget);
@@ -133,7 +115,7 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 		auto active = node->isVisible();
 		auto tempActive = active;
 		ImGui::Checkbox(" Is active", &active);
-		if (active != tempActive) {
+		if (active != tempActive && node->getName() != "ImGUILayer") {
 			node->setVisible(active);
 		}
 	}

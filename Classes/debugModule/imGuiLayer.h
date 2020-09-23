@@ -17,6 +17,12 @@ namespace mercenaryBattles {
 
 			void _onStart();
 
+			void update(float dt) override {
+				if (!this->isVisible()) {
+					this->setVisible(true);
+				}
+			}
+
 		public:
 			CREATE_FUNC(imGuiLayer);
 
@@ -30,7 +36,7 @@ namespace mercenaryBattles {
 			}
 			imGuiLayer() : _background(nullptr) {}
 
-			virtual bool init() {
+			bool init() override {
 				if (!LayerColor::initWithColor(cocos2d::Color4B(105, 105, 105, 255))) {
 					return false;
 				}
@@ -58,26 +64,18 @@ namespace mercenaryBattles {
 				classList[typeid(cocos2d::Action).name()] = "Action";
 				//TODO add DragonBones node
 
-				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
-				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
+//				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
+//				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
 //
-				_background = cocos2d::Sprite::create("background.png");
-				addChild(_background);
+//				_background = cocos2d::Sprite::create("background.png");
+//				addChild(_background);
 
 				_onStart();
+				scheduleUpdate();
 
 				return true;
 			}
 
-			cocos2d::Label *createText(const std::string &string) {
-				const auto text = cocos2d::Label::create();
-				text->setPosition(0.0f, -(getStageHeight() * 0.5f - 100.f));
-				text->setString(string);
-				text->setAlignment(cocos2d::TextHAlignment::CENTER);
-				addChild(text);
-
-				return text;
-			}
 
 			float getStageWidth() const {
 				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
