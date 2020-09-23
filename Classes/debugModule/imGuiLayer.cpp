@@ -70,8 +70,7 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 	ImGui::Columns(2);
 	ImGui::Separator();
 
-	//auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
-
+	auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
 	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
 //	ImGui::NextColumn();
 //	renderPreferences(GET_NODE()->findNode(lastTarget));
@@ -89,7 +88,12 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 	}
 	for (auto &node : n) {
 		ImGui::AlignTextToFramePadding();
-		const std::string name = node->getName() + (node->isVisible() ? "" : " #inactive");
+		std::string className = {};
+//		auto test = typeid(*node).name(); // need only for debug
+		if (classList.find(typeid(*node).name()) != classList.end()) {
+			className = classList[typeid(*node).name()] + " ";
+		}
+		const std::string name = className + node->getName() + (node->isVisible() ? "" : " #inactive");
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
 									   ImGuiTreeNodeFlags_SpanAvailWidth;
 		if (lastTarget == node->_ID) {
