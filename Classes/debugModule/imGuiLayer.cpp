@@ -140,6 +140,9 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform component")) {
+		/**
+		 * Height and Width
+		 */
 		auto width = node->getContentSize().width;
 		auto height = node->getContentSize().height;
 		float vecWH[2] = {width, height};
@@ -150,23 +153,50 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			_size.height = vecWH[1];
 			node->setContentSize(_size);
 		}
-//		auto position = node->getComponent<TransformComponent>().getPosition();
-//		auto xPos = position.getX();
-//		auto yPos = position.getY();
-//		float vecPos[2] = {xPos, yPos};
-//		ImGui::DragFloat2("X/Y position", vecPos, 1.f);
-//		if (vecPos[0] != xPos) {
-//			node->getComponent<TransformComponent>().setX(vecPos[0]);
-//		}
-//		if (vecPos[1] != yPos) {
-//			node->getComponent<TransformComponent>().setY(vecPos[1]);
-//		}
-//		auto scale = node->getComponent<TransformComponent>().getScale();
-//		auto tempScale = scale;
-//		ImGui::DragFloat("Scale", &scale, 0.1f);
-//		if (tempScale != scale) {
-//			node->getComponent<TransformComponent>().setScale(scale);
-//		}
+		/**
+		 * Position by X and Y
+		 */
+		auto nodePos = node->getPosition();
+		float vecPos[2] = {nodePos.x, nodePos.y};
+		ImGui::DragFloat2("Position X/Y", vecPos, 1.f);
+		if (vecPos[0] != nodePos.x || vecPos[1] != nodePos.y) {
+			node->setPosition(vecPos[0], vecPos[1]);
+		}
+		/**
+		 * Anchor
+		 */
+		auto nodeAnchor = node->getAnchorPoint();
+		float vecAnchor[2] = {nodeAnchor.x, nodeAnchor.y};
+		ImGui::DragFloat2("Anchor X/Y", vecAnchor, 0.1f, -1.f, 1.f);
+		if (vecAnchor[0] != nodeAnchor.x || vecAnchor[1] != nodeAnchor.y) {
+			node->setAnchorPoint({vecAnchor[0], vecAnchor[1]});
+		}
+		/**
+		 * Scale X and Y
+		 */
+		auto nodeScaleX = node->getScaleX();
+		auto nodeScaleY = node->getScaleY();
+		auto tempScaleX = nodeScaleX;
+		auto tempScaleY = nodeScaleY;
+		float vecScale[2] = {nodeScaleX, nodeScaleY};
+		ImGui::DragFloat2("Scale X/Y", vecScale, 0.01f);
+		if (tempScaleX != vecScale[0] || tempScaleY != vecScale[1]) {
+			node->setScaleX(vecScale[0]);
+			node->setScaleY(vecScale[1]);
+		}
+		/**
+		 * Skew X and Y
+		 */
+		auto nodeSkewX = node->getSkewX();
+		auto nodeSkewY = node->getSkewY();
+		auto tempSkewX = nodeSkewX;
+		auto tempSkewY = nodeSkewY;
+		float vecSkew[2] = {nodeSkewX, nodeSkewY};
+		ImGui::DragFloat2("Skew X/Y", vecSkew, 0.1f);
+		if (tempSkewX != vecSkew[0] || tempSkewY != vecSkew[1]) {
+			node->setSkewX(vecSkew[0]);
+			node->setSkewY(vecSkew[1]);
+		}
 	}
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
