@@ -35,20 +35,34 @@ namespace mercenaryBattles {
 					return false;
 				}
 
+				//General
 				classList[typeid(cocos2d::Camera).name()] = "Camera";
 				classList[typeid(cocos2d::Scene).name()] = "Scene";
+				// Nodes
 				classList[typeid(cocos2d::Node).name()] = "Node";
+				classList[typeid(cocos2d::ClippingNode).name()] = "ClippingNode";
+				classList[typeid(cocos2d::DrawNode).name()] = "DrawNode";
+				classList[typeid(cocos2d::ParticleBatchNode).name()] = "ParticleBatchNode";
+				classList[typeid(cocos2d::SpriteBatchNode).name()] = "SpriteBatchNode";
+				classList[typeid(cocos2d::ParallaxNode).name()] = "ParallaxNode";
+				classList[typeid(cocos2d::RenderTexture).name()] = "RenderTexture";
+				classList[typeid(cocos2d::ClippingRectangleNode).name()] = "ClippingRectangleNode";
+				classList[typeid(cocos2d::AttachNode).name()] = "AttachNode";
 				classList[typeid(cocos2d::Sprite).name()] = "Sprite";
 				classList[typeid(cocos2d::NodeGrid).name()] = "NodeGrid";
+				// Layers
 				classList[typeid(cocos2d::Layer).name()] = "Layer";
 				classList[typeid(cocos2d::LayerColor).name()] = "LayerColor";
 				classList[typeid(imGuiLayer).name()] = "imGuiLayer";
+				//Actions
+				classList[typeid(cocos2d::Action).name()] = "Action";
+				//TODO add DragonBones node
 
-//				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
-//				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
+				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
+				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
 //
-//				_background = cocos2d::Sprite::create("background.png");
-//				addChild(_background);
+				_background = cocos2d::Sprite::create("background.png");
+				addChild(_background);
 
 				_onStart();
 
@@ -93,7 +107,7 @@ namespace mercenaryBattles {
 			 */
 			int nodeEditorW = 430;
 			int nodeEditorH = 450;
-			unsigned int lastTarget = 0u;
+			Node* lastTarget = nullptr;
 		};
 	}
 }

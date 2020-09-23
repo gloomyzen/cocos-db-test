@@ -72,8 +72,8 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 
 	auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
 	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
-//	ImGui::NextColumn();
-//	renderPreferences(GET_NODE()->findNode(lastTarget));
+	ImGui::NextColumn();
+	renderPreferences(lastTarget);
 
 	ImGui::Columns(1);
 	ImGui::Separator();
@@ -83,8 +83,8 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 
 ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 	const ImRect nodeRect = ImRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
-	if (lastTarget == 0u) {
-		lastTarget = n.front()->_ID;
+	if (lastTarget == nullptr) {
+		lastTarget = n.front();
 	}
 	for (auto &node : n) {
 		ImGui::AlignTextToFramePadding();
@@ -96,7 +96,7 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 		const std::string name = className + node->getName() + (node->isVisible() ? "" : " #inactive");
 		ImGuiTreeNodeFlags nodeFlags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick |
 									   ImGuiTreeNodeFlags_SpanAvailWidth;
-		if (lastTarget == node->_ID) {
+		if (lastTarget == node) {
 			nodeFlags |= ImGuiTreeNodeFlags_Selected;
 		}
 		if (node->getChildren().empty()) {
@@ -105,10 +105,10 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 		bool nodeOpen = ImGui::TreeNodeEx((void *) (intptr_t) node->_ID, nodeFlags, "%s", name.c_str());
 		if (ImGui::IsItemClicked()) {
 			//id of clicked element
-			lastTarget = node->_ID;
+			lastTarget = node;
 		}
 		if (nodeOpen) {
-			ImGui::PushID(node->_ID);
+			ImGui::PushID(node);
 
 			renderTree(node->getChildren());
 			ImGui::PopID();
@@ -128,24 +128,28 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("General info")) {
-//		ImGui::Text("Node Name(ID) %s", node->getId().c_str());
-//		ImGui::Text("Node GUI %u", node->getUid());
-//		auto &active = node->getActive();
-//		ImGui::Checkbox(" Is active", &active);
+		ImGui::Text("Node Name(ID) %s", node->getName().c_str());
+		ImGui::Text("Node GUI %d", node->_ID);
+		auto active = node->isVisible();
+		auto tempActive = active;
+		ImGui::Checkbox(" Is active", &active);
+		if (active != tempActive) {
+			node->setVisible(active);
+		}
 	}
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform component")) {
-//		auto width = node->getComponent<TransformComponent>().getWidth();
-//		auto height = node->getComponent<TransformComponent>().getHeight();
-//		int vecWH[2] = {width, height};
-//		ImGui::DragInt2("Width/Height", vecWH, 1);
-//		if (vecWH[0] != width) {
-//			node->getComponent<TransformComponent>().setWidth(vecWH[0]);
-//		}
-//		if (vecWH[1] != height) {
-//			node->getComponent<TransformComponent>().setHeight(vecWH[1]);
-//		}
+		auto width = node->getContentSize().width;
+		auto height = node->getContentSize().height;
+		float vecWH[2] = {width, height};
+		ImGui::DragFloat2("Width/Height", vecWH, 1);
+		if (vecWH[0] != width || vecWH[1] != height) {
+			auto _size = cocos2d::Size();
+			_size.width = vecWH[0];
+			_size.height = vecWH[1];
+			node->setContentSize(_size);
+		}
 //		auto position = node->getComponent<TransformComponent>().getPosition();
 //		auto xPos = position.getX();
 //		auto yPos = position.getY();
