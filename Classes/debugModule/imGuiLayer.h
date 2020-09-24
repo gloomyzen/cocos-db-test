@@ -8,6 +8,7 @@
 #include <list>
 #include "cocos2d.h"
 #include "CCImGuiLayer.h"
+#include "dragonBones/cocos2dx/CCDragonBonesHeaders.h"
 
 namespace mercenaryBattles {
 	namespace debugModule {
@@ -63,6 +64,9 @@ namespace mercenaryBattles {
 				//Actions
 				classList[typeid(cocos2d::Action).name()] = "Action";
 				//TODO add DragonBones node
+				classList[typeid(dragonBones::CCArmatureDisplay).name()] = "DBRoot";
+				classList[typeid(dragonBones::DragonBones).name()] = "DBPart";
+				classList[typeid(dragonBones::Armature).name()] = "DBArmature";
 
 //				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
 //				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
@@ -87,7 +91,25 @@ namespace mercenaryBattles {
 				return stageSize.height;
 			}
 
+			void _addArmature()
+			{
+				if (_armatures.empty())
+				{
+					dragonBones::CCFactory::getFactory()->loadDragonBonesData("mecha_1406/mecha_1406_ske.dbbin");
+					dragonBones::CCFactory::getFactory()->loadTextureAtlasData("mecha_1406/mecha_1406_tex.json");
+				}
+
+				const auto armatureDisplay = dragonBones::CCFactory::getFactory()->buildArmatureDisplay("mecha_1406");
+				armatureDisplay->setScale(0.5f);
+				armatureDisplay->getArmature()->setCacheFrameRate(24);
+				armatureDisplay->getAnimation()->play("walk");
+				addChild(armatureDisplay);
+
+				_armatures.push_back(armatureDisplay);
+			}
+
 		private:
+			std::vector<dragonBones::CCArmatureDisplay*> _armatures;
 			/// Node editor
 			std::map<std::string, std::string> classList;
 			void showNodeEditor(bool *p_open);

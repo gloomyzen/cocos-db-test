@@ -39,6 +39,9 @@ void imGuiLayer::_onStart() {
 			CCIMGUI::getInstance()->removeCallback("hello");
 		}*/
 	}, "buttons");
+
+	_addArmature();
+
 }
 
 void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
@@ -53,6 +56,7 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 	ImGui::Columns(2);
 	ImGui::Separator();
 
+	auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
 	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
 	ImGui::NextColumn();
 	renderPreferences(lastTarget);
