@@ -8,6 +8,7 @@ import pickle
 import sys
 
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
+assetsStore = 'MBAssetsStore'
 
 def main():
 
@@ -27,12 +28,11 @@ def main():
 
     folder_name = ''
     folder_id = ''
-    location = ''
+    location = '../Resources/'
     # if len(sys.argv) > 2:
     #     location = sys.argv[2]
     #     if location[-1] != '/':
     #         location += '/'
-    assetsStore = 'MBAssetsStore'
 
     folder = service.files().list(
         q=f"name contains '{assetsStore}' and mimeType='application/vnd.google-apps.folder'",
@@ -73,9 +73,11 @@ def get_full_path(service, folder):
 
 def download_folder(service, folder_id, location, folder_name):
 
-    if not os.path.exists(location + folder_name):
+    if not os.path.exists(location + folder_name) and folder_name != assetsStore:
         os.makedirs(location + folder_name)
-    location += folder_name + '/'
+    # remove root folder name from path
+    if folder_name != assetsStore:
+        location += folder_name + '/'
 
     result = []
     page_token = None
