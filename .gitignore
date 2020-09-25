@@ -131,9 +131,15 @@ proj.win32/Release.*/
 
 # others
 temp
+venv
 # CMake
 *CmakeCache.txt
 *CMakeFiles/
 *cmake_install.cmake
 *.ser
 *Makefile
+
+#utilities
+##Update assets
+utilities/credentials.json
+utilities/token.pickle
