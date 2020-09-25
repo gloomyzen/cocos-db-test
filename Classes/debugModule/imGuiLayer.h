@@ -100,7 +100,8 @@ namespace mercenaryBattles {
 				}
 
 				const auto armatureDisplay = dragonBones::CCFactory::getFactory()->buildArmatureDisplay("mecha_1406");
-				armatureDisplay->setScale(0.5f);
+				armatureDisplay->setScale(0.3f);
+				armatureDisplay->setPosition(333.f, 26.f);
 				armatureDisplay->getArmature()->setCacheFrameRate(24);
 				armatureDisplay->getAnimation()->play("walk");
 				addChild(armatureDisplay);
