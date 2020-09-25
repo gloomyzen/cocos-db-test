@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 
-set(APP_NAME cocos-db)
+set(APP_NAME Mercenary_Battles)
 
 project(${APP_NAME})
 
