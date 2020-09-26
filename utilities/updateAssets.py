@@ -7,9 +7,12 @@ import os
 import pickle
 import sys
 import hashlib
+import datetime
+import time
 
 SCOPES = ['https://www.googleapis.com/auth/drive.appdata.readonly']
 assetsStore = 'MBAssetsStore'
+
 
 def md5(fname):
     hash_md5 = hashlib.md5()
@@ -17,6 +20,22 @@ def md5(fname):
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
+
+def dateToSeconds(dateTime):
+    return int(datetime.datetime.strptime(dateTime, "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%s"))
+
+
+def setFileTimestamps(fname, modifiedTime):
+    mtime = dateToSeconds(modifiedTime)
+    setFileModificationTime(fname, mtime)
+
+
+def setFileModificationTime(fname, newtime):
+    # Set access time to same value as modified time,
+    # since Drive API doesn't provide access time
+    os.utime(fname, (newtime, newtime))
+
 
 def main():
     creds = None
@@ -91,7 +110,7 @@ def download_folder(service, folder_id, location, folder_name):
     while True:
         files = service.files().list(
             q=f"'{folder_id}' in parents",
-            fields='nextPageToken, files(id, name, mimeType, md5Checksum)',
+            fields='nextPageToken, files(id, name, mimeType, md5Checksum, modifiedTime, createdTime, trashedTime)',
             pageToken=page_token,
             pageSize=1000).execute()
         result.extend(files['files'])
@@ -107,20 +126,25 @@ def download_folder(service, folder_id, location, folder_name):
         file_id = item['id']
         filename = item['name']
         mime_type = item['mimeType']
+        if "trashedTime" in item:
+            continue
         print(f'{file_id} {filename} {mime_type} ({current}/{total})')
         if mime_type == 'application/vnd.google-apps.folder':
             download_folder(service, file_id, location, filename)
         elif not os.path.isfile(location + filename):
-            download_file(service, file_id, location, filename, mime_type)
+            download_file(service, file_id, location, filename, mime_type, item["modifiedTime"])
         else:
             external_file_size = item['md5Checksum']
             local_file_size = md5(location + filename)
             if external_file_size != local_file_size:
-                download_file(service, file_id, location, filename, mime_type)
+                local_m_timestamp = os.path.getmtime(location + filename)
+                local_m_datetime = datetime.datetime.fromtimestamp(local_m_timestamp)
+                external_m_datetime = mtime = dateToSeconds(item["modifiedTime"])
+                download_file(service, file_id, location, filename, mime_type, item["modifiedTime"])
         current += 1
 
 
-def download_file(service, file_id, location, filename, mime_type):
+def download_file(service, file_id, location, filename, mime_type, m_time):
     if 'vnd.google-apps' in mime_type:
         request = service.files().export_media(fileId=file_id,
                                                mimeType='application/pdf')
@@ -139,6 +163,7 @@ def download_file(service, file_id, location, filename, mime_type):
             sys.exit(1)
         print(f'\rDownload {int(status.progress() * 100)}%.', end='')
         sys.stdout.flush()
+    setFileTimestamps(location + filename, m_time)
     print('')
 
 
