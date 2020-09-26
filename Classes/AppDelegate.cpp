@@ -82,10 +82,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	register_all_packages();
 
 	// create a scene. it's an autorelease object
-	auto scene = mercenaryBattles::debugModule::imGuiLayer::createScene();
+//	auto scene = mercenaryBattles::debugModule::imGuiLayer::createScene();
 
 	// run
-	director->runWithScene(scene);
+//	director->runWithScene(scene);
 
 	return true;
 }
