@@ -139,7 +139,10 @@ venv
 *.ser
 *Makefile
 
-#utilities
+#Resources
+Resources/*
+
+######## utilities
 ##Update assets
 utilities/credentials.json
 utilities/token.pickle

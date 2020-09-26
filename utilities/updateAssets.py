@@ -6,12 +6,25 @@ import io
 import os
 import pickle
 import sys
+import hashlib
 
-SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive.appdata.readonly']
 assetsStore = 'MBAssetsStore'
 
-def main():
 
+def hashfile(file):
+    BUF_SIZE = 65536
+    sha256 = hashlib.sha256()
+    with open(file, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+            sha256.update(data)
+    return sha256.hexdigest()
+
+
+def main():
     creds = None
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
@@ -60,8 +73,8 @@ def main():
     print(f'{folder_id} {folder_name}')
     download_folder(service, folder_id, location, folder_name)
 
-def get_full_path(service, folder):
 
+def get_full_path(service, folder):
     if not 'parents' in folder:
         return folder['name']
     files = service.files().get(fileId=folder['parents'][0], fields='id, name, parents').execute()
@@ -71,8 +84,8 @@ def get_full_path(service, folder):
         path = files['name'] + ' > ' + path
     return path
 
-def download_folder(service, folder_id, location, folder_name):
 
+def download_folder(service, folder_id, location, folder_name):
     if not os.path.exists(location + folder_name) and folder_name != assetsStore:
         os.makedirs(location + folder_name)
     # remove root folder name from path
@@ -103,12 +116,14 @@ def download_folder(service, folder_id, location, folder_name):
         print(f'{file_id} {filename} {mime_type} ({current}/{total})')
         if mime_type == 'application/vnd.google-apps.folder':
             download_folder(service, file_id, location, filename)
-        elif not os.path.isfile(location + filename):
+        # elif not os.path.isfile(location + filename):
+        else:
+            test = service.files()
             download_file(service, file_id, location, filename, mime_type)
         current += 1
 
-def download_file(service, file_id, location, filename, mime_type):
 
+def download_file(service, file_id, location, filename, mime_type):
     if 'vnd.google-apps' in mime_type:
         request = service.files().export_media(fileId=file_id,
                                                mimeType='application/pdf')
@@ -128,6 +143,7 @@ def download_file(service, file_id, location, filename, mime_type):
         print(f'\rDownload {int(status.progress() * 100)}%.', end='')
         sys.stdout.flush()
     print('')
+
 
 if __name__ == '__main__':
     main()
