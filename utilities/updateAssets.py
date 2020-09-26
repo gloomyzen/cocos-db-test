@@ -11,18 +11,12 @@ import hashlib
 SCOPES = ['https://www.googleapis.com/auth/drive.appdata.readonly']
 assetsStore = 'MBAssetsStore'
 
-
-def hashfile(file):
-    BUF_SIZE = 65536
-    sha256 = hashlib.sha256()
-    with open(file, 'rb') as f:
-        while True:
-            data = f.read(BUF_SIZE)
-            if not data:
-                break
-            sha256.update(data)
-    return sha256.hexdigest()
-
+def md5(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
 
 def main():
     creds = None
@@ -97,7 +91,7 @@ def download_folder(service, folder_id, location, folder_name):
     while True:
         files = service.files().list(
             q=f"'{folder_id}' in parents",
-            fields='nextPageToken, files(id, name, mimeType)',
+            fields='nextPageToken, files(id, name, mimeType, md5Checksum)',
             pageToken=page_token,
             pageSize=1000).execute()
         result.extend(files['files'])
@@ -116,10 +110,13 @@ def download_folder(service, folder_id, location, folder_name):
         print(f'{file_id} {filename} {mime_type} ({current}/{total})')
         if mime_type == 'application/vnd.google-apps.folder':
             download_folder(service, file_id, location, filename)
-        # elif not os.path.isfile(location + filename):
-        else:
-            test = service.files()
+        elif not os.path.isfile(location + filename):
             download_file(service, file_id, location, filename, mime_type)
+        else:
+            external_file_size = item['md5Checksum']
+            local_file_size = md5(location + filename)
+            if external_file_size != local_file_size:
+                download_file(service, file_id, location, filename, mime_type)
         current += 1
 
 
@@ -129,7 +126,7 @@ def download_file(service, file_id, location, filename, mime_type):
                                                mimeType='application/pdf')
         filename += '.pdf'
     else:
-        request = service.files().get_media(fileId=file_id)
+        request = service.files().get_media(fileId=file_id, fields='size')
     fh = io.FileIO(location + filename, 'wb')
     downloader = MediaIoBaseDownload(fh, request, 1024 * 1024 * 1024)
     done = False
