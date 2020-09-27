@@ -12,7 +12,7 @@
 
 namespace mercenaryBattles {
 	namespace debugModule {
-		class imGuiLayer : public cocos2d::LayerColor {
+		class imGuiLayer : public cocos2d::Layer {
 		protected:
 			cocos2d::Sprite *_background;
 
@@ -38,7 +38,7 @@ namespace mercenaryBattles {
 			imGuiLayer() : _background(nullptr) {}
 
 			bool init() override {
-				if (!LayerColor::initWithColor(cocos2d::Color4B(105, 105, 105, 255))) {
+				if (!Layer::init()) {
 					return false;
 				}
 
@@ -68,12 +68,6 @@ namespace mercenaryBattles {
 				classList[typeid(dragonBones::DragonBones).name()] = "DBPart";
 				classList[typeid(dragonBones::Armature).name()] = "DBArmature";
 
-//				const auto &stageSize = cocos2d::Director::getInstance()->getVisibleSize();
-//				setPosition(stageSize.width * 0.5f, stageSize.height * 0.5f);
-//
-//				_background = cocos2d::Sprite::create("background.png");
-//				addChild(_background);
-
 				_onStart();
 				scheduleUpdate();
 
@@ -91,23 +85,23 @@ namespace mercenaryBattles {
 				return stageSize.height;
 			}
 
-			void _addArmature()
-			{
-				if (_armatures.empty())
-				{
-					dragonBones::CCFactory::getFactory()->loadDragonBonesData("mecha_1406/mecha_1406_ske.dbbin");
-					dragonBones::CCFactory::getFactory()->loadTextureAtlasData("mecha_1406/mecha_1406_tex.json");
-				}
-
-				const auto armatureDisplay = dragonBones::CCFactory::getFactory()->buildArmatureDisplay("mecha_1406");
-				armatureDisplay->setScale(0.3f);
-				armatureDisplay->setPosition(333.f, 26.f);
-				armatureDisplay->getArmature()->setCacheFrameRate(24);
-				armatureDisplay->getAnimation()->play("walk");
-				addChild(armatureDisplay);
-
-				_armatures.push_back(armatureDisplay);
-			}
+//			void _addArmature()
+//			{
+//				if (_armatures.empty())
+//				{
+//					dragonBones::CCFactory::getFactory()->loadDragonBonesData("mecha_1406/mecha_1406_ske.dbbin");
+//					dragonBones::CCFactory::getFactory()->loadTextureAtlasData("mecha_1406/mecha_1406_tex.json");
+//				}
+//
+//				const auto armatureDisplay = dragonBones::CCFactory::getFactory()->buildArmatureDisplay("mecha_1406");
+//				armatureDisplay->setScale(0.3f);
+//				armatureDisplay->setPosition(333.f, 26.f);
+//				armatureDisplay->getArmature()->setCacheFrameRate(24);
+//				armatureDisplay->getAnimation()->play("walk");
+//				addChild(armatureDisplay);
+//
+//				_armatures.push_back(armatureDisplay);
+//			}
 
 		private:
 			std::vector<dragonBones::CCArmatureDisplay*> _armatures;

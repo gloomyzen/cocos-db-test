@@ -40,7 +40,7 @@ void imGuiLayer::_onStart() {
 		}*/
 	}, "buttons");
 
-	_addArmature();
+//	_addArmature();
 
 }
 
@@ -56,7 +56,6 @@ void imGuiLayer::showNodeEditor(bool *nodeEditorOpened) {
 	ImGui::Columns(2);
 	ImGui::Separator();
 
-	auto test = cocos2d::Director::getInstance()->getRunningScene()->getChildren();
 	renderTree(cocos2d::Director::getInstance()->getRunningScene()->getChildren());
 	ImGui::NextColumn();
 	renderPreferences(lastTarget);

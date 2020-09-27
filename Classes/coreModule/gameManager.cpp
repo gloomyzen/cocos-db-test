@@ -17,12 +17,13 @@ gameManager &gameManager::getInstance() {
 	return *currentGameManager;
 }
 
-void gameManager::run(gameStates state) {
+void gameManager::run() {
+	auto state = eGameStates::MAIN_MENU;
 	auto scene = generalScene::createScene();
 	Director::getInstance()->runWithScene(scene);
 	changeState(state);
 }
 
-void gameManager::changeState(gameStates state) {
+void gameManager::changeState(eGameStates state) {
 	currentState = state;
 }

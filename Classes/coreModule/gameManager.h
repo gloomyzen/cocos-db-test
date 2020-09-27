@@ -8,21 +8,22 @@
 namespace mercenaryBattles {
 	using namespace cocos2d;
 
-	enum gameLayers {
-		NONE = 0,
-		SKY = 2,
-		PLAN_3 = 4,
-		PLAN_2 = 6,
-		PLAN_1 = 8,
-		FLOOR = 10
-	};
-
-	enum gameStates {
-		MAIN_MENU,
-		BATTLE_SCENE
-	};
-
 	namespace coreModule {
+
+		enum eGameLayers {
+			NONE = 0,
+			SKY = 2,
+			PLAN_3 = 4,
+			PLAN_2 = 6,
+			PLAN_1 = 8,
+			FLOOR = 10,
+			DEBUG_LAYER = 99
+		};
+
+		enum eGameStates {
+			MAIN_MENU,
+			BATTLE_SCENE
+		};
 
 		class gameManager {
 		public:
@@ -30,12 +31,12 @@ namespace mercenaryBattles {
 			~gameManager();
 			static gameManager &getInstance();
 
-			void run(gameStates state = gameStates::MAIN_MENU);
-			void changeState(gameStates state);
-			gameStates getCurrentState() { return currentState; }
+			void run();
+			void changeState(eGameStates state);
+			eGameStates getCurrentState() { return currentState; }
 
 		private:
-			gameStates currentState;
+			eGameStates currentState;
 		};
 	}
 }
