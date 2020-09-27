@@ -2,12 +2,13 @@
 #define MERCENARY_BATTLES_GENERALSCENE_H
 
 #include "cocos2d.h"
-#include "coreModule/properties/nodeProperties.h"
+#include "coreModule/nodes/nodeProperties.h"
 
 namespace mercenaryBattles {
+	namespace coreModule {
+
 	using namespace cocos2d;
 
-	namespace coreModule {
 		class generalScene : public Scene {
 		public:
 			static cocos2d::Scene *createScene();
@@ -21,7 +22,7 @@ namespace mercenaryBattles {
 			CREATE_FUNC(generalScene);
 		};
 	}
-}
+}//mercenaryBattles::coreModule
 
 
 #endif //MERCENARY_BATTLES_GENERALSCENE_H

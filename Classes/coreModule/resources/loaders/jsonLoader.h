@@ -1,7 +1,6 @@
 #ifndef MERCENARY_BATTLES_JSONLOADER_H
 #define MERCENARY_BATTLES_JSONLOADER_H
 
-#include "cocos2d.h"
 #include <fstream>
 #include "rapidjson/document.h"
 #include <rapidjson/istreamwrapper.h>
@@ -11,7 +10,6 @@
 #include <string>
 
 namespace mercenaryBattles {
-	using namespace cocos2d;
 
 	namespace coreModule {
 		class jsonLoader {

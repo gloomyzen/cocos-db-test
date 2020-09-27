@@ -1,5 +1,5 @@
-#ifndef COCOS_DB_IMGUILAYER_H
-#define COCOS_DB_IMGUILAYER_H
+#ifndef MERCENARY_BATTLES_IMGUILAYER_H
+#define MERCENARY_BATTLES_IMGUILAYER_H
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -126,6 +126,6 @@ namespace mercenaryBattles {
 			Node* lastTarget = nullptr;
 		};
 	}
-}
+}//mercenaryBattles::debugModule
 
-#endif //COCOS_DB_IMGUILAYER_H
+#endif //MERCENARY_BATTLES_IMGUILAYER_H

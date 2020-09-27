@@ -25,6 +25,6 @@ namespace mercenaryBattles {
 //			virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags);
 		};
 	}
-}
+}//mercenaryBattles::coreModule
 
 #endif //MERCENARY_BATTLES_NODEPROPERTIES_H

@@ -4,13 +4,14 @@
 #include "cocos2d.h"
 
 namespace mercenaryBattles {
-	using namespace cocos2d;
 	namespace coreModule {
+	using namespace cocos2d;
 		class mainMenu : public Layer {
 		public:
+			//TODO remove this and make new nodes tree in general scene
 		};
 	}
-}
+}//mercenaryBattles::coreModule
 
 
 #endif //MERCENARY_BATTLES_MAINMENU_H

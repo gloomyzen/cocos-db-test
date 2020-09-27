@@ -6,9 +6,10 @@
 #define GET_GAME_MANAGER() mercenaryBattles::coreModule::gameManager::getInstance()
 
 namespace mercenaryBattles {
-	using namespace cocos2d;
 
 	namespace coreModule {
+
+	using namespace cocos2d;
 
 		enum eGameLayers {
 			NONE = 0,
@@ -39,7 +40,7 @@ namespace mercenaryBattles {
 			eGameStates currentState;
 		};
 	}
-}
+}//mercenaryBattles::coreModule
 
 
 #endif //MERCENARY_BATTLES_GAMEMANAGER_H
