@@ -2,6 +2,7 @@
 #define MERCENARY_BATTLES_GENERALSCENE_H
 
 #include "cocos2d.h"
+#include "coreModule/properties/nodeProperties.h"
 
 namespace mercenaryBattles {
 	using namespace cocos2d;

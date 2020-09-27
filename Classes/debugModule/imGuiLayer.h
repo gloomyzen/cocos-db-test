@@ -57,6 +57,7 @@ namespace mercenaryBattles {
 				classList[typeid(cocos2d::AttachNode).name()] = "AttachNode";
 				classList[typeid(cocos2d::Sprite).name()] = "Sprite";
 				classList[typeid(cocos2d::NodeGrid).name()] = "NodeGrid";
+				classList[typeid(cocos2d::Label).name()] = "Label";
 				// Layers
 				classList[typeid(cocos2d::Layer).name()] = "Layer";
 				classList[typeid(cocos2d::LayerColor).name()] = "LayerColor";
