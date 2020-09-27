@@ -182,6 +182,16 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			node->setSkewX(vecSkew[0]);
 			node->setSkewY(vecSkew[1]);
 		}
+		/**
+		 * Rotation
+		 */
+		auto nodeRotation = node->getRotation();
+		auto tempRotation = nodeRotation;
+		float floatRotation[1] = {nodeRotation};
+		ImGui::DragFloat("Rotation", floatRotation, 0.1f);
+		if(floatRotation[0] != tempRotation) {
+			node->setRotation(floatRotation[0]);
+		}
 	}
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);

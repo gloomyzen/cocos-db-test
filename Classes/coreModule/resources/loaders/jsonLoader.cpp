@@ -1,4 +1,5 @@
 #include "jsonLoader.h"
+#include "cocos2d.h"
 
 using namespace mercenaryBattles::coreModule;
 
@@ -8,6 +9,8 @@ jsonLoader::jsonLoader() {}
 jsonLoader::~jsonLoader() {}
 
 rapidjson::Document jsonLoader::loadJson(const std::string &path, const std::string &prefix) {
+	//TODO change ifstream to FileUtils for correct cross-platform support
+//	cocos2d::FileUtils::
 	const std::string pref = prefix + propFolder;
 	std::ifstream ifs(pref + path + ".json", std::ifstream::in);
 	if (!ifs.is_open()) {
