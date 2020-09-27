@@ -33,7 +33,6 @@ endif()
 file(GLOB_RECURSE GAME_HEADER Classes/*.h include/*.hpp)
 file(GLOB_RECURSE GAME_SOURCE Classes/*.cpp)
 
-
 if(ANDROID)
     # change APP_NAME to the share library name for Android, it's value depend on AndroidManifest.xml
     set(APP_NAME MyGame)
@@ -129,3 +128,8 @@ if(LINUX OR WINDOWS)
     cocos_get_resource_path(APP_RES_DIR ${APP_NAME})
     cocos_copy_target_res(${APP_NAME} LINK_TO ${APP_RES_DIR} FOLDERS ${GAME_RES_FOLDER})
 endif()
+
+target_include_directories(${APP_NAME}
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Classes>
+        )
