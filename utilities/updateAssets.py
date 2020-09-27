@@ -9,9 +9,19 @@ import sys
 import hashlib
 import datetime
 import time
+import platform
+
+"""
+https://developers.google.com/drive/api/v3/reference/files
+"""
 
 SCOPES = ['https://www.googleapis.com/auth/drive.appdata.readonly']
 assetsStore = 'MBAssetsStore'
+
+
+def get_creation_time(path):
+    (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(str(path))
+    return mtime
 
 
 def md5(fname):
@@ -22,16 +32,27 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 
-def dateToSeconds(dateTime):
+def date_to_seconds(dateTime):
     return int(datetime.datetime.strptime(dateTime, "%Y-%m-%dT%H:%M:%S.%fZ").strftime("%s"))
 
 
-def setFileTimestamps(fname, modifiedTime):
-    mtime = dateToSeconds(modifiedTime)
-    setFileModificationTime(fname, mtime)
+def creation_date(path_to_file):
+    if platform.system() == 'Windows':
+        return int(os.path.getctime(path_to_file))
+    else:
+        stat = os.stat(path_to_file)
+        try:
+            return int(stat.st_birthtime)
+        except AttributeError:
+            return int(stat.st_mtime)
 
 
-def setFileModificationTime(fname, newtime):
+def set_file_timestamps(fname, modifiedTime):
+    mtime = date_to_seconds(modifiedTime)
+    set_file_modification_time(fname, mtime)
+
+
+def set_file_modification_time(fname, newtime):
     # Set access time to same value as modified time,
     # since Drive API doesn't provide access time
     os.utime(fname, (newtime, newtime))
@@ -137,11 +158,16 @@ def download_folder(service, folder_id, location, folder_name):
             external_file_size = item['md5Checksum']
             local_file_size = md5(location + filename)
             if external_file_size != local_file_size:
-                local_m_timestamp = os.path.getmtime(location + filename)
-                local_m_datetime = datetime.datetime.fromtimestamp(local_m_timestamp)
-                external_m_datetime = mtime = dateToSeconds(item["modifiedTime"])
-                download_file(service, file_id, location, filename, mime_type, item["modifiedTime"])
+                local_m_timestamp = get_creation_time(location + filename)
+                external_m_datetime = date_to_seconds(item["modifiedTime"])
+                if local_m_timestamp >= external_m_datetime:
+                    # todo upload file to google drive
+                    test = 'upload'
+                else:
+                    download_file(service, file_id, location, filename, mime_type, item["modifiedTime"])
         current += 1
+        # todo compare local files and folder in 'location' and upload then if item are missing
+        #  https://developers.google.com/drive/api/v3/manage-uploads
 
 
 def download_file(service, file_id, location, filename, mime_type, m_time):
@@ -163,7 +189,7 @@ def download_file(service, file_id, location, filename, mime_type, m_time):
             sys.exit(1)
         print(f'\rDownload {int(status.progress() * 100)}%.', end='')
         sys.stdout.flush()
-    setFileTimestamps(location + filename, m_time)
+    set_file_timestamps(location + filename, m_time)
     print('')
 
 
