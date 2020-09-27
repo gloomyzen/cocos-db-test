@@ -4,6 +4,12 @@ set(APP_NAME Mercenary_Battles)
 
 project(${APP_NAME})
 
+if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    add_definitions(-DDEBUG=1)
+else ()
+    add_definitions(-DRELEASE=1)
+endif ()
+
 if(XCODE)
     if(NOT DEFINED CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET)
         SET (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET 8.0)
