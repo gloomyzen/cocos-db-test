@@ -10,6 +10,7 @@
 namespace mercenaryBattles {
 
 	namespace coreModule {
+		class mainScene;
 		using namespace cocos2d;
 
 		class gameManager {
@@ -24,7 +25,7 @@ namespace mercenaryBattles {
 
 		private:
 			eGameStates currentState;
-			Scene* mainScene = nullptr;
+			mainScene* mainSceneIns = nullptr;
 		};
 	}
 }//mercenaryBattles::coreModule

@@ -2,6 +2,7 @@
 #include "debugModule/logManager.h"
 #include "debugModule/imGuiLayer.h"
 #include "coreModule/gameManager.h"
+#include "coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
 
 using namespace mercenaryBattles::coreModule;
 using namespace cocos2d;
@@ -11,39 +12,40 @@ Scene *mainScene::createScene() {
 }
 
 bool mainScene::init() {
-	//////////////////////////////
-	// 1. super init first
 	if (!Scene::init()) {
 		return false;
 	}
 	LOG_INFO("mainScene::init()");
+	/// insert debug layer
+	auto imGuiLayer = mercenaryBattles::debugModule::imGuiLayer::create();
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-	auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
-	this->addChild(_background);
-
-
-	auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-	if (label == nullptr) {
-		LOG_ERROR("'fonts/Marker Felt.ttf'");
-	} else {
-		// position the label on the center of the screen
-		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-								origin.y + visibleSize.height - label->getContentSize().height));
-
-		// add the label as a child to this layer
-		this->addChild(label, 1);
-
-		auto imGuiLayer = mercenaryBattles::debugModule::imGuiLayer::create();
-
-		this->addChild(imGuiLayer, mercenaryBattles::coreModule::eGameLayers::DEBUG_LAYER);
-	}
+	this->addChild(imGuiLayer, eGameLayers::DEBUG_LAYER);
 
 	return true;
 }
 
 void mainScene::menuCloseCallback(Ref *pSender) {
 	Director::getInstance()->end();
+}
+
+void mainScene::setRoom(eGameStates state) {
+	if (nodes.empty()) {
+		auto currentNode = scenesFactoryInstance::getInstance().getStateRoot(state);
+		this->addChild(currentNode, eGameLayers::ROOT);
+		nodes.push_back(currentNode);
+		return;
+	}
+	nodes.reserve(2);
+
+	nodes.front()->setLocalZOrder(nodes.front()->getLocalZOrder() - 1);
+	auto nextNode = scenesFactoryInstance::getInstance().getStateRoot(state);
+	nextNode->setCascadeOpacityEnabled(true);
+	nextNode->setOpacity(0);
+	auto seq = Sequence::create(FadeIn::create(0.5f), CallFunc::create([this](){
+		nodes.front()->removeFromParentAndCleanup(true);
+		nodes.erase(nodes.begin());
+	}), nullptr);
+	this->addChild(nextNode, eGameLayers::ROOT);
+	nodes.push_back(nextNode);
+	nextNode->runAction(seq);
 }

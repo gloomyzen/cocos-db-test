@@ -3,6 +3,8 @@
 
 #include "cocos2d.h"
 #include "coreModule/nodes/nodeProperties.h"
+#include "coreModule/enums/scenesEnums.h"
+#include <vector>
 
 namespace mercenaryBattles {
 	namespace coreModule {
@@ -15,12 +17,15 @@ namespace mercenaryBattles {
 
 			virtual bool init();
 
+			void setRoom(eGameStates);
 
-			// a selector callback
+
 			void menuCloseCallback(cocos2d::Ref *pSender);
 
-			// implement the "static create()" method manually
 			CREATE_FUNC(mainScene);
+
+		private:
+			std::vector<Node*> nodes{};
 		};
 	}
 }//mercenaryBattles::coreModule

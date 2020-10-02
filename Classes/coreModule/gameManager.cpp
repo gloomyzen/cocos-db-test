@@ -1,5 +1,6 @@
 #include "gameManager.h"
 #include "coreModule/scenes/mainScene.h"
+#include "debugModule/logManager.h"
 
 using namespace mercenaryBattles;
 using namespace mercenaryBattles::coreModule;
@@ -18,14 +19,23 @@ gameManager &gameManager::getInstance() {
 }
 
 void gameManager::run() {
+	mainSceneIns = dynamic_cast<mainScene *>(mainScene::createScene());
 	/// Starting from state
-	changeState(eGameStates::MAIN_MENU);
+	changeState(eGameStates::BATTLE_SCENE);
+	Director::getInstance()->runWithScene(mainSceneIns);
 
-	mainScene = mainScene::createScene();
-
-	Director::getInstance()->runWithScene(mainScene);
+	//todo remove after testing
+//	auto seq = Sequence::create(DelayTime::create(7.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}), nullptr);
+//	mainSceneIns->runAction(seq);
 }
 
 void gameManager::changeState(eGameStates state) {
+	if (mainSceneIns == nullptr) {
+		LOG_ERROR("gameManager::changeState Instance mainSceneIns is null!");
+		return;
+	}
 	currentState = state;
+	mainSceneIns->setRoom(currentState);
 }

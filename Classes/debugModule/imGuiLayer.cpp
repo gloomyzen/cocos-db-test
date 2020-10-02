@@ -107,7 +107,7 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 
 ImRect imGuiLayer::renderPreferences(Node *node) {
 	const ImRect prefRect = ImRect(ImGui::GetItemRectMin(), ImGui::GetItemRectMax());
-	if (node == nullptr) {
+	if (node == nullptr || node->getReferenceCount() == 0 || !node->isRunning()) {
 		return prefRect;
 	}
 
@@ -115,11 +115,13 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 	if (ImGui::CollapsingHeader("General info")) {
 		ImGui::Text("Node Name(ID) %s", node->getName().c_str());
 		ImGui::Text("Node GUI %d", node->_ID);
-		auto active = node->isVisible();
-		auto tempActive = active;
-		ImGui::Checkbox(" Is active", &active);
-		if (active != tempActive && node->getName() != "ImGUILayer") {
-			node->setVisible(active);
+		if (node->isRunning()) {
+			auto active = node->isVisible();
+			auto tempActive = active;
+			ImGui::Checkbox(" Is active", &active);
+			if (active != tempActive && node->getName() != "ImGUILayer") {
+				node->setVisible(active);
+			}
 		}
 	}
 
@@ -191,6 +193,25 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 		ImGui::DragFloat("Rotation", floatRotation, 0.1f);
 		if(floatRotation[0] != tempRotation) {
 			node->setRotation(floatRotation[0]);
+		}
+		/**
+		 * Opacity
+		 */
+		auto nodeOpacity = node->getOpacity();
+		auto tempOpacity = nodeOpacity;
+		int changedOpacity = static_cast<int>(nodeOpacity);
+		ImGui::DragInt("Opacity", &changedOpacity, 1, 0, 255);
+		if(changedOpacity != tempOpacity) {
+			node->setOpacity(static_cast<uint8_t>(changedOpacity));
+		}
+		/**
+		 * is cascade opacity
+		 */
+		auto isCascadeOpacity = node->isCascadeOpacityEnabled();
+		auto tempCascadeOpacity = isCascadeOpacity;
+		ImGui::Checkbox("Cascade opacity", &tempCascadeOpacity);
+		if (tempCascadeOpacity != isCascadeOpacity) {
+			node->setCascadeOpacityEnabled(tempCascadeOpacity);
 		}
 	}
 
