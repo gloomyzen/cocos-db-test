@@ -139,9 +139,6 @@ venv
 *.ser
 *Makefile
 
-#Resources
-Resources/*
-
 ######## utilities
 ##Update assets
 utilities/credentials.json
