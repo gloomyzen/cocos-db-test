@@ -1,5 +1,5 @@
 #include "gameManager.h"
-#include "coreModule/scenes/generalScene.h"
+#include "coreModule/scenes/mainScene.h"
 
 using namespace mercenaryBattles;
 using namespace mercenaryBattles::coreModule;
@@ -18,10 +18,12 @@ gameManager &gameManager::getInstance() {
 }
 
 void gameManager::run() {
-	auto state = eGameStates::MAIN_MENU;
-	auto scene = generalScene::createScene();
-	Director::getInstance()->runWithScene(scene);
-	changeState(state);
+	/// Starting from state
+	changeState(eGameStates::MAIN_MENU);
+
+	mainScene = mainScene::createScene();
+
+	Director::getInstance()->runWithScene(mainScene);
 }
 
 void gameManager::changeState(eGameStates state) {

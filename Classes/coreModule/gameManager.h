@@ -2,29 +2,15 @@
 #define MERCENARY_BATTLES_GAMEMANAGER_H
 
 #include "cocos2d.h"
+#include "enums/layersEnum.h"
+#include "enums/scenesEnums.h"
 
 #define GET_GAME_MANAGER() mercenaryBattles::coreModule::gameManager::getInstance()
 
 namespace mercenaryBattles {
 
 	namespace coreModule {
-
-	using namespace cocos2d;
-
-		enum eGameLayers {
-			NONE = 0,
-			SKY = 2,
-			PLAN_3 = 4,
-			PLAN_2 = 6,
-			PLAN_1 = 8,
-			FLOOR = 10,
-			DEBUG_LAYER = 99
-		};
-
-		enum eGameStates {
-			MAIN_MENU,
-			BATTLE_SCENE
-		};
+		using namespace cocos2d;
 
 		class gameManager {
 		public:
@@ -38,6 +24,7 @@ namespace mercenaryBattles {
 
 		private:
 			eGameStates currentState;
+			Scene* mainScene = nullptr;
 		};
 	}
 }//mercenaryBattles::coreModule

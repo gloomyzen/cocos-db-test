@@ -1,4 +1,4 @@
-#include "generalScene.h"
+#include "mainScene.h"
 #include "debugModule/logManager.h"
 #include "debugModule/imGuiLayer.h"
 #include "coreModule/gameManager.h"
@@ -6,17 +6,17 @@
 using namespace mercenaryBattles::coreModule;
 using namespace cocos2d;
 
-Scene *generalScene::createScene() {
-	return generalScene::create();
+Scene *mainScene::createScene() {
+	return mainScene::create();
 }
 
-bool generalScene::init() {
+bool mainScene::init() {
 	//////////////////////////////
 	// 1. super init first
 	if (!Scene::init()) {
 		return false;
 	}
-	LOG_INFO("generalScene::init()");
+	LOG_INFO("mainScene::init()");
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -44,6 +44,6 @@ bool generalScene::init() {
 	return true;
 }
 
-void generalScene::menuCloseCallback(Ref *pSender) {
+void mainScene::menuCloseCallback(Ref *pSender) {
 	Director::getInstance()->end();
 }
