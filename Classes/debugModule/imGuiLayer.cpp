@@ -259,7 +259,7 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 		}
 	}
 	if (auto labelNode = dynamic_cast<cocos2d::Label*>(node)) {
-		if (ImGui::CollapsingHeader("Label attr")) {
+		if (ImGui::CollapsingHeader("Label component")) {
 			//todo lh ls color text font shadow
 			/*** Text */
 			auto labelText = labelNode->getString();
