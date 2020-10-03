@@ -4,6 +4,3 @@
 [submodule "lib/imgui"]
 	path = lib/imgui
 	url = https://github.com/gloomyzen/cocos2d-x-imgui
-[submodule "Resources"]
-	path = Resources
-	url = git@github.com:gloomyzen/cocos-mb-resources.git

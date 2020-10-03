@@ -29,6 +29,34 @@ void gameManager::run() {
 //		changeState(eGameStates::BATTLE_SCENE);
 //	}), nullptr);
 //	mainSceneIns->runAction(seq);
+
+//	auto seq = Sequence::create(DelayTime::create(7.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::BATTLE_SCENE);
+//	}),DelayTime::create(5.f), CallFunc::create([this](){
+//		changeState(eGameStates::MAIN_MENU);
+//	}), nullptr);
+//	mainSceneIns->runAction(seq);
+
 }
 
 void gameManager::changeState(eGameStates state) {

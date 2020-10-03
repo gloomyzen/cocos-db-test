@@ -214,12 +214,21 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			node->setCascadeOpacityEnabled(tempCascadeOpacity);
 		}
 	}
-
-	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
-	if (ImGui::CollapsingHeader("Sprite component")) {
-//		std::string image = "Image: " + node->getComponent<SpriteComponent>().getImagePath();
-//		ImGui::Text("%s", image.c_str());
+	if (auto spriteNode = dynamic_cast<cocos2d::Sprite*>(node)) {
+		if (ImGui::CollapsingHeader("Sprite attr")) {
+			ImGui::Text("Image %s", spriteNode->getResourceName().c_str());
+			//todo
+//			spriteNode->getColor();
+//			spriteNode->setColor();
+		}
 	}
+	if (auto labelNode = dynamic_cast<cocos2d::Label*>(node)) {
+		if (ImGui::CollapsingHeader("Label attr")) {
+			//todo lh ls color text font shadow
+			ImGui::Text("Text %s", labelNode->getString().c_str());
+		}
+	}
+
 
 	return prefRect;
 }

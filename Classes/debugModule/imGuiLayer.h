@@ -43,31 +43,31 @@ namespace mercenaryBattles {
 				}
 
 				//General
-				classList[typeid(cocos2d::Camera).name()] = "Camera";
-				classList[typeid(cocos2d::Scene).name()] = "Scene";
+				classList[typeid(cocos2d::Camera).name()] = "[Camera]";
+				classList[typeid(cocos2d::Scene).name()] = "[Scene]";
 				// Nodes
-				classList[typeid(cocos2d::Node).name()] = "Node";
-				classList[typeid(cocos2d::ClippingNode).name()] = "ClippingNode";
-				classList[typeid(cocos2d::DrawNode).name()] = "DrawNode";
-				classList[typeid(cocos2d::ParticleBatchNode).name()] = "ParticleBatchNode";
-				classList[typeid(cocos2d::SpriteBatchNode).name()] = "SpriteBatchNode";
-				classList[typeid(cocos2d::ParallaxNode).name()] = "ParallaxNode";
-				classList[typeid(cocos2d::RenderTexture).name()] = "RenderTexture";
-				classList[typeid(cocos2d::ClippingRectangleNode).name()] = "ClippingRectangleNode";
-				classList[typeid(cocos2d::AttachNode).name()] = "AttachNode";
-				classList[typeid(cocos2d::Sprite).name()] = "Sprite";
-				classList[typeid(cocos2d::NodeGrid).name()] = "NodeGrid";
-				classList[typeid(cocos2d::Label).name()] = "Label";
+				classList[typeid(cocos2d::Node).name()] = "[Node]";
+				classList[typeid(cocos2d::ClippingNode).name()] = "[ClippingNode]";
+				classList[typeid(cocos2d::DrawNode).name()] = "[DrawNode]";
+				classList[typeid(cocos2d::ParticleBatchNode).name()] = "[ParticleBatchNode]";
+				classList[typeid(cocos2d::SpriteBatchNode).name()] = "[SpriteBatchNode]";
+				classList[typeid(cocos2d::ParallaxNode).name()] = "[ParallaxNode]";
+				classList[typeid(cocos2d::RenderTexture).name()] = "[RenderTexture]";
+				classList[typeid(cocos2d::ClippingRectangleNode).name()] = "[ClippingRectangleNode]";
+				classList[typeid(cocos2d::AttachNode).name()] = "[AttachNode]";
+				classList[typeid(cocos2d::Sprite).name()] = "[Sprite]";
+				classList[typeid(cocos2d::NodeGrid).name()] = "[NodeGrid]";
+				classList[typeid(cocos2d::Label).name()] = "[Label]";
 				// Layers
-				classList[typeid(cocos2d::Layer).name()] = "Layer";
-				classList[typeid(cocos2d::LayerColor).name()] = "LayerColor";
-				classList[typeid(imGuiLayer).name()] = "imGuiLayer";
+				classList[typeid(cocos2d::Layer).name()] = "[Layer]";
+				classList[typeid(cocos2d::LayerColor).name()] = "[LayerColor]";
+				classList[typeid(imGuiLayer).name()] = "[imGuiLayer]";
 				//Actions
-				classList[typeid(cocos2d::Action).name()] = "Action";
+				classList[typeid(cocos2d::Action).name()] = "[Action]";
 				//TODO add DragonBones node
-				classList[typeid(dragonBones::CCArmatureDisplay).name()] = "DBRoot";
-				classList[typeid(dragonBones::DragonBones).name()] = "DBPart";
-				classList[typeid(dragonBones::Armature).name()] = "DBArmature";
+				classList[typeid(dragonBones::CCArmatureDisplay).name()] = "[DBRoot]";
+				classList[typeid(dragonBones::DragonBones).name()] = "[DBPart]";
+				classList[typeid(dragonBones::Armature).name()] = "[DBArmature]";
 
 				_onStart();
 				scheduleUpdate();
