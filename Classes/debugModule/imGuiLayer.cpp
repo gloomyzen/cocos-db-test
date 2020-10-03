@@ -268,6 +268,24 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			if (labelText != newLabelText) {
 				labelNode->setString(newLabelText);
 			}
+			/*** Label Effects todo not working! */
+			/*int labelEffectsIdx = 0;
+			auto labelEffect = labelNode->getLabelEffectType();
+			for (int i = 0; i < labelEffectList.size(); ++i) {
+				if (labelEffectList[i].second == labelEffect) {
+					labelEffectsIdx = i;
+				}
+			}
+			int currentEffectsIdx = labelEffectsIdx;
+			std::string elementsList{};
+			for (const auto &item : labelEffectList) {
+				elementsList += item.first + '\0';
+			}
+			if (ImGui::Combo("Style", &labelEffectsIdx, elementsList.c_str())) {
+				if (labelEffectsIdx != currentEffectsIdx) {
+					//
+				}
+			}*/
 		}
 	}
 
