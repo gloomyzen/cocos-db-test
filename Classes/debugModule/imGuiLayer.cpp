@@ -1,5 +1,5 @@
 #include "imGuiLayer.h"
-#include <imgui_internal.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
 
 using namespace mercenaryBattles;
 using namespace mercenaryBattles::debugModule;
@@ -261,7 +261,13 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 	if (auto labelNode = dynamic_cast<cocos2d::Label*>(node)) {
 		if (ImGui::CollapsingHeader("Label attr")) {
 			//todo lh ls color text font shadow
-			ImGui::Text("Text %s", labelNode->getString().c_str());
+			/*** Text */
+			auto labelText = labelNode->getString();
+			char *newLabelText = const_cast<char *>(labelText.c_str());
+			ImGui::InputText("Text", newLabelText, IM_ARRAYSIZE(newLabelText)*16);
+			if (labelText != newLabelText) {
+				labelNode->setString(newLabelText);
+			}
 		}
 	}
 

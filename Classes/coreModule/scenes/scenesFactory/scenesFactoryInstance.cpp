@@ -50,8 +50,6 @@ Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
 
 			auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
 			node->addChild(_background);
-			node->addChild(cocos2d::Sprite::create("images/ui/windows/testWindow/icon_gold.png"));
-			node->addChild(cocos2d::Sprite::create("images/ui/windows/testWindow/icon_treasure.png"));
 			auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
 			if (label == nullptr) {
 				LOG_ERROR("'fonts/Marker Felt.ttf'");
