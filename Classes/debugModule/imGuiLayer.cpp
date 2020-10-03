@@ -1,4 +1,5 @@
 #include "imGuiLayer.h"
+#include <imgui_internal.h>
 
 using namespace mercenaryBattles;
 using namespace mercenaryBattles::debugModule;
@@ -195,7 +196,16 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			node->setRotation(floatRotation[0]);
 		}
 		/**
-		 * Opacity
+		 * Set cascade opacity
+		 */
+		auto isCascadeOpacity = node->isCascadeOpacityEnabled();
+		auto tempCascadeOpacity = isCascadeOpacity;
+		ImGui::Checkbox("Cascade opacity", &tempCascadeOpacity);
+		if (tempCascadeOpacity != isCascadeOpacity) {
+			node->setCascadeOpacityEnabled(tempCascadeOpacity);
+		}
+		/**
+		 * Set opacity
 		 */
 		auto nodeOpacity = node->getOpacity();
 		auto tempOpacity = nodeOpacity;
@@ -204,22 +214,48 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 		if(changedOpacity != tempOpacity) {
 			node->setOpacity(static_cast<uint8_t>(changedOpacity));
 		}
+	}
+	if (ImGui::CollapsingHeader("Color component")) {
 		/**
-		 * is cascade opacity
+		 * Set cascade opacity
 		 */
-		auto isCascadeOpacity = node->isCascadeOpacityEnabled();
-		auto tempCascadeOpacity = isCascadeOpacity;
-		ImGui::Checkbox("Cascade opacity", &tempCascadeOpacity);
-		if (tempCascadeOpacity != isCascadeOpacity) {
-			node->setCascadeOpacityEnabled(tempCascadeOpacity);
+		auto isCascadeColor = node->isCascadeColorEnabled();
+		auto tempCascadeColor = isCascadeColor;
+		ImGui::Checkbox("Cascade color", &tempCascadeColor);
+		if (tempCascadeColor != isCascadeColor) {
+			node->setCascadeColorEnabled(tempCascadeColor);
+		}
+		/***
+		 * Sprite Color
+		 */
+		auto nodeColor = node->getColor();
+		float nodeRed = nodeColor.r / 255.0f;
+		float nodeGreen = nodeColor.g / 255.0f;
+		float nodeBlue = nodeColor.b / 255.0f;
+		float vecColors[3] = {nodeRed, nodeGreen, nodeBlue};
+		ImGui::ColorEdit4("Color", (float*)&vecColors, ImGuiColorEditFlags_DisplayRGB | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_Uint8);
+		if (vecColors[0] != static_cast<float>(nodeColor.r) / 255.0f) {
+			nodeColor.r = static_cast<uint8_t>(vecColors[0] * 255.0f);
+			if (nodeColor.r < 0) nodeColor.r = 0;
+			else if (nodeColor.r >= 255) nodeColor.r = 255;
+			node->setColor(nodeColor);
+		}
+		if (vecColors[1] != static_cast<float>(nodeColor.g) / 255.0f) {
+			nodeColor.g = static_cast<uint8_t>(vecColors[1] * 255.0f);
+			if (nodeColor.g < 0) nodeColor.g = 0;
+			else if (nodeColor.g >= 255) nodeColor.g = 255;
+			node->setColor(nodeColor);
+		}
+		if (vecColors[2] != static_cast<float>(nodeColor.b) / 255.0f) {
+			nodeColor.b = static_cast<uint8_t>(vecColors[2] * 255.0f);
+			if (nodeColor.b < 0) nodeColor.b = 0;
+			else if (nodeColor.b >= 255) nodeColor.b = 255;
+			node->setColor(nodeColor);
 		}
 	}
 	if (auto spriteNode = dynamic_cast<cocos2d::Sprite*>(node)) {
-		if (ImGui::CollapsingHeader("Sprite attr")) {
-			ImGui::Text("Image %s", spriteNode->getResourceName().c_str());
-			//todo
-//			spriteNode->getColor();
-//			spriteNode->setColor();
+		if (ImGui::CollapsingHeader("Sprite component")) {
+			ImGui::Text("Image \"%s\"", spriteNode->getResourceName().c_str());
 		}
 	}
 	if (auto labelNode = dynamic_cast<cocos2d::Label*>(node)) {
