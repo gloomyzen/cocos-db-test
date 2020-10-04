@@ -28,7 +28,8 @@ void nodeProperties::loadProperty(const std::string &path, Node *node) {
 	/// If the first named element is different from the current node, add the new node as a child to the current node
 	Node* usedNode;
 	if (json["name"].GetString() != this->getName()) {
-		usedNode = Node::create();
+		usedNode = GET_NODE_FACTORY().createNodeWithType(json["type"].GetString());
+		usedNode->setName(json["name"].GetString());
 		node->addChild(usedNode);
 	} else {
 		usedNode = node;
@@ -44,7 +45,7 @@ void nodeProperties::loadProperty(const std::string &path, Node *node) {
 void nodeProperties::parseData(Node *node, const GenericValue<UTF8<char>>::Array &array) {
 	for (auto &item : array) {
 		if (item["type"].IsString() && item["name"].IsString()) {
-			auto childNode = GET_NODE_FACTORY().createNodeWithType(item["name"].GetString());
+			auto childNode = GET_NODE_FACTORY().createNodeWithType(item["type"].GetString());
 			childNode->setName(item["name"].GetString());
 			if (item.HasMember("child")) {
 				parseData(childNode, item["child"].GetArray());
@@ -72,7 +73,9 @@ void nodeProperties::parseComponents(Node *node, const std::string &pathProperti
 		if (!propJson[nodeName].IsObject()) {
 			continue;
 		}
-		auto *targetNode = node->getChildByName(nodeName);
+		auto *targetNode = findNode(nodeName, node);
+		if (targetNode == nullptr) continue;
+
 		for (auto &item : propJson[nodeName].GetObject()) {
 			std::string componentName = item.name.GetString();
 			if (item.value.IsObject()) {
@@ -85,4 +88,18 @@ void nodeProperties::parseComponents(Node *node, const std::string &pathProperti
 	}
 }
 
-//todo add parseProperty
+
+Node *nodeProperties::findNode(const std::string &name, Node *parent) {
+	if (parent->getName() == name) {
+		return parent;
+	}
+	Node *nodeFound = parent->getChildByName(name);
+	if (!nodeFound) {
+		auto children = parent->getChildren();
+		for (auto child: children) {
+			nodeFound = findNode(name, child);
+			if (nodeFound) break;
+		}
+	}
+	return nodeFound;
+}

@@ -23,7 +23,7 @@ namespace mercenaryBattles {
 			 * @param prefix @only for gtest
 			 * @return rapidjson::Document
 			 */
-			rapidjson::Document loadJson(const std::string &path, const std::string &prefix = "");
+			rapidjson::Document loadJson(const std::string &path);
 		};
 	}
 }//mercenaryBattles::coreModule

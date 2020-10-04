@@ -71,21 +71,19 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 			}
 		}
 			break;
-//		case SPRITE_COMPONENT: {
-//			auto sprite = Sprite::create();
-//			node->addComponent();
-//			node->addComponent<SpriteComponent>();
-//			auto &sprite = node->getComponent<SpriteComponent>();
-//			if (object.HasMember("image") && object["image"].IsString()) {
-//				sprite.setTexture(object["image"].GetString());
-//			}
-//		}
-//			break;
+		case SPRITE_COMPONENT: {
+			if (auto sprite = dynamic_cast<Sprite*>(node)) {
+				if (object.HasMember("image") && object["image"].IsString()) {
+					sprite->initWithFile(object["image"].GetString());
+				}
+			} else {
+				LOG_ERROR("nodeFactory::getComponents: Component '" + componentName + "' no has sprite node type!");
+			}
+		}
+			break;
 //		case ANIMSPRITE_COMPONENT:
 //			node->addComponent<SpriteComponent>();
 //			break;
-		case SPRITE_COMPONENT:
-			break;
 		case ANIMSPRITE_COMPONENT:
 			break;
 	}
