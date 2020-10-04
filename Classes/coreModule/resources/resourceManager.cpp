@@ -1,5 +1,6 @@
 #include "resourceManager.h"
 #include "debugModule/logManager.h"
+#include "cocos2d.h"
 
 using namespace mercenaryBattles::coreModule;
 
@@ -12,6 +13,8 @@ resourceManager::~resourceManager() {}
 resourceManager &resourceManager::getInstance() {
 	if (currentResourceManager == nullptr) {
 		currentResourceManager = new resourceManager();
+		// add Resources folder to search path. This is necessary when releasing for win32
+		cocos2d::FileUtils::getInstance()->addSearchPath("Resources");
 	}
 	return *currentResourceManager;
 }

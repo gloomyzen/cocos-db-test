@@ -3,22 +3,18 @@
 
 using namespace mercenaryBattles::coreModule;
 
-const std::string propFolder = "Re]sources/";
 
 jsonLoader::jsonLoader() {}
 jsonLoader::~jsonLoader() {}
 
-rapidjson::Document jsonLoader::loadJson(const std::string &path, const std::string &prefix) {
-	//TODO change ifstream to FileUtils for correct cross-platform support
-//	cocos2d::FileUtils::
-	const std::string pref = prefix + propFolder;
-	std::ifstream ifs(pref + path + ".json", std::ifstream::in);
-	if (!ifs.is_open()) {
+rapidjson::Document jsonLoader::loadJson(const std::string &path, const std::string &pref) {
+	auto fileUtils = cocos2d::FileUtils::getInstance();
+	auto data = fileUtils->getDataFromFile(path + ".json");
+	if (data.isNull()) {
 		return nullptr;
 	}
-	rapidjson::IStreamWrapper isw{ifs};
 	rapidjson::Document document{};
-	document.ParseStream(isw);
+	document.Parse(reinterpret_cast<const char *>(data.getBytes()));
 	if (!document.HasParseError() && document.IsObject()) {
 		return document;
 	} else {

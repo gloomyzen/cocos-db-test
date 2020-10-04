@@ -1,5 +1,6 @@
 #include "scenesFactoryInstance.h"
 #include "debugModule/logManager.h"
+#include "interfaceModule/widgets/testWidget.h"
 #include <map>
 
 using namespace mercenaryBattles;
@@ -44,6 +45,11 @@ Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
 		case LOADING_SCREEN: return new Node();
 		case BATTLE_SCENE: {
 			// todo change to cast instance
+			auto testNode = interfaceModule::testWidget::create();
+			auto test1 = testNode->getId();
+
+
+
 			auto node = new Node();
 			auto visibleSize = Director::getInstance()->getVisibleSize();
 			Vec2 origin = Director::getInstance()->getVisibleOrigin();
