@@ -24,6 +24,7 @@ namespace mercenaryBattles {
 
 		private:
 			void parseData(Node *node, const rapidjson::GenericValue<rapidjson::UTF8<char>>::Array &array);
+			void parseProperty(Node *node, const std::string &string);
 		};
 	}
 }//mercenaryBattles::coreModule
