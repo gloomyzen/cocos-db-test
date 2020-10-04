@@ -3,7 +3,11 @@
 
 #include "cocos2d.h"
 #include <string>
+#include <map>
+#include <functional>
 #include "rapidjson/document.h"
+
+#define GET_NODE_FACTORY() mercenaryBattles::coreModule::nodeFactory::getInstance()
 
 namespace mercenaryBattles {
 	namespace coreModule {
@@ -17,10 +21,20 @@ namespace mercenaryBattles {
 
 		class nodeFactory {
 		public:
-			static void getComponents(Node *node, const std::string &componentName,
+			nodeFactory();
+			~nodeFactory();
+			static nodeFactory &getInstance();
+
+			void getComponents(Node *node, const std::string &componentName,
 									  const rapidjson::GenericValue<rapidjson::UTF8<char>>::Object &object);
 
-			static bool hasRegisteredComponent(const std::string &componentName);
+			bool hasRegisteredComponent(const std::string &componentName);
+
+			Node* createNodeWithType(const std::string &type);
+
+		private:
+			void init();
+			bool inited = false;
 		};
 	}
 }//mercenaryBattles::coreModule

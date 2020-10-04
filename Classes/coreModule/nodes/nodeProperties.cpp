@@ -1,5 +1,6 @@
 #include "nodeProperties.h"
 #include "coreModule/resources/resourceManager.h"
+#include "coreModule/nodes/nodeFactory.h"
 
 using namespace mercenaryBattles::coreModule;
 using namespace cocos2d;
@@ -37,13 +38,13 @@ void nodeProperties::loadProperty(const std::string &path, Node *node) {
 		parseData(usedNode, json["child"].GetArray());
 	}
 
-	parseProperty(usedNode, pathProperties);
+	parseComponents(usedNode, pathProperties, true);
 }
 
 void nodeProperties::parseData(Node *node, const GenericValue<UTF8<char>>::Array &array) {
 	for (auto &item : array) {
 		if (item["type"].IsString() && item["name"].IsString()) {
-			auto childNode = Node::create();
+			auto childNode = GET_NODE_FACTORY().createNodeWithType(item["name"].GetString());
 			childNode->setName(item["name"].GetString());
 			if (item.HasMember("child")) {
 				parseData(childNode, item["child"].GetArray());
@@ -53,28 +54,34 @@ void nodeProperties::parseData(Node *node, const GenericValue<UTF8<char>>::Array
 	}
 }
 
-void nodeProperties::parseProperty(Node *node, const std::string &pathProperties) {
+void nodeProperties::parseComponents(Node *node, const std::string &pathProperties, bool recursive) {
 	auto propJson = GET_JSON(pathProperties);
 
 	if (propJson.HasParseError() || !propJson.IsObject()) {
 		LOG_ERROR("nodeProperties::parseProperty Json file '" + pathProperties + "' has errors or not found!");
 		return;
 	}
-
+	bool found = false;
 	for (auto &propList : propJson.GetObject()) {
 		auto nodeName = propList.name.GetString();
-
+		if (!recursive && nodeName != node->getName()) {
+			continue;
+		} else if (!recursive && nodeName == node->getName()) {
+			found = true;
+		}
 		if (!propJson[nodeName].IsObject()) {
 			continue;
 		}
-//		auto *targetNode = node->findNode(nodeName);
+		auto *targetNode = node->getChildByName(nodeName);
 		for (auto &item : propJson[nodeName].GetObject()) {
 			std::string componentName = item.name.GetString();
 			if (item.value.IsObject()) {
-//				NodeFactory::getComponents(targetNode, componentName, item.value.GetObject());
+				GET_NODE_FACTORY().getComponents(targetNode, componentName, item.value.GetObject());
 			}
 		}
-
+		if (found && !recursive) {
+			return;
+		}
 	}
 }
 
