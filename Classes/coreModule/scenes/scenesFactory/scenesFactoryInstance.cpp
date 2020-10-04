@@ -46,11 +46,11 @@ Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
 		case BATTLE_SCENE: {
 			// todo change to cast instance
 			auto testNode = interfaceModule::testWidget::create();
-			auto test1 = testNode->getId();
-
+			auto test1 = testNode->getName();
 
 
 			auto node = new Node();
+			node->addChild(testNode); //todo remove after testing
 			auto visibleSize = Director::getInstance()->getVisibleSize();
 			Vec2 origin = Director::getInstance()->getVisibleOrigin();
 

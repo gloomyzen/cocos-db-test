@@ -4,6 +4,7 @@
 #include "debugModule/logManager.h"
 #include "cocos2d.h"
 #include <string>
+#include "rapidjson/document.h"
 
 namespace mercenaryBattles {
 	using namespace cocos2d;
@@ -12,25 +13,17 @@ namespace mercenaryBattles {
 
 		class nodeProperties : public Node {
 		public:
-
-			void setId(const std::string &name) {
-				this->setName(name);
-			}
-
-			std::string getId() { return this->getName(); }
-
-			void setPropertyPath(const std::string &path) {
-				propertyPath = path;
-			}
-
-			std::string getPropertyPath() { return propertyPath; }
-
+			/***
+		 	 * Парсинг параметров из json файла
+		 	 * @param path relative path to file
+			 * @param node Node instance
+		 	 */
 			void loadProperty(const std::string &path, Node *node);
 
 //			virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags);
 
 		private:
-			std::string propertyPath{};
+			void parseData(Node *node, const rapidjson::GenericValue<rapidjson::UTF8<char>>::Array &array);
 		};
 	}
 }//mercenaryBattles::coreModule

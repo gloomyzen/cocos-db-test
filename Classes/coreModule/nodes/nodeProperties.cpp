@@ -2,10 +2,12 @@
 #include "coreModule/resources/resourceManager.h"
 
 using namespace mercenaryBattles::coreModule;
+using namespace cocos2d;
+using namespace rapidjson;
 
 
-void nodeProperties::loadProperty(const std::string &path, cocos2d::Node *node) {
-	if (getId().empty()) {
+void nodeProperties::loadProperty(const std::string &path, Node *node) {
+	if (this->getName().empty()) {
 		LOG_ERROR("Node::loadProperty Node has no identifier!");
 		return;
 	}
@@ -22,9 +24,32 @@ void nodeProperties::loadProperty(const std::string &path, cocos2d::Node *node) 
 		return;
 	}
 
-	if (json["name"].GetString() != getId()) {
-		LOG_ERROR("Node::loadProperty Node id: '" + static_cast<std::string>(json["name"].GetString()) +
-				  "' and getId() '" + getId() + "' is not match!");
-		return;
+	//TODO if json["name"].GetString() == this->getName() -> read like this node
+	//TODO if json["name"].GetString() != this->getName() -> read like child node
+//	if (json["name"].GetString() != this->getName()) {
+//		LOG_ERROR("Node::loadProperty Node id: '" + static_cast<std::string>(json["name"].GetString()) +
+//				  "' and this->getName() '" + this->getName() + "' is not match!");
+//		return;
+//	}
+
+//	if (json.HasMember("childs") && json["childs"].IsArray()) {
+//		parseData(this, json["childs"].GetArray());
+//	}
+//
+//	parseProperty(this, pathProperties, prefix);
+}
+
+void nodeProperties::parseData(Node *node, const GenericValue<UTF8<char>>::Array &array) {
+	for (auto &item : array) {
+		if (item["type"].IsString() && item["name"].IsString()) {
+			auto childNode = Node::create();
+			childNode->setName(item["name"].GetString());
+			if (item.HasMember("childs")) {
+				parseData(childNode, item["childs"].GetArray());
+			}
+			node->addChild(childNode);
+		}
 	}
 }
+
+//todo add parseProperty
