@@ -13,18 +13,18 @@ void imGuiLayer::_onStart() {
 	//Buttons
 	CCIMGUI::getInstance()->addCallback([this](){
 		static bool nodeEditorOpened = false;
-		static bool engineInfoOpened = false;
-		static bool devicesListOpened = false;
+//		static bool engineInfoOpened = false;
+//		static bool devicesListOpened = false;
 
 		if (ImGui::Button("Debug")) {
 			nodeEditorOpened = !nodeEditorOpened;
 		}
-		if (ImGui::Button("Engine")) {
-			engineInfoOpened = !engineInfoOpened;
-		}
-		if (ImGui::Button("Devices")) {
-			devicesListOpened = !devicesListOpened;
-		}
+//		if (ImGui::Button("Engine")) {
+//			engineInfoOpened = !engineInfoOpened;
+//		}
+//		if (ImGui::Button("Devices")) {
+//			devicesListOpened = !devicesListOpened;
+//		}
 
 		if (nodeEditorOpened) showNodeEditor(&nodeEditorOpened);
 //		if (engineInfoOpened) showEngineInfo(&engineInfoOpened);

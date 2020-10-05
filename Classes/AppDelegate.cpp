@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "coreModule/gameManager.h"
 #include "coreModule/enums/statesEnums.h"
+#include "coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -81,13 +82,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 
 	register_all_packages();
+	GET_SCENES_FACTORY().registerState(mercenaryBattles::coreModule::eGameStates::BATTLE_SCENE, [](Node* node)->Node*{
+		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
+		node->addChild(_background);
+		auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
+		node->addChild(label);
+
+		return node;
+	});
+
+	GET_SCENES_FACTORY().registerState(mercenaryBattles::coreModule::eGameStates::MAIN_MENU, [](Node* node)->Node*{
+		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
+		node->addChild(_background);
+		auto label = Label::createWithTTF("Main menu", "fonts/Marker Felt.ttf", 24);
+		node->addChild(label);
+
+		return node;
+	});
 
 	GET_GAME_MANAGER().run(mercenaryBattles::coreModule::eGameStates::BATTLE_SCENE);
-	//todo
-	// 1. register callback for states
-	// 2. register run states (BATTLE_STATES)
-	// 3. GET_GAME_MANAGER().run(state)
-	// 4. move coreModule and debugModule in blank git repo
 
 	return true;
 }

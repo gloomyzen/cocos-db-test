@@ -1,6 +1,5 @@
 #include "scenesFactoryInstance.h"
 #include "debugModule/logManager.h"
-#include "interfaceModule/widgets/testWidget.h"
 #include <map>
 
 using namespace mercenaryBattles;
@@ -21,58 +20,14 @@ scenesFactoryInstance &scenesFactoryInstance::getInstance() {
 }
 
 Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
-	switch (state) {
-		case MAIN_MENU: {
-			// todo change to cast instance
-			auto node = new Node();
-			auto visibleSize = Director::getInstance()->getVisibleSize();
-			Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-			auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
-			node->addChild(_background);
-			auto label = Label::createWithTTF("Main menu", "fonts/Marker Felt.ttf", 24);
-			if (label == nullptr) {
-				LOG_ERROR("'fonts/Marker Felt.ttf'");
-			} else {
-				// position the label on the center of the screen
-				label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-										origin.y + visibleSize.height - label->getContentSize().height));
-				// add the label as a child to this layer
-				node->addChild(label, 1);
-			}
-			return node;
-		}
-		case LOADING_SCREEN: return new Node();
-		case BATTLE_SCENE: {
-			// todo change to cast instance
-			auto testNode = interfaceModule::testWidget::create();
-			auto test1 = testNode->getName();
-
-
-			auto node = new Node();
-			node->addChild(testNode); //todo remove after testing
-			auto visibleSize = Director::getInstance()->getVisibleSize();
-			Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-			auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
-			node->addChild(_background);
-			auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
-			if (label == nullptr) {
-				LOG_ERROR("'fonts/Marker Felt.ttf'");
-			} else {
-				// position the label on the center of the screen
-				label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-										origin.y + visibleSize.height - label->getContentSize().height));
-				// add the label as a child to this layer
-				node->addChild(label, 1);
-			}
-			return node;
-		}
+	if (states.count(state)) {
+		auto node = Node::create();
+		return states[state](node);
 	}
-	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is wrong!");
-	return nullptr;
+	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is not registered! Return simple node.");
+	return Node::create();
 }
 
-void scenesFactoryInstance::registerState(eGameStates, std::function<Node *()>) {
-	//
+void scenesFactoryInstance::registerState(eGameStates state, std::function<Node *(Node*)> clb) {
+	states[state] = std::move(clb);
 }
