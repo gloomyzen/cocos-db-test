@@ -1,4 +1,5 @@
 from googleapiclient.http import MediaIoBaseDownload
+from googleapiclient.http import MediaFileUpload
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -15,7 +16,7 @@ import platform
 https://developers.google.com/drive/api/v3/reference/files
 """
 
-SCOPES = ['https://www.googleapis.com/auth/drive.appdata.readonly']
+SCOPES = ['https://www.googleapis.com/auth/drive.metadata']
 assetsStore = 'MBAssetsStore'
 
 
@@ -161,8 +162,21 @@ def download_folder(service, folder_id, location, folder_name):
                 local_m_timestamp = get_creation_time(location + filename)
                 external_m_datetime = date_to_seconds(item["modifiedTime"])
                 if local_m_timestamp >= external_m_datetime:
-                    # todo upload file to google drive
                     test = 'upload'
+                    #todo upload files
+                    file_metadata = {'name': filename}
+                    media = MediaFileUpload(location + filename, mimetype=mime_type, resumable=True)
+                    request = service.files().create(body=file_metadata, media_body=media)
+                    response = None
+                    while response is None:
+                        status, response = request.next_chunk()
+                        if status:
+                            print("Uploaded %d%%." % int(status.progress() * 100))
+
+                    print("Upload of {} is complete.".format(filename))
+
+                    print ('File ID: %s' % request.get('id'))
+
                 else:
                     download_file(service, file_id, location, filename, mime_type, item["modifiedTime"])
         current += 1
