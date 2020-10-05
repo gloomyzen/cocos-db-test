@@ -3,7 +3,10 @@
 
 #include "cocos2d.h"
 #include "coreModule/enums/layersEnum.h"
-#include "coreModule/enums/scenesEnums.h"
+#include "coreModule/enums/statesEnums.h"
+#include <map>
+#include <functional>
+#include <string>
 
 namespace mercenaryBattles {
 
@@ -16,6 +19,9 @@ namespace mercenaryBattles {
 			~scenesFactoryInstance();
 			static scenesFactoryInstance &getInstance();
 			Node* getStateRoot(eGameStates);
+			void registerState(eGameStates, std::function<Node*()>);
+		private:
+			std::map<eGameStates, std::function<Node*()>> states{};
 		};
 	}
 }

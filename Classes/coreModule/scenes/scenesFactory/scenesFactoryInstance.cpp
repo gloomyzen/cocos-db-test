@@ -72,3 +72,7 @@ Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
 	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is wrong!");
 	return nullptr;
 }
+
+void scenesFactoryInstance::registerState(eGameStates, std::function<Node *()>) {
+	//
+}

@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "coreModule/nodes/nodeProperties.h"
-#include "coreModule/enums/scenesEnums.h"
+#include "coreModule/enums/statesEnums.h"
 #include <vector>
 
 namespace mercenaryBattles {

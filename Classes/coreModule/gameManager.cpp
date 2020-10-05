@@ -7,7 +7,10 @@ using namespace mercenaryBattles::coreModule;
 
 gameManager *currentGameManager = nullptr;
 
-gameManager::gameManager() = default;
+gameManager::gameManager() {
+	currentState = eGameStates::LOADING_SCREEN;
+	mainSceneIns = dynamic_cast<mainScene *>(mainScene::createScene());
+};
 
 gameManager::~gameManager() = default;
 
@@ -18,10 +21,9 @@ gameManager &gameManager::getInstance() {
 	return *currentGameManager;
 }
 
-void gameManager::run() {
-	mainSceneIns = dynamic_cast<mainScene *>(mainScene::createScene());
+void gameManager::run(eGameStates state) {
 	/// Starting from state
-	changeState(eGameStates::BATTLE_SCENE);
+	changeState(state);
 	Director::getInstance()->runWithScene(mainSceneIns);
 
 	//todo remove after testing

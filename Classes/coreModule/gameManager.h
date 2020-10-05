@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "enums/layersEnum.h"
-#include "enums/scenesEnums.h"
+#include "enums/statesEnums.h"
 
 #define GET_GAME_MANAGER() mercenaryBattles::coreModule::gameManager::getInstance()
 
@@ -19,7 +19,7 @@ namespace mercenaryBattles {
 			~gameManager();
 			static gameManager &getInstance();
 
-			void run();
+			void run(eGameStates state = eGameStates::MAIN_MENU);
 			void changeState(eGameStates state);
 			eGameStates getCurrentState() { return currentState; }
 

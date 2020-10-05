@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
-#include "debugModule/imGuiLayer.h"
 #include "coreModule/gameManager.h"
+#include "coreModule/enums/statesEnums.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -82,7 +82,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	register_all_packages();
 
-	GET_GAME_MANAGER().run();
+	GET_GAME_MANAGER().run(mercenaryBattles::coreModule::eGameStates::BATTLE_SCENE);
+	//todo
+	// 1. register callback for states
+	// 2. register run states (BATTLE_STATES)
+	// 3. GET_GAME_MANAGER().run(state)
+	// 4. move coreModule and debugModule in blank git repo
 
 	return true;
 }
