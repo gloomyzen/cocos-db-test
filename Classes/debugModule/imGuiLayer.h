@@ -141,6 +141,8 @@ namespace mb {
 
 		private:
 			std::vector<dragonBones::CCArmatureDisplay*> _armatures;
+			/// Debug data
+			void debugToggleRow(Node *);
 			/// Node editor
 			std::map<std::string, std::string> classList;
 			void showNodeEditor(bool *p_open);

@@ -1,6 +1,7 @@
 #include "nodeProperties.h"
 #include "coreModule/resources/resourceManager.h"
 #include "coreModule/nodes/nodeFactory.h"
+#include "coreModule/gameManager.h"
 
 using namespace mb::coreModule;
 using namespace cocos2d;
@@ -102,4 +103,36 @@ Node *nodeProperties::findNode(const std::string &name, Node *parent) {
 		}
 	}
 	return nodeFound;
+}
+
+void nodeProperties::enableDebug(bool value) {
+#ifdef DEBUG
+	if (isDebugEnabled == value) return;
+	isDebugEnabled = value;
+	if (value) {
+		addDebugDraw();
+	} else {
+		removeDebugDraw();
+	}
+#endif
+}
+
+void nodeProperties::addDebugDraw() {
+	debugNode = DrawNode::create();
+	GET_GAME_MANAGER().getDebugLayer()->addChild(debugNode);
+}
+
+void nodeProperties::removeDebugDraw() {
+	debugNode->clear();
+	debugNode->removeFromParentAndCleanup(true);
+	delete debugNode;
+	debugNode = nullptr;
+}
+
+void nodeProperties::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) {
+	Node::draw(renderer, transform, flags);
+	if (isDebugEnabled && debugNode != nullptr) {
+		debugNode->clear();
+		debugNode->drawRect(this->getPosition(), Vec2(this->getContentSize().width,this->getContentSize().height), Color4F::WHITE);
+	}
 }

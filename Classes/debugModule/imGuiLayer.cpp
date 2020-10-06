@@ -1,5 +1,6 @@
 #include "imGuiLayer.h"
 #include <imgui/misc/cpp/imgui_stdlib.h>
+#include "coreModule/nodes/nodeProperties.h"
 
 using namespace mb;
 using namespace mb::debugModule;
@@ -125,6 +126,8 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			}
 		}
 	}
+
+	debugToggleRow(node);
 
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::CollapsingHeader("Transform component")) {
@@ -292,4 +295,17 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 
 
 	return prefRect;
+}
+
+void imGuiLayer::debugToggleRow(cocos2d::Node* _node) {
+	if (auto node = dynamic_cast<coreModule::nodeProperties*>(_node)) {
+		if (_node->isRunning()) {
+			auto active = node->debugDrawEnabled();
+			auto tempActive = active;
+			ImGui::Checkbox("debug", &active);
+			if (active != tempActive) {
+				node->enableDebug(active);
+			}
+		}
+	}
 }

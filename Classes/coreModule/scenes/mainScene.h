@@ -24,8 +24,13 @@ namespace mb {
 
 			CREATE_FUNC(mainScene);
 
+			Layer* getDebugLayer() {
+				return debugLayer;
+			}
+
 		private:
 			std::vector<Node*> nodes{};
+			Layer* debugLayer = nullptr;
 		};
 	}
 }//mb::coreModule

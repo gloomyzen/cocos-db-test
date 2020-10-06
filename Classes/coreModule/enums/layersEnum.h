@@ -15,6 +15,7 @@ namespace mb {
 
 			WINDOW = 20,
 
+			DEBUG_NODES = 98,
 			DEBUG_LAYER = 99
 		};
 	}

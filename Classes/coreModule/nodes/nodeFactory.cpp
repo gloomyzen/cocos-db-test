@@ -22,7 +22,6 @@ nodeFactory::nodeFactory() {
 		inited = true;
 		nodes["node"] = []()->Node* { return new Node(); };
 		nodes["sprite"] = []()->Sprite* { return new Sprite(); };
-		nodes["pageView"] = []()->PageView* { return new PageView(); };
 	}
 }
 
