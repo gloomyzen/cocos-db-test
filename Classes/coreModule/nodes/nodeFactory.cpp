@@ -2,9 +2,11 @@
 #include <map>
 #include <string>
 #include "debugModule/logManager.h"
+#include "ui/CocosGUI.h"
 
 using namespace mb::coreModule;
 using namespace cocos2d;
+using namespace cocos2d::ui;
 
 std::map<std::string, eNodeFactory> componentsMap = {
 		{"TransformComponent",  eNodeFactory::TRANSFORM_COMPONENT},
@@ -20,6 +22,7 @@ nodeFactory::nodeFactory() {
 		inited = true;
 		nodes["node"] = []()->Node* { return new Node(); };
 		nodes["sprite"] = []()->Sprite* { return new Sprite(); };
+		nodes["pageView"] = []()->PageView* { return new PageView(); };
 	}
 }
 
