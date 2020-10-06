@@ -4,7 +4,7 @@
 #include "coreModule/gameManager.h"
 #include "coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
 
-using namespace mercenaryBattles::coreModule;
+using namespace mb::coreModule;
 using namespace cocos2d;
 
 Scene *mainScene::createScene() {
@@ -17,7 +17,7 @@ bool mainScene::init() {
 	}
 	LOG_INFO("mainScene::init()");
 	/// insert debug layer
-	auto imGuiLayer = mercenaryBattles::debugModule::imGuiLayer::create();
+	auto imGuiLayer = mb::debugModule::imGuiLayer::create();
 
 	this->addChild(imGuiLayer, eGameLayers::DEBUG_LAYER);
 

@@ -1,7 +1,7 @@
 #include "jsonLoader.h"
 #include "cocos2d.h"
 
-using namespace mercenaryBattles::coreModule;
+using namespace mb::coreModule;
 
 
 jsonLoader::jsonLoader() {}

@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace interfaceModule {
 		using namespace cocos2d;
 
@@ -12,7 +12,7 @@ namespace mercenaryBattles {
 		};
 
 	}
-}//mercenaryBattles::interfaceModule
+}//mb::interfaceModule
 
 
 #endif //MERCENARY_BATTLES_INTERFACESYSTEM_H

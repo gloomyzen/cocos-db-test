@@ -9,7 +9,7 @@
 #include <rapidjson/ostreamwrapper.h>
 #include <string>
 
-namespace mercenaryBattles {
+namespace mb {
 
 	namespace coreModule {
 		class jsonLoader {
@@ -26,7 +26,7 @@ namespace mercenaryBattles {
 			rapidjson::Document loadJson(const std::string &path);
 		};
 	}
-}//mercenaryBattles::coreModule
+}//mb::coreModule
 
 
 #endif //MERCENARY_BATTLES_JSONLOADER_H

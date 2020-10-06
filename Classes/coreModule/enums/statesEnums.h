@@ -1,7 +1,7 @@
 #ifndef MERCENARY_BATTLES_STATESENUMS_H
 #define MERCENARY_BATTLES_STATESENUMS_H
 
-namespace mercenaryBattles {
+namespace mb {
 
 	namespace coreModule {
 
@@ -11,6 +11,6 @@ namespace mercenaryBattles {
 			BATTLE_SCENE
 		};
 	}
-}
+}//mb::coreModule
 
 #endif //MERCENARY_BATTLES_STATESENUMS_H

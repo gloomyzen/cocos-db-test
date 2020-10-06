@@ -5,9 +5,9 @@
 #include "enums/layersEnum.h"
 #include "enums/statesEnums.h"
 
-#define GET_GAME_MANAGER() mercenaryBattles::coreModule::gameManager::getInstance()
+#define GET_GAME_MANAGER() mb::coreModule::gameManager::getInstance()
 
-namespace mercenaryBattles {
+namespace mb {
 
 	namespace coreModule {
 		class mainScene;
@@ -28,7 +28,7 @@ namespace mercenaryBattles {
 			mainScene* mainSceneIns = nullptr;
 		};
 	}
-}//mercenaryBattles::coreModule
+}//mb::coreModule
 
 
 #endif //MERCENARY_BATTLES_GAMEMANAGER_H

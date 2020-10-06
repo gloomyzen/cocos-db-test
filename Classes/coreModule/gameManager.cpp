@@ -2,8 +2,8 @@
 #include "coreModule/scenes/mainScene.h"
 #include "debugModule/logManager.h"
 
-using namespace mercenaryBattles;
-using namespace mercenaryBattles::coreModule;
+using namespace mb;
+using namespace mb::coreModule;
 
 gameManager *currentGameManager = nullptr;
 

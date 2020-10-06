@@ -6,7 +6,7 @@
 #include <string>
 #include "rapidjson/document.h"
 
-namespace mercenaryBattles {
+namespace mb {
 	using namespace cocos2d;
 
 	namespace coreModule {
@@ -28,6 +28,6 @@ namespace mercenaryBattles {
 			void parseData(Node *node, const rapidjson::GenericValue<rapidjson::UTF8<char>>::Array &array);
 		};
 	}
-}//mercenaryBattles::coreModule
+}//mb::coreModule
 
 #endif //MERCENARY_BATTLES_NODEPROPERTIES_H

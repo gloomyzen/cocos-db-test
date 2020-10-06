@@ -8,9 +8,9 @@
 #include <functional>
 #include <string>
 
-#define GET_SCENES_FACTORY() mercenaryBattles::coreModule::scenesFactoryInstance::getInstance()
+#define GET_SCENES_FACTORY() mb::coreModule::scenesFactoryInstance::getInstance()
 
-namespace mercenaryBattles {
+namespace mb {
 
 	namespace coreModule {
 		using namespace cocos2d;
@@ -26,7 +26,7 @@ namespace mercenaryBattles {
 			std::map<eGameStates, std::function<Node*(Node* node)>> states{};
 		};
 	}
-}
+}//mb::coreModule
 
 
 #endif //MERCENARY_BATTLES_SCENESFACTORYINSTANCE_H

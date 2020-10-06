@@ -2,6 +2,7 @@
 #include "coreModule/gameManager.h"
 #include "coreModule/enums/statesEnums.h"
 #include "coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
+#include "metaModule/metaTabs.h"
 
 // #define USE_AUDIO_ENGINE 1
 
@@ -82,7 +83,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 
 	register_all_packages();
-	GET_SCENES_FACTORY().registerState(mercenaryBattles::coreModule::eGameStates::BATTLE_SCENE, [](Node* node)->Node*{
+	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Node* node)->Node*{
 		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
 		node->addChild(_background);
 		auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
@@ -91,16 +92,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		return node;
 	});
 
-	GET_SCENES_FACTORY().registerState(mercenaryBattles::coreModule::eGameStates::MAIN_MENU, [](Node* node)->Node*{
-		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
-		node->addChild(_background);
-		auto label = Label::createWithTTF("Main menu", "fonts/Marker Felt.ttf", 24);
-		node->addChild(label);
+	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::MAIN_MENU, [](Node* node)->Node*{
+		auto meta = new mb::metaModule::metaTabs();
+		node->addChild(meta);
 
 		return node;
 	});
 
-	GET_GAME_MANAGER().run(mercenaryBattles::coreModule::eGameStates::BATTLE_SCENE);
+	GET_GAME_MANAGER().run(mb::coreModule::eGameStates::MAIN_MENU);
 
 	return true;
 }

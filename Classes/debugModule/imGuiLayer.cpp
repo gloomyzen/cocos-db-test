@@ -1,8 +1,8 @@
 #include "imGuiLayer.h"
 #include <imgui/misc/cpp/imgui_stdlib.h>
 
-using namespace mercenaryBattles;
-using namespace mercenaryBattles::debugModule;
+using namespace mb;
+using namespace mb::debugModule;
 
 void imGuiLayer::_onStart() {
 	std::string layerName = "ImGUILayer";

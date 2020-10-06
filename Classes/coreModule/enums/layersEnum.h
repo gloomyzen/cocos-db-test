@@ -1,7 +1,7 @@
 #ifndef MERCENARY_BATTLES_LAYERSENUM_H
 #define MERCENARY_BATTLES_LAYERSENUM_H
 
-namespace mercenaryBattles {
+namespace mb {
 
 	namespace coreModule {
 
@@ -18,6 +18,6 @@ namespace mercenaryBattles {
 			DEBUG_LAYER = 99
 		};
 	}
-}
+}//mb::coreModule
 
 #endif //MERCENARY_BATTLES_LAYERSENUM_H

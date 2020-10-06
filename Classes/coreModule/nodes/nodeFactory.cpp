@@ -3,7 +3,7 @@
 #include <string>
 #include "debugModule/logManager.h"
 
-using namespace mercenaryBattles::coreModule;
+using namespace mb::coreModule;
 using namespace cocos2d;
 
 std::map<std::string, eNodeFactory> componentsMap = {

@@ -2,7 +2,7 @@
 #include "debugModule/logManager.h"
 #include "cocos2d.h"
 
-using namespace mercenaryBattles::coreModule;
+using namespace mb::coreModule;
 
 resourceManager *currentResourceManager = nullptr;
 

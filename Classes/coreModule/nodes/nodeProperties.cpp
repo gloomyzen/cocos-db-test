@@ -2,7 +2,7 @@
 #include "coreModule/resources/resourceManager.h"
 #include "coreModule/nodes/nodeFactory.h"
 
-using namespace mercenaryBattles::coreModule;
+using namespace mb::coreModule;
 using namespace cocos2d;
 using namespace rapidjson;
 

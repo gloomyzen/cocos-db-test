@@ -6,12 +6,12 @@
 #include <vector>
 #include <string>
 
-#define GET_LOGGER() mercenaryBattles::debugModule::loggerInstance::getInstance()
+#define GET_LOGGER() mb::debugModule::loggerInstance::getInstance()
 #define LOG_INFO(W) GET_LOGGER().info(W)
 #define LOG_WARNING(W) GET_LOGGER().warning(W)
 #define LOG_ERROR(W) GET_LOGGER().error(W)
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace debugModule {
 
 		enum eLogTypes : size_t {
@@ -57,6 +57,6 @@ namespace mercenaryBattles {
 		};
 	}
 
-}//mercenaryBattles::debugModule
+}//mb::debugModule
 
 #endif// MERCENARY_BATTLES_LOGMANAGER_H

@@ -1,6 +1,6 @@
 #include "testWidget.h"
 
-using namespace mercenaryBattles::interfaceModule;
+using namespace mb::interfaceModule;
 
 
 testWidget::testWidget() {

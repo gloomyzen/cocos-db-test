@@ -2,8 +2,8 @@
 #include "debugModule/logManager.h"
 #include <map>
 
-using namespace mercenaryBattles;
-using namespace mercenaryBattles::coreModule;
+using namespace mb;
+using namespace mb::coreModule;
 using namespace cocos2d;
 
 scenesFactoryInstance *currentFactoryInstance = nullptr;

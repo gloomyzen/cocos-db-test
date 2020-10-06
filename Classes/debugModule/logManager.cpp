@@ -2,7 +2,7 @@
 #include <map>
 #include <string>
 
-using namespace mercenaryBattles::debugModule;
+using namespace mb::debugModule;
 
 const std::map<eLogTypes, std::string> mapPrefix = {
 		{eLogTypes::INFO,    "[INFO] "},

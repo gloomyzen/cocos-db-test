@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "coreModule/nodes/nodeProperties.h"
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace interfaceModule {
 		using namespace cocos2d;
 

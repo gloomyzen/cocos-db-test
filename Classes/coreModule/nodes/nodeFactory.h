@@ -7,9 +7,9 @@
 #include <functional>
 #include "rapidjson/document.h"
 
-#define GET_NODE_FACTORY() mercenaryBattles::coreModule::nodeFactory::getInstance()
+#define GET_NODE_FACTORY() mb::coreModule::nodeFactory::getInstance()
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace coreModule {
 		using namespace cocos2d;
 
@@ -37,7 +37,7 @@ namespace mercenaryBattles {
 			bool inited = false;
 		};
 	}
-}//mercenaryBattles::coreModule
+}//mb::coreModule
 
 
 #endif //MERCENARY_BATTLES_NODEFACTORY_H

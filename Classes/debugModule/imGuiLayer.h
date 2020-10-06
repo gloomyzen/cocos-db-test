@@ -11,7 +11,7 @@
 #include "CCImGuiLayer.h"
 #include "dragonBones/cocos2dx/CCDragonBonesHeaders.h"
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace debugModule {
 		class imGuiLayer : public cocos2d::Layer {
 		protected:
@@ -161,6 +161,6 @@ namespace mercenaryBattles {
 			Node* lastTarget = nullptr;
 		};
 	}
-}//mercenaryBattles::debugModule
+}//mb::debugModule
 
 #endif //MERCENARY_BATTLES_IMGUILAYER_H

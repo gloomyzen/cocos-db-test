@@ -6,7 +6,7 @@
 #include "coreModule/enums/statesEnums.h"
 #include <vector>
 
-namespace mercenaryBattles {
+namespace mb {
 	namespace coreModule {
 
 	using namespace cocos2d;
@@ -28,7 +28,7 @@ namespace mercenaryBattles {
 			std::vector<Node*> nodes{};
 		};
 	}
-}//mercenaryBattles::coreModule
+}//mb::coreModule
 
 
 #endif //MERCENARY_BATTLES_MAINSCENE_H
