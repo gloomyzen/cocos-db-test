@@ -83,7 +83,9 @@ include(${CMAKE_SOURCE_DIR}/cmake/DragonBones.cmake)
 target_link_libraries(dragonbones_target PRIVATE rapidjson_target cocos2d)
 target_link_libraries(project_dependency INTERFACE dragonbones_target)
 
-
+#------------------------------------------------------------------------------
+#                               Build Interface for all dependency
+#------------------------------------------------------------------------------
 target_include_directories(project_dependency INTERFACE
         $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/>
         )

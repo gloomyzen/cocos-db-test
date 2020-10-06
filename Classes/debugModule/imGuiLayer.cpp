@@ -142,13 +142,14 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			node->setContentSize(_size);
 		}
 		/**
-		 * Position by X and Y
+		 * Position by X Y Z
 		 */
-		auto nodePos = node->getPosition();
-		float vecPos[2] = {nodePos.x, nodePos.y};
-		ImGui::DragFloat2("Position X/Y", vecPos, 1.f);
-		if (vecPos[0] != nodePos.x || vecPos[1] != nodePos.y) {
-			node->setPosition(vecPos[0], vecPos[1]);
+		auto nodePos = node->getPosition3D();
+		float vecPos[3] = {nodePos.x, nodePos.y, nodePos.z};
+		ImGui::DragFloat3("Position X/Y", vecPos, 1.f);
+		if (vecPos[0] != nodePos.x || vecPos[1] != nodePos.y || vecPos[2] != nodePos.z) {
+			cocos2d::Vec3 vec3 = {vecPos[0], vecPos[1], vecPos[2]};
+			node->setPosition3D(vec3);
 		}
 		/**
 		 * Anchor
@@ -160,7 +161,7 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 			node->setAnchorPoint({vecAnchor[0], vecAnchor[1]});
 		}
 		/**
-		 * Scale X and Y
+		 * Scale
 		 */
 		auto nodeScaleX = node->getScaleX();
 		auto nodeScaleY = node->getScaleY();
