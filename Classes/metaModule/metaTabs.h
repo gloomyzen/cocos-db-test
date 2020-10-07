@@ -10,6 +10,23 @@ namespace mb {
 		using namespace cocos2d;
 		using namespace ui;
 
+		class debugComponent : public cocos2d::Component {
+		public:
+			debugComponent() {
+				this->setName("debug");
+				this->setEnabled(true);
+			}
+			void onAdd() {
+				auto test = DrawNode::create();
+				getOwner()->addChild(test);
+			}
+			void update(float delta) {
+				auto test = getOwner()->getPosition();
+			}
+			~debugComponent() {}
+			CREATE_FUNC(debugComponent);
+		};
+
 		class metaTabs : public coreModule::nodeProperties {
 		public:
 			metaTabs();

@@ -118,21 +118,23 @@ void nodeProperties::enableDebug(bool value) {
 }
 
 void nodeProperties::addDebugDraw() {
-	debugNode = DrawNode::create();
-	GET_GAME_MANAGER().getDebugLayer()->addChild(debugNode);
+	if (debugNode == nullptr) {
+		debugNode = DrawNode::create();
+		GET_GAME_MANAGER().getDebugLayer()->addChild(debugNode);
+	}
+	isDebugEnabled = true;
 }
 
 void nodeProperties::removeDebugDraw() {
 	debugNode->clear();
-	debugNode->removeFromParentAndCleanup(true);
-	delete debugNode;
-	debugNode = nullptr;
+	isDebugEnabled = false;
 }
 
 void nodeProperties::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) {
 	Node::draw(renderer, transform, flags);
 	if (isDebugEnabled && debugNode != nullptr) {
 		debugNode->clear();
-		debugNode->drawRect(this->getPosition(), Vec2(this->getContentSize().width,this->getContentSize().height), Color4F::WHITE);
+		debugNode->setPosition(this->getPosition());
+		debugNode->drawRect(Vec2::ZERO, Vec2(this->getContentSize().width,this->getContentSize().height), Color4F::WHITE);
 	}
 }

@@ -9,7 +9,8 @@ using namespace ui;
 metaTabs::metaTabs() {
 	this->setName("metaTabs");
 	createPageView();
-	enableDebug(true);
+	loadProperty("menuScene/" + this->getName(), dynamic_cast<Node*>(this));
+	addComponent(debugComponent::create());
 }
 
 metaTabs::~metaTabs() {}

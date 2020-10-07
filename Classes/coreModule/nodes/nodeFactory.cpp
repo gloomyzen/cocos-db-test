@@ -56,6 +56,15 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 							  std::to_string(positions.Size()) + "' position keys!");
 				}
 			}
+			if (object.HasMember("anchor")) {
+				auto anchor = object["anchor"].GetArray();
+				if (anchor.Size() == 2) {
+					node->setAnchorPoint(Vec2(anchor[0].GetFloat(), anchor[1].GetFloat()));
+				} else {
+					LOG_ERROR("nodeFactory::getComponents: Component: '" + componentName + "' has '" +
+							  std::to_string(anchor.Size()) + "' anchor keys!");
+				}
+			}
 			if (object.HasMember("size")) {
 				auto size = object["size"].GetArray();
 				if (size.Size() == 2) {
