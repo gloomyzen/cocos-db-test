@@ -10,7 +10,8 @@ metaTabs::metaTabs() {
 	this->setName("metaTabs");
 	createPageView();
 	loadProperty("menuScene/" + this->getName(), dynamic_cast<Node*>(this));
-	addComponent(debugComponent::create());
+	auto test = Node::create();
+	auto test1 = DrawNode::create();
 }
 
 metaTabs::~metaTabs() {}
