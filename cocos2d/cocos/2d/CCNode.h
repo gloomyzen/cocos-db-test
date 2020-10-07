@@ -1,32 +1,3 @@
-/****************************************************************************
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2009      Valentin Milea
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2011      Zynga Inc.
- Copyright (c) 2013-2016 Chukong Technologies Inc.
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
- http://www.cocos2d-x.org
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
 #ifndef __CCNODE_H__
 #define __CCNODE_H__
 
@@ -1951,6 +1922,64 @@ public:
     
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
+
+#ifdef DEBUG
+/*********************************   DEBUG NODE *******************************/
+	public:
+		bool _isDebugDraw = true;
+		Color4F debugDrawColorLine;
+		Color4F debugDrawColorPoint;
+		void d_DrawPoint(const Vec2& point, const float pointSize, const Color4F &color);   //done
+		void d_DrawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color); //done
+		void d_DrawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color); //done
+		void d_Clear();
+		const BlendFunc& d_GetBlendFunc() const;
+		void d_GetBlendFunc(const BlendFunc &blendFunc);
+		void d_SetLineWidth(float lineWidth);
+		float d_GetLineWidth();
+
+		void d_SetIsolated(bool isolated);
+		bool d_IsIsolated() const;
+	protected:
+		void d_EnsureCapacity(int count);
+		void d_EnsureCapacityGLPoint(int count);
+		void d_EnsureCapacityGLLine(int count);
+
+		void d_UpdateShader();
+		void d_SetVertexLayout(CustomCommand& cmd);
+		void d_UpdateBlendState(CustomCommand& cmd);
+		void d_UpdateUniforms(const Mat4 &transform, CustomCommand& cmd);
+
+		int         _d_bufferCapacity = 0;
+		int         _d_bufferCount = 0;
+		V2F_C4B_T2F *_d_buffer = nullptr;
+
+		int         _d_bufferCapacityGLPoint = 0;
+		int         _d_bufferCountGLPoint = 0;
+		V2F_C4B_T2F *_d_bufferGLPoint = nullptr;
+		Color4F     _d_pointColor;
+		int         _d_pointSize = 0;
+
+		int         _d_bufferCapacityGLLine = 0;
+		int         _d_bufferCountGLLine = 0;
+		V2F_C4B_T2F *_d_bufferGLLine = nullptr;
+
+		BlendFunc   _d_blendFunc;
+
+		backend::ProgramState* _d_programStatePoint = nullptr;
+		backend::ProgramState* _d_programStateLine = nullptr;
+
+		CustomCommand _d_customCommand;
+		CustomCommand _d_customCommandGLPoint;
+		CustomCommand _d_customCommandGLLine;
+
+		bool        _d_dirty = false;
+		bool        _d_dirtyGLPoint = false;
+		bool        _d_dirtyGLLine = false;
+		bool        _d_isolated = false;
+		float       _d_lineWidth = 0.0f;
+/*********************************   DEBUG NODE *******************************/
+#endif
 };
 
 /**

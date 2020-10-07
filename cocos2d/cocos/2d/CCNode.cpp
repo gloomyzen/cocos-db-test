@@ -131,6 +131,12 @@ Node::Node()
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
     _transform = _inverse = Mat4::IDENTITY;
+#ifdef DEBUG
+		_d_lineWidth = 2.f;
+		_d_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+		debugDrawColorLine = Color4F(0.5f, 0.5f, 0.5f ,0.5f);
+		debugDrawColorPoint = Color4F(0.33f, 0.33f, 0.33f ,0.5f);
+#endif
 }
 
 Node * Node::create()
@@ -149,6 +155,19 @@ Node * Node::create()
 
 Node::~Node()
 {
+
+#ifdef DEBUG
+	free(_d_buffer);
+	_d_buffer = nullptr;
+	free(_d_bufferGLPoint);
+	_d_bufferGLPoint = nullptr;
+	free(_d_bufferGLLine);
+	_d_bufferGLLine = nullptr;
+
+	CC_SAFE_RELEASE(_d_programStatePoint);
+	CC_SAFE_RELEASE(_d_programStateLine);
+#endif
+
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
     
 #if CC_ENABLE_SCRIPT_BINDING
@@ -2195,5 +2214,53 @@ backend::ProgramState* Node::getProgramState() const
 {
     return _programState;
 }
+
+#ifdef DEBUG
+/*********************************   DEBUG NODE *******************************/
+	void Node::d_SetIsolated(bool isolated) {
+		_d_isolated = isolated;
+	}
+
+	bool Node::d_IsIsolated() const {
+		return _d_isolated;
+	}
+
+	void Node::d_DrawPoint(const Vec2& position, const float pointSize, const Color4F &color)
+	{
+		d_EnsureCapacityGLPoint(1);
+
+		V2F_C4B_T2F *point = _d_bufferGLPoint + _d_bufferCountGLPoint;
+		*point = {position, Color4B(color), Tex2F(pointSize,0)};
+
+		_d_customCommandGLPoint.updateVertexBuffer(point, _d_bufferCountGLPoint*sizeof(V2F_C4B_T2F), sizeof(V2F_C4B_T2F));
+		_d_bufferCountGLPoint += 1;
+		_d_dirtyGLPoint = true;
+		_d_customCommandGLPoint.setVertexDrawInfo(0, _d_bufferCountGLPoint);
+	}
+
+	void Node::d_DrawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+	{
+		d_EnsureCapacityGLLine(2);
+
+		V2F_C4B_T2F *point = _d_bufferGLLine + _d_bufferCountGLLine;
+
+		*point = {origin, Color4B(color), Tex2F(0.0, 0.0)};
+		*(point+1) = {destination, Color4B(color), Tex2F(0.0, 0.0)};
+
+		_d_customCommandGLLine.updateVertexBuffer(point, _d_bufferCountGLLine*sizeof(V2F_C4B_T2F), 2*sizeof(V2F_C4B_T2F));
+		_d_bufferCountGLLine += 2;
+		_d_dirtyGLLine = true;
+		_d_customCommandGLLine.setVertexDrawInfo(0, _d_bufferCountGLLine);
+	}
+
+	void Node::d_DrawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
+	{
+		d_DrawLine(origin, Vec2(destination.x, origin.y), color);
+		d_DrawLine(Vec2(destination.x, origin.y), destination, color);
+		d_DrawLine(destination, Vec2(origin.x, destination.y), color);
+		d_DrawLine(Vec2(origin.x, destination.y), origin, color);
+	}
+/*********************************   DEBUG NODE *******************************/
+#endif
 
 NS_CC_END
