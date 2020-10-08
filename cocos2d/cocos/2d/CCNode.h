@@ -1932,20 +1932,21 @@ private:
 		void d_DrawPoint(const Vec2& point, const float pointSize, const Color4F &color);   //done
 		void d_DrawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color); //done
 		void d_DrawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color); //done
-		void d_Clear();
-		const BlendFunc& d_GetBlendFunc() const;
-		void d_GetBlendFunc(const BlendFunc &blendFunc);
-		void d_SetLineWidth(float lineWidth);
-		float d_GetLineWidth();
+		void d_Clear(); //done
+		const BlendFunc& d_GetBlendFunc() const; //done
+		void d_SetBlendFunc(const BlendFunc &blendFunc); //done
+		void d_SetLineWidth(float lineWidth); //done
+		float d_GetLineWidth(); //done
 
-		void d_SetIsolated(bool isolated);
-		bool d_IsIsolated() const;
+		void d_SetIsolated(bool isolated) { _d_isolated = isolated; }
+
+		bool d_IsIsolated() const { return _d_isolated; }
 	protected:
-		void d_EnsureCapacity(int count);
-		void d_EnsureCapacityGLPoint(int count);
-		void d_EnsureCapacityGLLine(int count);
+		void d_EnsureCapacity(int count); //done
+		void d_EnsureCapacityGLPoint(int count); //done
+		void d_EnsureCapacityGLLine(int count); //done
 
-		void d_UpdateShader();
+		void d_UpdateShader(); //done
 		void d_SetVertexLayout(CustomCommand& cmd);
 		void d_UpdateBlendState(CustomCommand& cmd);
 		void d_UpdateUniforms(const Mat4 &transform, CustomCommand& cmd);

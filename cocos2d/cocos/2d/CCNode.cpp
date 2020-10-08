@@ -2217,13 +2217,6 @@ backend::ProgramState* Node::getProgramState() const
 
 #ifdef DEBUG
 /*********************************   DEBUG NODE *******************************/
-	void Node::d_SetIsolated(bool isolated) {
-		_d_isolated = isolated;
-	}
-
-	bool Node::d_IsIsolated() const {
-		return _d_isolated;
-	}
 
 	void Node::d_DrawPoint(const Vec2& position, const float pointSize, const Color4F &color)
 	{
@@ -2259,6 +2252,165 @@ backend::ProgramState* Node::getProgramState() const
 		d_DrawLine(Vec2(destination.x, origin.y), destination, color);
 		d_DrawLine(destination, Vec2(origin.x, destination.y), color);
 		d_DrawLine(Vec2(origin.x, destination.y), origin, color);
+	}
+
+	void Node::d_Clear() {
+		_d_bufferCount = 0;
+		_d_dirty = true;
+		_d_bufferCountGLLine = 0;
+		_d_dirtyGLLine = true;
+		_d_bufferCountGLPoint = 0;
+		_d_dirtyGLPoint = true;
+		_d_lineWidth = 0;
+	}
+
+	const BlendFunc& Node::d_GetBlendFunc() const
+	{
+		return _d_blendFunc;
+	}
+
+	void Node::d_SetBlendFunc(const BlendFunc &blendFunc)
+	{
+		_d_blendFunc = blendFunc;
+	}
+
+	void Node::d_SetLineWidth(float lineWidth)
+	{
+		_d_lineWidth = lineWidth;
+	}
+
+	float Node::d_GetLineWidth()
+	{
+		return this->_d_lineWidth;
+	}
+
+	void Node::d_EnsureCapacity(int count)
+	{
+		CCASSERT(count>=0, "capacity must be >= 0");
+
+		if(_d_bufferCount + count > _d_bufferCapacity)
+		{
+			_d_bufferCapacity += MAX(_d_bufferCapacity, count);
+			_d_buffer = (V2F_C4B_T2F*)realloc(_d_buffer, _d_bufferCapacity*sizeof(V2F_C4B_T2F));
+
+			_d_customCommand.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacity, CustomCommand::BufferUsage::STATIC);
+			_d_customCommand.updateVertexBuffer(_d_buffer, _d_bufferCapacity*sizeof(V2F_C4B_T2F));
+		}
+	}
+
+	void Node::d_EnsureCapacityGLPoint(int count)
+	{
+		CCASSERT(count>=0, "capacity must be >= 0");
+
+		if(_d_bufferCountGLPoint + count > _d_bufferCapacityGLPoint)
+		{
+			_d_bufferCapacityGLPoint += MAX(_d_bufferCapacityGLPoint, count);
+			_d_bufferGLPoint = (V2F_C4B_T2F*)realloc(_d_bufferGLPoint, _d_bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
+
+			_d_customCommandGLPoint.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacityGLPoint, CustomCommand::BufferUsage::STATIC);
+			_d_customCommandGLPoint.updateVertexBuffer(_d_bufferGLPoint, _d_bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
+		}
+	}
+
+	void Node::d_EnsureCapacityGLLine(int count)
+	{
+		CCASSERT(count>=0, "capacity must be >= 0");
+
+		if(_d_bufferCountGLLine + count > _d_bufferCapacityGLLine)
+		{
+			_d_bufferCapacityGLLine += MAX(_d_bufferCapacityGLLine, count);
+			_d_bufferGLLine = (V2F_C4B_T2F*)realloc(_d_bufferGLLine, _d_bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
+
+			_d_customCommandGLLine.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacityGLLine, CustomCommand::BufferUsage::STATIC);
+			_d_customCommandGLLine.updateVertexBuffer(_d_bufferGLLine, _d_bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
+		}
+	}
+
+	void Node::d_UpdateShader()
+	{
+		CC_SAFE_RELEASE(_programState);
+		auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
+		_programState = new (std::nothrow) backend::ProgramState(program);
+		_d_customCommand.getPipelineDescriptor().programState = _programState;
+		d_SetVertexLayout(_d_customCommand);
+		_d_customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
+		_d_customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
+
+		CC_SAFE_RELEASE(_d_programStatePoint);
+		program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE);
+		_d_programStatePoint = new (std::nothrow) backend::ProgramState(program);
+		_d_customCommandGLPoint.getPipelineDescriptor().programState = _d_programStatePoint;
+		d_SetVertexLayout(_d_customCommandGLPoint);
+		_d_customCommandGLPoint.setDrawType(CustomCommand::DrawType::ARRAY);
+		_d_customCommandGLPoint.setPrimitiveType(CustomCommand::PrimitiveType::POINT);
+
+		CC_SAFE_RELEASE(_d_programStateLine);
+		program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
+		_d_programStateLine = new (std::nothrow) backend::ProgramState(program);
+		_d_customCommandGLLine.getPipelineDescriptor().programState = _d_programStateLine;
+		d_SetVertexLayout(_d_customCommandGLLine);
+		_d_customCommandGLLine.setDrawType(CustomCommand::DrawType::ARRAY);
+		_d_customCommandGLLine.setPrimitiveType(CustomCommand::PrimitiveType::LINE);
+	}
+
+	void Node::d_SetVertexLayout(CustomCommand& cmd)
+	{
+		auto* programState = cmd.getPipelineDescriptor().programState;
+		auto layout = programState->getVertexLayout();
+		const auto& attributeInfo = programState->getProgram()->getActiveAttributes();
+		auto iter = attributeInfo.find("a_position");
+		if(iter != attributeInfo.end())
+		{
+			layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
+		}
+
+		iter = attributeInfo.find("a_texCoord");
+		if(iter != attributeInfo.end())
+		{
+			layout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
+		}
+
+		iter = attributeInfo.find("a_color");
+		if(iter != attributeInfo.end())
+		{
+			layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
+		}
+		layout->setLayout(sizeof(V2F_C4B_T2F));
+	}
+
+	void Node::d_UpdateBlendState(CustomCommand& cmd)
+	{
+		backend::BlendDescriptor& blendDescriptor = cmd.getPipelineDescriptor().blendDescriptor;
+		blendDescriptor.blendEnabled = true;
+		if (_d_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
+		{
+			blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
+			blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+			blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
+			blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+			setOpacityModifyRGB(false);
+		}
+		else
+		{
+			blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
+			blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+			blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
+			blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
+			setOpacityModifyRGB(true);
+		}
+	}
+
+	void Node::d_UpdateUniforms(const Mat4 &transform, CustomCommand& cmd)
+	{
+		auto& pipelineDescriptor = cmd.getPipelineDescriptor();
+		const auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+		Mat4 matrixMVP = matrixP * transform;
+		auto mvpLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
+		pipelineDescriptor.programState->setUniform(mvpLocation, matrixMVP.m, sizeof(matrixMVP.m));
+
+		float alpha = _displayedOpacity / 255.0f;
+		auto alphaUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha");
+		pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha, sizeof(alpha));
 	}
 /*********************************   DEBUG NODE *******************************/
 #endif
