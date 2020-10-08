@@ -17,6 +17,12 @@ bool mainScene::init() {
 	}
 	LOG_INFO("mainScene::init()");
 
+#ifdef DEBUG
+	/// insert debug layer
+	auto imGuiLayer = mb::debugModule::imGuiLayer::create();
+	this->addChild(imGuiLayer, eGameLayers::DEBUG_LAYER);
+#endif
+
 	return true;
 }
 

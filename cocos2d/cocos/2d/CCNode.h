@@ -1942,6 +1942,7 @@ private:
 
 		bool d_IsIsolated() const { return _d_isolated; }
 	protected:
+		void debugDraw(Renderer* renderer, const Mat4 & transform, uint32_t flags);
 		void d_EnsureCapacity(int count); //done
 		void d_EnsureCapacityGLPoint(int count); //done
 		void d_EnsureCapacityGLLine(int count); //done

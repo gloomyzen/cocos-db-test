@@ -1,32 +1,3 @@
-/****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
-Copyright (c) 2009      Valentin Milea
-Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2016 Chukong Technologies Inc.
-Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
-
-http://www.cocos2d-x.org
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-****************************************************************************/
-
 #include "2d/CCNode.h"
 
 #include <algorithm>
@@ -43,6 +14,7 @@ THE SOFTWARE.
 #include "2d/CCComponent.h"
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
+#include "renderer/CCRenderer.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -134,8 +106,8 @@ Node::Node()
 #ifdef DEBUG
 		_d_lineWidth = 2.f;
 		_d_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-		debugDrawColorLine = Color4F(0.5f, 0.5f, 0.5f ,0.5f);
-		debugDrawColorPoint = Color4F(0.33f, 0.33f, 0.33f ,0.5f);
+		debugDrawColorLine = Color4F::WHITE;
+		debugDrawColorPoint = Color4F::RED;
 #endif
 }
 
@@ -210,6 +182,17 @@ Node::~Node()
 
 bool Node::init()
 {
+#ifdef DEBUG
+	_d_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+	d_UpdateShader();
+	d_EnsureCapacity(512);
+	d_EnsureCapacityGLPoint(64);
+	d_EnsureCapacityGLLine(256);
+
+	_d_dirty = true;
+	_d_dirtyGLLine = true;
+	_d_dirtyGLPoint = true;
+#endif
     return true;
 }
 
@@ -1175,8 +1158,9 @@ void Node::draw()
     draw(renderer, _modelViewTransform, FLAGS_TRANSFORM_DIRTY);
 }
 
-void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
+void Node::draw(Renderer* renderer, const Mat4 & transform, uint32_t flags)
 {
+	debugDraw(renderer, transform, flags);
 }
 
 void Node::visit()
@@ -2411,6 +2395,41 @@ backend::ProgramState* Node::getProgramState() const
 		float alpha = _displayedOpacity / 255.0f;
 		auto alphaUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha");
 		pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha, sizeof(alpha));
+	}
+
+	void Node::debugDraw(Renderer* renderer, const Mat4 & transform, uint32_t flags) {
+#ifdef DEBUG
+		if (getName() == "testNode1") {
+			auto test  = true;
+		}
+		if (_isDebugDraw) {
+			d_DrawLine(Vec2(getPositionX(), getPositionY()), Vec2(getContentSize().width, getContentSize().height), debugDrawColorLine);
+		}
+		if(_d_bufferCount)
+		{
+			d_UpdateBlendState(_d_customCommand);
+			d_UpdateUniforms(_modelViewTransform, _d_customCommand);
+			_d_customCommand.init(_globalZOrder);
+			renderer->addCommand(&_d_customCommand);
+		}
+
+		if(_d_bufferCountGLPoint)
+		{
+			d_UpdateBlendState(_d_customCommandGLPoint);
+			d_UpdateUniforms(_modelViewTransform, _d_customCommandGLPoint);
+			_d_customCommandGLPoint.init(_globalZOrder);
+			renderer->addCommand(&_d_customCommandGLPoint);
+		}
+
+		if(_d_bufferCountGLLine)
+		{
+			d_UpdateBlendState(_d_customCommandGLLine);
+			d_UpdateUniforms(_modelViewTransform, _d_customCommandGLLine);
+			_d_customCommandGLLine.setLineWidth(_d_lineWidth);
+			_d_customCommandGLLine.init(_globalZOrder);
+			renderer->addCommand(&_d_customCommandGLLine);
+		}
+#endif
 	}
 /*********************************   DEBUG NODE *******************************/
 #endif
