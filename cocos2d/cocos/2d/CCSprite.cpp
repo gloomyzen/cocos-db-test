@@ -363,7 +363,7 @@ void Sprite::setVertexLayout()
                               backend::VertexFormat::FLOAT2,
                               offsetof(V3F_C4B_T2F, texCoords),
                               false);
-    
+
     ///a_color
     vertexLayout->setAttribute(backend::ATTRIBUTE_NAME_COLOR,
                               _programState->getAttributeLocation(backend::Attribute::COLOR),
@@ -387,7 +387,7 @@ void Sprite::setProgramState(backend::ProgramType type)
     if(_programState != nullptr &&
        _programState->getProgram()->getProgramType() == type)
         return;
-    
+
     auto* program = backend::Program::getBuiltinProgram(type);
     auto programState = new (std::nothrow) backend::ProgramState(program);
     setProgramState(programState);
@@ -422,7 +422,7 @@ void Sprite::setTexture(Texture2D *texture)
     CCASSERT(! _batchNode || (texture &&  texture == _batchNode->getTexture()), "CCSprite: Batched sprites should use the same texture as the batchnode");
     // accept texture==nil as argument
     CCASSERT( !texture || dynamic_cast<Texture2D*>(texture), "setTexture expects a Texture2D. Invalid argument");
-    
+
     if (texture == nullptr)
     {
         // Gets the texture by key firstly.
@@ -842,7 +842,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints)
 void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQuad)
 {
     Texture2D *tex = (_renderMode == RenderMode::QUAD_BATCHNODE) ? _textureAtlas->getTexture() : _texture;
-    
+
     if (tex == nullptr)
         return;
 
@@ -850,7 +850,7 @@ void Sprite::setTextureCoords(const Rect& rectInPoints, V3F_C4B_T2F_Quad* outQua
 
     const float atlasWidth = (float)tex->getPixelsWide();
     const float atlasHeight = (float)tex->getPixelsHigh();
-   
+
     float rw = rectInPixels.size.width;
     float rh = rectInPixels.size.height;
 
@@ -1099,7 +1099,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if (_texture == nullptr || _texture->getBackendTexture() == nullptr)
         return;
-    
+
     //TODO: arnold: current camera can be a non-default one.
     setMVPMatrixUniform();
 
@@ -1126,31 +1126,27 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                                flags);
         renderer->addCommand(&_trianglesCommand);
 
-        //todo remove this
 #if CC_SPRITE_DEBUG_DRAW
-//            _debugDrawNode->clear();
-//            auto count = _polyInfo.triangles.indexCount / 3;
-//            auto indices = _polyInfo.triangles.indices;
-//            auto verts = _polyInfo.triangles.verts;
-//            for(unsigned int i = 0; i < count; i++)
-//            {
-//                draw 3 lines
-//                Vec3 from =verts[indices[i*3]].vertices;
-//                Vec3 to = verts[indices[i*3+1]].vertices;
-//                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-//
-//                from =verts[indices[i*3+1]].vertices;
-//                to = verts[indices[i*3+2]].vertices;
-//                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-//
-//                from =verts[indices[i*3+2]].vertices;
-//                to = verts[indices[i*3]].vertices;
-//                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-//            }
+            _debugDrawNode->clear();
+            auto count = _polyInfo.triangles.indexCount / 3;
+            auto indices = _polyInfo.triangles.indices;
+            auto verts = _polyInfo.triangles.verts;
+            for(unsigned int i = 0; i < count; i++)
+            {
+                //draw 3 lines
+                Vec3 from =verts[indices[i*3]].vertices;
+                Vec3 to = verts[indices[i*3+1]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+
+                from =verts[indices[i*3+1]].vertices;
+                to = verts[indices[i*3+2]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+
+                from =verts[indices[i*3+2]].vertices;
+                to = verts[indices[i*3]].vertices;
+                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+            }
 #endif //CC_SPRITE_DEBUG_DRAW
-#ifdef DEBUG
-			debugDraw(renderer, transform, flags);
-#endif
     }
 }
 
@@ -1713,11 +1709,11 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
 void Sprite::updateBlendFunc()
 {
     CCASSERT(_renderMode != RenderMode::QUAD_BATCHNODE, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
-    
+
     // it is possible to have an untextured sprite
     backend::BlendDescriptor& blendDescriptor = _trianglesCommand.getPipelineDescriptor().blendDescriptor;
     blendDescriptor.blendEnabled = true;
-    
+
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -1737,7 +1733,7 @@ std::string Sprite::getDescription() const
         sprintf(textureDescriptor, "<Sprite | Tag = %d, TextureID = %p>", _tag, _batchNode->getTextureAtlas()->getTexture()->getBackendTexture());
     else
         sprintf(textureDescriptor, "<Sprite | Tag = %d, TextureID = %p>", _tag, _texture->getBackendTexture());
-    
+
     return textureDescriptor;
 }
 

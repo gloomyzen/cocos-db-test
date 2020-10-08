@@ -1,3 +1,32 @@
+/****************************************************************************
+Copyright (c) 2008-2010 Ricardo Quesada
+Copyright (c) 2009      Valentin Milea
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2011      Zynga Inc.
+Copyright (c) 2013-2016 Chukong Technologies Inc.
+Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "2d/CCNode.h"
 
 #include <algorithm>
@@ -14,7 +43,6 @@
 #include "2d/CCComponent.h"
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
-#include "renderer/CCRenderer.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -97,18 +125,12 @@ Node::Node()
     _scheduler->retain();
     _eventDispatcher = _director->getEventDispatcher();
     _eventDispatcher->retain();
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     ScriptEngineProtocol* engine = ScriptEngineManager::getInstance()->getScriptEngine();
     _scriptType = engine != nullptr ? engine->getScriptType() : kScriptTypeNone;
 #endif
     _transform = _inverse = Mat4::IDENTITY;
-#ifdef DEBUG
-		_d_lineWidth = 2.f;
-		_d_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-		debugDrawColorLine = Color4F::WHITE;
-		debugDrawColorPoint = Color4F::RED;
-#endif
 }
 
 Node * Node::create()
@@ -127,21 +149,8 @@ Node * Node::create()
 
 Node::~Node()
 {
-
-#ifdef DEBUG
-	free(_d_buffer);
-	_d_buffer = nullptr;
-	free(_d_bufferGLPoint);
-	_d_bufferGLPoint = nullptr;
-	free(_d_bufferGLLine);
-	_d_bufferGLLine = nullptr;
-
-	CC_SAFE_RELEASE(_d_programStatePoint);
-	CC_SAFE_RELEASE(_d_programStateLine);
-#endif
-
     CCLOGINFO( "deallocing Node: %p - tag: %i", this, _tag );
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
@@ -159,16 +168,16 @@ Node::~Node()
     }
 
     removeAllComponents();
-    
+
     CC_SAFE_DELETE(_componentContainer);
-    
+
     stopAllActions();
     unscheduleAllCallbacks();
     CC_SAFE_RELEASE_NULL(_actionManager);
     CC_SAFE_RELEASE_NULL(_scheduler);
-    
+
     _eventDispatcher->removeEventListenersForTarget(this);
-    
+
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
     _eventDispatcher->debugCheckNodeHasNoEventListenersOnDestruction(this);
 #endif
@@ -182,17 +191,6 @@ Node::~Node()
 
 bool Node::init()
 {
-#ifdef DEBUG
-	_d_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-	d_UpdateShader();
-	d_EnsureCapacity(512);
-	d_EnsureCapacityGLPoint(64);
-	d_EnsureCapacityGLLine(256);
-
-	_d_dirty = true;
-	_d_dirtyGLLine = true;
-	_d_dirtyGLPoint = true;
-#endif
     return true;
 }
 
@@ -209,7 +207,7 @@ void Node::cleanup()
         ScriptEngineManager::sendNodeEventToLua(this, kNodeOnCleanup);
     }
 #endif // #if CC_ENABLE_SCRIPT_BINDING
-    
+
     // actions
     this->stopAllActions();
     // timers
@@ -217,14 +215,14 @@ void Node::cleanup()
 
     // NOTE: Although it was correct that removing event listeners associated with current node in Node::cleanup.
     // But it broke the compatibility to the versions before v3.16 .
-    // User code may call `node->removeFromParent(true)` which will trigger node's cleanup method, when the node 
-    // is added to scene again, event listeners like EventListenerTouchOneByOne will be lost. 
+    // User code may call `node->removeFromParent(true)` which will trigger node's cleanup method, when the node
+    // is added to scene again, event listeners like EventListenerTouchOneByOne will be lost.
     // In fact, user's code should use `node->removeFromParent(false)` in order not to do a cleanup and just remove node
     // from its parent. For more discussion about why we revert this change is at https://github.com/cocos2d/cocos2d-x/issues/18104.
     // We need to consider more before we want to correct the old and wrong logic code.
     // For now, compatiblity is the most important for our users.
 //    _eventDispatcher->removeEventListenersForTarget(this);
-    
+
     for( const auto &child: _children)
         child->cleanup();
 }
@@ -245,7 +243,7 @@ void Node::setSkewX(float skewX)
 {
     if (_skewX == skewX)
         return;
-    
+
     _skewX = skewX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -259,7 +257,7 @@ void Node::setSkewY(float skewY)
 {
     if (_skewY == skewY)
         return;
-    
+
     _skewY = skewY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -268,7 +266,7 @@ void Node::setLocalZOrder(std::int32_t z)
 {
     if (getLocalZOrder() == z)
         return;
-    
+
     _setLocalZOrder(z);
     if (_parent)
     {
@@ -311,10 +309,10 @@ void Node::setRotation(float rotation)
 {
     if (_rotationZ_X == rotation)
         return;
-    
+
     _rotationZ_X = _rotationZ_Y = rotation;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
+
     updateRotationQuat();
 }
 
@@ -329,7 +327,7 @@ void Node::setRotation3D(const Vec3& rotation)
         _rotationY == rotation.y &&
         _rotationZ_X == rotation.z)
         return;
-    
+
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _rotationX = rotation.x;
@@ -337,7 +335,7 @@ void Node::setRotation3D(const Vec3& rotation)
 
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     _rotationZ_Y = _rotationZ_X = rotation.z;
-    
+
     updateRotationQuat();
 }
 
@@ -371,7 +369,7 @@ void Node::updateRotation3D()
     sy = clampf(sy, -1, 1);
     _rotationY = asinf(sy);
     _rotationZ_X = atan2f(2.f * (w * z + x * y), 1.f - 2.f * (y * y + z * z));
-    
+
     _rotationX = CC_RADIANS_TO_DEGREES(_rotationX);
     _rotationY = CC_RADIANS_TO_DEGREES(_rotationY);
     _rotationZ_X = _rotationZ_Y = -CC_RADIANS_TO_DEGREES(_rotationZ_X);
@@ -393,10 +391,10 @@ void Node::setRotationSkewX(float rotationX)
 {
     if (_rotationZ_X == rotationX)
         return;
-    
+
     _rotationZ_X = rotationX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
+
     updateRotationQuat();
 }
 
@@ -409,10 +407,10 @@ void Node::setRotationSkewY(float rotationY)
 {
     if (_rotationZ_Y == rotationY)
         return;
-    
+
     _rotationZ_Y = rotationY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
-    
+
     updateRotationQuat();
 }
 
@@ -428,7 +426,7 @@ void Node::setScale(float scale)
 {
     if (_scaleX == scale && _scaleY == scale && _scaleZ == scale)
         return;
-    
+
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -444,7 +442,7 @@ void Node::setScale(float scaleX,float scaleY)
 {
     if (_scaleX == scaleX && _scaleY == scaleY)
         return;
-    
+
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -455,7 +453,7 @@ void Node::setScaleX(float scaleX)
 {
     if (_scaleX == scaleX)
         return;
-    
+
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -471,7 +469,7 @@ void Node::setScaleZ(float scaleZ)
 {
     if (_scaleZ == scaleZ)
         return;
-    
+
     _scaleZ = scaleZ;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -487,7 +485,7 @@ void Node::setScaleY(float scaleY)
 {
     if (_scaleY == scaleY)
         return;
-    
+
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
 }
@@ -515,10 +513,10 @@ void Node::setPosition(float x, float y)
 {
     if (_position.x == x && _position.y == y)
         return;
-    
+
     _position.x = x;
     _position.y = y;
-    
+
     _transformUpdated = _transformDirty = _inverseDirty = true;
     _usingNormalizedPosition = false;
 }
@@ -563,7 +561,7 @@ void Node::setPositionZ(float positionZ)
 {
     if (_positionZ == positionZ)
         return;
-    
+
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
@@ -669,7 +667,7 @@ bool Node::isIgnoreAnchorPointForPosition() const
 /// isRelativeAnchorPoint setter
 void Node::setIgnoreAnchorPointForPosition(bool newValue)
 {
-    if (newValue != _ignoreAnchorPointForPosition) 
+    if (newValue != _ignoreAnchorPointForPosition)
     {
         _ignoreAnchorPointForPosition = newValue;
         _transformUpdated = _transformDirty = _inverseDirty = true;
@@ -727,7 +725,7 @@ Scene* Node::getScene() const
 {
     if (!_parent)
         return nullptr;
-    
+
     auto sceneNode = _parent;
     while (sceneNode->_parent)
     {
@@ -766,10 +764,10 @@ Node* Node::getChildByTag(int tag) const
 Node* Node::getChildByName(const std::string& name) const
 {
     CCASSERT(!name.empty(), "Invalid name");
-    
+
     std::hash<std::string> h;
     size_t hash = h(name);
-    
+
     for (const auto& child : _children)
     {
         // Different strings may have the same hash code, but can use it to compare first for speed
@@ -783,12 +781,12 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
 {
     CCASSERT(!name.empty(), "Invalid name");
     CCASSERT(callback != nullptr, "Invalid callback function");
-    
+
     size_t length = name.length();
-    
+
     size_t subStrStartPos = 0;  // sub string start index
     size_t subStrlength = length; // sub string length
-    
+
     // Starts with '//'?
     bool searchRecursively = false;
     if (length > 2 && name[0] == '/' && name[1] == '/')
@@ -797,7 +795,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         subStrStartPos = 2;
         subStrlength -= 2;
     }
-    
+
     // End with '/..'?
     bool searchFromParent = false;
     if (length > 3 &&
@@ -808,12 +806,12 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         searchFromParent = true;
         subStrlength -= 3;
     }
-    
+
     // Remove '//', '/..' if exist
     std::string newName = name.substr(subStrStartPos, subStrlength);
-    
+
     const Node* target = this;
-    
+
     if (searchFromParent)
     {
         if (nullptr == _parent)
@@ -822,7 +820,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
         }
         target = _parent;
     }
-    
+
     if (searchRecursively)
     {
         // name is '//xxx'
@@ -838,7 +836,7 @@ void Node::enumerateChildren(const std::string &name, std::function<bool (Node *
 bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::function<bool (Node *)> callback) const
 {
     bool ret =false;
-    
+
     if (node->doEnumerate(name, callback))
     {
         // search itself
@@ -856,7 +854,7 @@ bool Node::doEnumerateRecursive(const Node* node, const std::string &name, std::
             }
         }
     }
-    
+
     return ret;
 }
 
@@ -872,7 +870,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
         name.erase(0, pos+1);
         needRecursive = true;
     }
-    
+
     bool ret = false;
     for (const auto& child : getChildren())
     {
@@ -895,7 +893,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
             }
         }
     }
-    
+
     return ret;
 }
 
@@ -904,7 +902,7 @@ bool Node::doEnumerate(std::string name, std::function<bool (Node *)> callback) 
 * to override this method
 */
 void Node::addChild(Node *child, int localZOrder, int tag)
-{    
+{
     CCASSERT( child != nullptr, "Argument must be non-nil");
     CCASSERT( child->_parent == nullptr, "child already added. It can't be added again");
 
@@ -915,7 +913,7 @@ void Node::addChild(Node* child, int localZOrder, const std::string &name)
 {
     CCASSERT(child != nullptr, "Argument must be non-nil");
     CCASSERT(child->_parent == nullptr, "child already added. It can't be added again");
-    
+
     addChildHelper(child, localZOrder, INVALID_TAG, name, false);
 }
 
@@ -928,26 +926,26 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
                     parent = parent->getParent() )
                   if ( parent == child )
                       return false;
-              
+
               return true;
           } );
     (void)assertNotSelfChild;
-    
+
     CCASSERT( assertNotSelfChild(),
               "A node cannot be the child of his own children" );
-    
+
     if (_children.empty())
     {
         this->childrenAlloc();
     }
-    
+
     this->insertChild(child, localZOrder);
-    
+
     if (setTag)
         child->setTag(tag);
     else
         child->setName(name);
-    
+
     child->setParent(this);
 
     child->updateOrderOfArrival();
@@ -961,12 +959,12 @@ void Node::addChildHelper(Node* child, int localZOrder, int tag, const std::stri
             child->onEnterTransitionDidFinish();
         }
     }
-    
+
     if (_cascadeColorEnabled)
     {
         updateCascadeColor();
     }
-    
+
     if (_cascadeOpacityEnabled)
     {
         updateCascadeOpacity();
@@ -995,7 +993,7 @@ void Node::removeFromParentAndCleanup(bool cleanup)
     if (_parent != nullptr)
     {
         _parent->removeChild(this,cleanup);
-    } 
+    }
 }
 
 /* "remove" logic MUST only be on this method
@@ -1034,9 +1032,9 @@ void Node::removeChildByTag(int tag, bool cleanup/* = true */)
 void Node::removeChildByName(const std::string &name, bool cleanup)
 {
     CCASSERT(!name.empty(), "Invalid name");
-    
+
     Node *child = this->getChildByName(name);
-    
+
     if (child == nullptr)
     {
         CCLOG("cocos2d: removeChildByName(name = %s): child not found!", name.c_str());
@@ -1080,7 +1078,7 @@ void Node::removeAllChildrenWithCleanup(bool cleanup)
         // set parent nil at the end
         child->setParent(nullptr);
     }
-    
+
     _children.clear();
 }
 
@@ -1101,7 +1099,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     {
         child->cleanup();
     }
-    
+
 #if CC_ENABLE_GC_FOR_NATIVE_OBJECTS
     auto sEngine = ScriptEngineManager::getInstance()->getScriptEngine();
     if (sEngine)
@@ -1158,9 +1156,8 @@ void Node::draw()
     draw(renderer, _modelViewTransform, FLAGS_TRANSFORM_DIRTY);
 }
 
-void Node::draw(Renderer* renderer, const Mat4 & transform, uint32_t flags)
+void Node::draw(Renderer* /*renderer*/, const Mat4 & /*transform*/, uint32_t /*flags*/)
 {
-	debugDraw(renderer, transform, flags);
 }
 
 void Node::visit()
@@ -1193,11 +1190,11 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
     uint32_t flags = parentFlags;
     flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
     flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);
-    
+
 
     if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);
-    
+
     _transformUpdated = false;
     _contentSizeDirty = false;
 
@@ -1226,7 +1223,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     // but it is deprecated and your code should not rely on it
     _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
+
     bool visibleByCamera = isVisitableByVisitingCamera();
 
     int i = 0;
@@ -1257,7 +1254,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     }
 
     _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
+
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
     // reset for next frame
@@ -1284,7 +1281,7 @@ void Node::onEnter()
             return;
     }
 #endif
-    
+
     if (_onEnterCallback)
         _onEnterCallback();
 
@@ -1292,16 +1289,16 @@ void Node::onEnter()
     {
         _componentContainer->onEnter();
     }
-    
+
     _isTransitionFinished = false;
-    
+
     for( const auto &child: _children)
         child->onEnter();
-    
+
     this->resume();
-    
+
     _running = true;
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
@@ -1319,14 +1316,14 @@ void Node::onEnterTransitionDidFinish()
             return;
     }
 #endif
-    
+
     if (_onEnterTransitionDidFinishCallback)
         _onEnterTransitionDidFinishCallback();
 
     _isTransitionFinished = true;
     for( const auto &child: _children)
         child->onEnterTransitionDidFinish();
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
@@ -1344,13 +1341,13 @@ void Node::onExitTransitionDidStart()
             return;
     }
 #endif
-    
+
     if (_onExitTransitionDidStartCallback)
         _onExitTransitionDidStartCallback();
-    
+
     for( const auto &child: _children)
         child->onExitTransitionDidStart();
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
@@ -1372,22 +1369,22 @@ void Node::onExit()
             return;
     }
 #endif
-    
+
     if (_onExitCallback)
         _onExitCallback();
-    
+
     if (_componentContainer && !_componentContainer->isEmpty())
     {
         _componentContainer->onExit();
     }
-    
+
     this->pause();
-    
+
     _running = false;
-    
+
     for( const auto &child: _children)
         child->onExit();
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
     {
@@ -1510,18 +1507,18 @@ void Node::scheduleUpdateWithPriority(int priority)
 void Node::scheduleUpdateWithPriorityLua(int nHandler, int priority)
 {
     unscheduleUpdate();
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     _updateScriptHandler = nHandler;
 #endif
-    
+
     _scheduler->scheduleUpdate(this, priority, !_running);
 }
 
 void Node::unscheduleUpdate()
 {
     _scheduler->unscheduleUpdate(this);
-    
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_updateScriptHandler)
     {
@@ -1579,7 +1576,7 @@ void Node::unschedule(SEL_SCHEDULE selector)
     // explicit null handling
     if (selector == nullptr)
         return;
-    
+
     _scheduler->unschedule(selector, this);
 }
 
@@ -1619,7 +1616,7 @@ void Node::update(float fDelta)
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
 #endif
-    
+
     if (_componentContainer && !_componentContainer->isEmpty())
     {
         _componentContainer->visit(fDelta);
@@ -1666,22 +1663,22 @@ const Mat4& Node::getNodeToParentTransform() const
         float x = _position.x;
         float y = _position.y;
         float z = _positionZ;
-        
+
         if (_ignoreAnchorPointForPosition)
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
         }
-        
+
         bool needsSkewMatrix = ( _skewX || _skewY );
 
         // Build Transform Matrix = translation * rotation * scale
         Mat4 translation;
         //move to anchor point first, then rotate
         Mat4::createTranslation(x, y, z, &translation);
-        
+
         Mat4::createRotation(_rotationQuat, &_transform);
-        
+
         if (_rotationZ_X != _rotationZ_Y)
         {
             // Rotation values
@@ -1693,7 +1690,7 @@ const Mat4& Node::getNodeToParentTransform() const
             float sx = sinf(radiansX);
             float cy = cosf(radiansY);
             float sy = sinf(radiansY);
-            
+
             float m0 = _transform.m[0], m1 = _transform.m[1], m4 = _transform.m[4], m5 = _transform.m[5], m8 = _transform.m[8], m9 = _transform.m[9];
             _transform.m[0] = cy * m0 - sx * m1;
             _transform.m[4] = cy * m4 - sx * m5;
@@ -1722,7 +1719,7 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform.m[9] *= _scaleZ;
             _transform.m[10] *= _scaleZ;
         }
-        
+
         // FIXME:: Try to inline skew
         // If skew is needed, apply skew and then anchor point
         if (needsSkewMatrix)
@@ -1735,7 +1732,7 @@ const Mat4& Node::getNodeToParentTransform() const
                 0,  0,  0, 1
             };
             Mat4 skewMatrix(skewMatArray);
-            
+
             _transform = _transform * skewMatrix;
         }
 
@@ -1917,7 +1914,7 @@ Component* Node::getComponent(const std::string& name)
 {
     if (_componentContainer)
         return _componentContainer->get(name);
-    
+
     return nullptr;
 }
 
@@ -1926,10 +1923,10 @@ bool Node::addComponent(Component *component)
     // lazy alloc
     if (!_componentContainer)
         _componentContainer = new (std::nothrow) ComponentContainer(this);
-    
+
     // should enable schedule update, then all components can receive this call back
     scheduleUpdate();
-    
+
     return _componentContainer->add(component);
 }
 
@@ -1937,7 +1934,7 @@ bool Node::removeComponent(const std::string& name)
 {
     if (_componentContainer)
         return _componentContainer->remove(name);
-    
+
     return false;
 }
 
@@ -1947,7 +1944,7 @@ bool Node::removeComponent(Component *component)
     {
         return _componentContainer->remove(component);
     }
-    
+
     return false;
 }
 
@@ -1972,7 +1969,7 @@ uint8_t Node::getDisplayedOpacity() const
 void Node::setOpacity(uint8_t opacity)
 {
     _displayedOpacity = _realOpacity = opacity;
-    
+
     updateCascadeOpacity();
 }
 
@@ -1980,7 +1977,7 @@ void Node::updateDisplayedOpacity(uint8_t parentOpacity)
 {
     _displayedOpacity = _realOpacity * parentOpacity/255.0;
     updateColor();
-    
+
     if (_cascadeOpacityEnabled)
     {
         for(const auto& child : _children)
@@ -2001,9 +1998,9 @@ void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
     {
         return;
     }
-    
+
     _cascadeOpacityEnabled = cascadeOpacityEnabled;
-    
+
     if (cascadeOpacityEnabled)
     {
         updateCascadeOpacity();
@@ -2017,19 +2014,19 @@ void Node::setCascadeOpacityEnabled(bool cascadeOpacityEnabled)
 void Node::updateCascadeOpacity()
 {
     uint8_t parentOpacity = 255;
-    
+
     if (_parent != nullptr && _parent->isCascadeOpacityEnabled())
     {
         parentOpacity = _parent->getDisplayedOpacity();
     }
-    
+
     updateDisplayedOpacity(parentOpacity);
 }
 
 void Node::disableCascadeOpacity()
 {
     _displayedOpacity = _realOpacity;
-    
+
     for(const auto& child : _children)
     {
         child->updateDisplayedOpacity(255);
@@ -2057,7 +2054,7 @@ const Color3B& Node::getDisplayedColor() const
 void Node::setColor(const Color3B& color)
 {
     _displayedColor = _realColor = color;
-    
+
     updateCascadeColor();
 }
 
@@ -2067,7 +2064,7 @@ void Node::updateDisplayedColor(const Color3B& parentColor)
     _displayedColor.g = _realColor.g * parentColor.g/255.0;
     _displayedColor.b = _realColor.b * parentColor.b/255.0;
     updateColor();
-    
+
     if (_cascadeColorEnabled)
     {
         for(const auto &child : _children)
@@ -2088,9 +2085,9 @@ void Node::setCascadeColorEnabled(bool cascadeColorEnabled)
     {
         return;
     }
-    
+
     _cascadeColorEnabled = cascadeColorEnabled;
-    
+
     if (_cascadeColorEnabled)
     {
         updateCascadeColor();
@@ -2108,7 +2105,7 @@ void Node::updateCascadeColor()
     {
         parentColor = _parent->getDisplayedColor();
     }
-    
+
     updateDisplayedColor(parentColor);
 }
 
@@ -2126,19 +2123,19 @@ bool isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, 
     {
         return false;
     }
-    
+
     // first, convert pt to near/far plane, get Pn and Pf
     Vec3 Pn(pt.x, pt.y, -1), Pf(pt.x, pt.y, 1);
     Pn = camera->unprojectGL(Pn);
     Pf = camera->unprojectGL(Pf);
-    
+
     //  then convert Pn and Pf to node space
     w2l.transformPoint(&Pn);
     w2l.transformPoint(&Pf);
 
     // Pn and Pf define a line Q(t) = D + t * E which D = Pn
     auto E = Pf - Pn;
-    
+
     // second, get three points which define content plane
     //  these points define a plane P(u, w) = A + uB + wC
     Vec3 A = Vec3(rect.origin.x, rect.origin.y, 0);
@@ -2146,7 +2143,7 @@ bool isScreenPointInRect(const Vec2 &pt, const Camera* camera, const Mat4& w2l, 
     Vec3 C(rect.origin.x, rect.origin.y + rect.size.height, 0);
     B = B - A;
     C = C - A;
-    
+
     //  the line Q(t) intercept with plane P(u, w)
     //  calculate the intercept point P = Q(t)
     //      (BxC).A - (BxC).D
@@ -2198,240 +2195,5 @@ backend::ProgramState* Node::getProgramState() const
 {
     return _programState;
 }
-
-#ifdef DEBUG
-/*********************************   DEBUG NODE *******************************/
-
-	void Node::d_DrawPoint(const Vec2& position, const float pointSize, const Color4F &color)
-	{
-		d_EnsureCapacityGLPoint(1);
-
-		V2F_C4B_T2F *point = _d_bufferGLPoint + _d_bufferCountGLPoint;
-		*point = {position, Color4B(color), Tex2F(pointSize,0)};
-
-		_d_customCommandGLPoint.updateVertexBuffer(point, _d_bufferCountGLPoint*sizeof(V2F_C4B_T2F), sizeof(V2F_C4B_T2F));
-		_d_bufferCountGLPoint += 1;
-		_d_dirtyGLPoint = true;
-		_d_customCommandGLPoint.setVertexDrawInfo(0, _d_bufferCountGLPoint);
-	}
-
-	void Node::d_DrawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
-	{
-		d_EnsureCapacityGLLine(2);
-
-		V2F_C4B_T2F *point = _d_bufferGLLine + _d_bufferCountGLLine;
-
-		*point = {origin, Color4B(color), Tex2F(0.0, 0.0)};
-		*(point+1) = {destination, Color4B(color), Tex2F(0.0, 0.0)};
-
-		_d_customCommandGLLine.updateVertexBuffer(point, _d_bufferCountGLLine*sizeof(V2F_C4B_T2F), 2*sizeof(V2F_C4B_T2F));
-		_d_bufferCountGLLine += 2;
-		_d_dirtyGLLine = true;
-		_d_customCommandGLLine.setVertexDrawInfo(0, _d_bufferCountGLLine);
-	}
-
-	void Node::d_DrawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color)
-	{
-		d_DrawLine(origin, Vec2(destination.x, origin.y), color);
-		d_DrawLine(Vec2(destination.x, origin.y), destination, color);
-		d_DrawLine(destination, Vec2(origin.x, destination.y), color);
-		d_DrawLine(Vec2(origin.x, destination.y), origin, color);
-	}
-
-	void Node::d_Clear() {
-		_d_bufferCount = 0;
-		_d_dirty = true;
-		_d_bufferCountGLLine = 0;
-		_d_dirtyGLLine = true;
-		_d_bufferCountGLPoint = 0;
-		_d_dirtyGLPoint = true;
-		_d_lineWidth = 0;
-	}
-
-	const BlendFunc& Node::d_GetBlendFunc() const
-	{
-		return _d_blendFunc;
-	}
-
-	void Node::d_SetBlendFunc(const BlendFunc &blendFunc)
-	{
-		_d_blendFunc = blendFunc;
-	}
-
-	void Node::d_SetLineWidth(float lineWidth)
-	{
-		_d_lineWidth = lineWidth;
-	}
-
-	float Node::d_GetLineWidth()
-	{
-		return this->_d_lineWidth;
-	}
-
-	void Node::d_EnsureCapacity(int count)
-	{
-		CCASSERT(count>=0, "capacity must be >= 0");
-
-		if(_d_bufferCount + count > _d_bufferCapacity)
-		{
-			_d_bufferCapacity += MAX(_d_bufferCapacity, count);
-			_d_buffer = (V2F_C4B_T2F*)realloc(_d_buffer, _d_bufferCapacity*sizeof(V2F_C4B_T2F));
-
-			_d_customCommand.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacity, CustomCommand::BufferUsage::STATIC);
-			_d_customCommand.updateVertexBuffer(_d_buffer, _d_bufferCapacity*sizeof(V2F_C4B_T2F));
-		}
-	}
-
-	void Node::d_EnsureCapacityGLPoint(int count)
-	{
-		CCASSERT(count>=0, "capacity must be >= 0");
-
-		if(_d_bufferCountGLPoint + count > _d_bufferCapacityGLPoint)
-		{
-			_d_bufferCapacityGLPoint += MAX(_d_bufferCapacityGLPoint, count);
-			_d_bufferGLPoint = (V2F_C4B_T2F*)realloc(_d_bufferGLPoint, _d_bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
-
-			_d_customCommandGLPoint.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacityGLPoint, CustomCommand::BufferUsage::STATIC);
-			_d_customCommandGLPoint.updateVertexBuffer(_d_bufferGLPoint, _d_bufferCapacityGLPoint*sizeof(V2F_C4B_T2F));
-		}
-	}
-
-	void Node::d_EnsureCapacityGLLine(int count)
-	{
-		CCASSERT(count>=0, "capacity must be >= 0");
-
-		if(_d_bufferCountGLLine + count > _d_bufferCapacityGLLine)
-		{
-			_d_bufferCapacityGLLine += MAX(_d_bufferCapacityGLLine, count);
-			_d_bufferGLLine = (V2F_C4B_T2F*)realloc(_d_bufferGLLine, _d_bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
-
-			_d_customCommandGLLine.createVertexBuffer(sizeof(V2F_C4B_T2F), _d_bufferCapacityGLLine, CustomCommand::BufferUsage::STATIC);
-			_d_customCommandGLLine.updateVertexBuffer(_d_bufferGLLine, _d_bufferCapacityGLLine*sizeof(V2F_C4B_T2F));
-		}
-	}
-
-	void Node::d_UpdateShader()
-	{
-		CC_SAFE_RELEASE(_programState);
-		auto* program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
-		_programState = new (std::nothrow) backend::ProgramState(program);
-		_d_customCommand.getPipelineDescriptor().programState = _programState;
-		d_SetVertexLayout(_d_customCommand);
-		_d_customCommand.setDrawType(CustomCommand::DrawType::ARRAY);
-		_d_customCommand.setPrimitiveType(CustomCommand::PrimitiveType::TRIANGLE);
-
-		CC_SAFE_RELEASE(_d_programStatePoint);
-		program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_TEXTURE_AS_POINTSIZE);
-		_d_programStatePoint = new (std::nothrow) backend::ProgramState(program);
-		_d_customCommandGLPoint.getPipelineDescriptor().programState = _d_programStatePoint;
-		d_SetVertexLayout(_d_customCommandGLPoint);
-		_d_customCommandGLPoint.setDrawType(CustomCommand::DrawType::ARRAY);
-		_d_customCommandGLPoint.setPrimitiveType(CustomCommand::PrimitiveType::POINT);
-
-		CC_SAFE_RELEASE(_d_programStateLine);
-		program = backend::Program::getBuiltinProgram(backend::ProgramType::POSITION_COLOR_LENGTH_TEXTURE);
-		_d_programStateLine = new (std::nothrow) backend::ProgramState(program);
-		_d_customCommandGLLine.getPipelineDescriptor().programState = _d_programStateLine;
-		d_SetVertexLayout(_d_customCommandGLLine);
-		_d_customCommandGLLine.setDrawType(CustomCommand::DrawType::ARRAY);
-		_d_customCommandGLLine.setPrimitiveType(CustomCommand::PrimitiveType::LINE);
-	}
-
-	void Node::d_SetVertexLayout(CustomCommand& cmd)
-	{
-		auto* programState = cmd.getPipelineDescriptor().programState;
-		auto layout = programState->getVertexLayout();
-		const auto& attributeInfo = programState->getProgram()->getActiveAttributes();
-		auto iter = attributeInfo.find("a_position");
-		if(iter != attributeInfo.end())
-		{
-			layout->setAttribute("a_position", iter->second.location, backend::VertexFormat::FLOAT2, 0, false);
-		}
-
-		iter = attributeInfo.find("a_texCoord");
-		if(iter != attributeInfo.end())
-		{
-			layout->setAttribute("a_texCoord", iter->second.location, backend::VertexFormat::FLOAT2, offsetof(V2F_C4B_T2F, texCoords), false);
-		}
-
-		iter = attributeInfo.find("a_color");
-		if(iter != attributeInfo.end())
-		{
-			layout->setAttribute("a_color", iter->second.location, backend::VertexFormat::UBYTE4, offsetof(V2F_C4B_T2F, colors), true);
-		}
-		layout->setLayout(sizeof(V2F_C4B_T2F));
-	}
-
-	void Node::d_UpdateBlendState(CustomCommand& cmd)
-	{
-		backend::BlendDescriptor& blendDescriptor = cmd.getPipelineDescriptor().blendDescriptor;
-		blendDescriptor.blendEnabled = true;
-		if (_d_blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-		{
-			blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::SRC_ALPHA;
-			blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-			blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::SRC_ALPHA;
-			blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-			setOpacityModifyRGB(false);
-		}
-		else
-		{
-			blendDescriptor.sourceRGBBlendFactor = backend::BlendFactor::ONE;
-			blendDescriptor.destinationRGBBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-			blendDescriptor.sourceAlphaBlendFactor = backend::BlendFactor::ONE;
-			blendDescriptor.destinationAlphaBlendFactor = backend::BlendFactor::ONE_MINUS_SRC_ALPHA;
-			setOpacityModifyRGB(true);
-		}
-	}
-
-	void Node::d_UpdateUniforms(const Mat4 &transform, CustomCommand& cmd)
-	{
-		auto& pipelineDescriptor = cmd.getPipelineDescriptor();
-		const auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-		Mat4 matrixMVP = matrixP * transform;
-		auto mvpLocation = pipelineDescriptor.programState->getUniformLocation("u_MVPMatrix");
-		pipelineDescriptor.programState->setUniform(mvpLocation, matrixMVP.m, sizeof(matrixMVP.m));
-
-		float alpha = _displayedOpacity / 255.0f;
-		auto alphaUniformLocation = pipelineDescriptor.programState->getUniformLocation("u_alpha");
-		pipelineDescriptor.programState->setUniform(alphaUniformLocation, &alpha, sizeof(alpha));
-	}
-
-	void Node::debugDraw(Renderer* renderer, const Mat4 & transform, uint32_t flags) {
-#ifdef DEBUG
-		if (getName() == "testNode1") {
-			auto test  = true;
-		}
-		if (_isDebugDraw) {
-			d_DrawLine(Vec2(getPositionX(), getPositionY()), Vec2(getContentSize().width, getContentSize().height), debugDrawColorLine);
-		}
-		if(_d_bufferCount)
-		{
-			d_UpdateBlendState(_d_customCommand);
-			d_UpdateUniforms(_modelViewTransform, _d_customCommand);
-			_d_customCommand.init(_globalZOrder);
-			renderer->addCommand(&_d_customCommand);
-		}
-
-		if(_d_bufferCountGLPoint)
-		{
-			d_UpdateBlendState(_d_customCommandGLPoint);
-			d_UpdateUniforms(_modelViewTransform, _d_customCommandGLPoint);
-			_d_customCommandGLPoint.init(_globalZOrder);
-			renderer->addCommand(&_d_customCommandGLPoint);
-		}
-
-		if(_d_bufferCountGLLine)
-		{
-			d_UpdateBlendState(_d_customCommandGLLine);
-			d_UpdateUniforms(_modelViewTransform, _d_customCommandGLLine);
-			_d_customCommandGLLine.setLineWidth(_d_lineWidth);
-			_d_customCommandGLLine.init(_globalZOrder);
-			renderer->addCommand(&_d_customCommandGLLine);
-		}
-#endif
-	}
-/*********************************   DEBUG NODE *******************************/
-#endif
 
 NS_CC_END
