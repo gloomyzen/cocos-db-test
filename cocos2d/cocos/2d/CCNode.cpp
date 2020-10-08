@@ -227,6 +227,8 @@ void Node::cleanup()
         child->cleanup();
 }
 
+	void Node::setDebug(bool) {}
+
 std::string Node::getDescription() const
 {
     return StringUtils::format("<Node | Tag = %d", _tag);

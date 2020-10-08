@@ -295,10 +295,12 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 
 Sprite::Sprite()
 {
-#if CC_SPRITE_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
-#endif //CC_SPRITE_DEBUG_DRAW
+#if DEBUG
+	if (isDebugDraw) {
+		_debugDrawNode = DrawNode::create();
+		addChild(_debugDrawNode);
+	}
+#endif //DEBUG
 }
 
 Sprite::~Sprite()
@@ -307,6 +309,20 @@ Sprite::~Sprite()
     CC_SAFE_FREE(_trianglesIndex);
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
+}
+
+void Sprite::setDebug(bool value) {
+#ifdef DEBUG
+	isDebugDraw = value;
+	if (value && !_debugDrawNode) {
+		_debugDrawNode = DrawNode::create();
+		addChild(_debugDrawNode);
+	}
+	if (!value) {
+		_debugDrawNode->removeFromParent();
+		_debugDrawNode = nullptr;
+	}
+#endif
 }
 
 /*
@@ -1126,27 +1142,28 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                                flags);
         renderer->addCommand(&_trianglesCommand);
 
-#if CC_SPRITE_DEBUG_DRAW
-            _debugDrawNode->clear();
-            auto count = _polyInfo.triangles.indexCount / 3;
-            auto indices = _polyInfo.triangles.indices;
-            auto verts = _polyInfo.triangles.verts;
-            for(unsigned int i = 0; i < count; i++)
-            {
-                //draw 3 lines
-                Vec3 from =verts[indices[i*3]].vertices;
-                Vec3 to = verts[indices[i*3+1]].vertices;
-                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+#if DEBUG
+        if (isDebugDraw) {
+			_debugDrawNode->clear();
+			auto count = _polyInfo.triangles.indexCount / 3;
+			auto indices = _polyInfo.triangles.indices;
+			auto verts = _polyInfo.triangles.verts;
+			for (unsigned int i = 0; i < count; i++) {
+				//draw 3 lines
+				Vec3 from = verts[indices[i * 3]].vertices;
+				Vec3 to = verts[indices[i * 3 + 1]].vertices;
+				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), Color4F::WHITE);
 
-                from =verts[indices[i*3+1]].vertices;
-                to = verts[indices[i*3+2]].vertices;
-                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
+				from = verts[indices[i * 3 + 1]].vertices;
+				to = verts[indices[i * 3 + 2]].vertices;
+				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), Color4F::WHITE);
 
-                from =verts[indices[i*3+2]].vertices;
-                to = verts[indices[i*3]].vertices;
-                _debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::WHITE);
-            }
-#endif //CC_SPRITE_DEBUG_DRAW
+				from = verts[indices[i * 3 + 2]].vertices;
+				to = verts[indices[i * 3]].vertices;
+				_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), Color4F::WHITE);
+			}
+		}
+#endif //DEBUG
     }
 }
 

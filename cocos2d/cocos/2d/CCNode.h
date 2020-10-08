@@ -134,7 +134,11 @@ public:
      * Gets count of nodes those are attached to scene graph.
      */
     static int getAttachedNodeCount();
+
+protected:
+	bool isDebugDraw = true;
 public:
+	virtual void setDebug(bool);
 
     /**
      * Gets the description string. It makes debugging easier.
