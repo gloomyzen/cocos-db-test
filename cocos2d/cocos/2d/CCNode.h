@@ -138,6 +138,7 @@ public:
 protected:
 	bool isDebugDraw = true;
 public:
+	bool getDebug() { return isDebugDraw; }
 	virtual void setDebug(bool);
 
     /**
