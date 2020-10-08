@@ -69,7 +69,3 @@ void gameManager::changeState(eGameStates state) {
 	currentState = state;
 	mainSceneIns->setRoom(currentState);
 }
-
-Layer *gameManager::getDebugLayer() {
-	return mainSceneIns->getDebugLayer();
-}

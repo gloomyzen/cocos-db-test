@@ -300,12 +300,7 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 void imGuiLayer::debugToggleRow(cocos2d::Node* _node) {
 	if (auto node = dynamic_cast<coreModule::nodeProperties*>(_node)) {
 		if (_node->isRunning()) {
-			auto active = node->debugDrawEnabled();
-			auto tempActive = active;
-			ImGui::Checkbox("debug", &active);
-			if (active != tempActive) {
-				node->enableDebug(active);
-			}
+			//todo
 		}
 	}
 }

@@ -22,7 +22,6 @@ namespace mb {
 			void run(eGameStates state = eGameStates::MAIN_MENU);
 			void changeState(eGameStates state);
 			eGameStates getCurrentState() { return currentState; }
-			Layer* getDebugLayer();
 
 		private:
 			eGameStates currentState;
