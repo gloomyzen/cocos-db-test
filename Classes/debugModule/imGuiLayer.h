@@ -66,6 +66,7 @@ namespace mb {
 
 				// Widgets
 				classList[typeid(cocos2d::ui::Widget).name()] = "[ui::Widget]";
+				classList[typeid(cocos2d::ui::Layout).name()] = "[ui::Layout]";
 				classList[typeid(cocos2d::ui::Button).name()] = "[ui::Button]";
 				classList[typeid(cocos2d::ui::ListView).name()] = "[ui::ListView]";
 				classList[typeid(cocos2d::ui::AbstractCheckButton).name()] = "[ui::AbstractCheckButton]";

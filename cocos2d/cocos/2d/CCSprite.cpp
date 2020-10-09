@@ -1171,9 +1171,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 			auto rect = getCenterRect();
 			Vec2 pos = {(rect.origin.x + rect.size.width) * anchor.x, (rect.origin.y + rect.size.height) * anchor.y};
 			_debugDrawNode->drawPoint(pos, 4.f, _debugColorPoint);
-			// todo draw anchor point
-
-//			size.origin.x
 		}
 #endif //DEBUG
     }

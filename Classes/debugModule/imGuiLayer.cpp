@@ -74,6 +74,7 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 		lastTarget = n.front();
 	}
 	for (auto &node : n) {
+		if (node->getName() == "debugNode") continue;
 		ImGui::AlignTextToFramePadding();
 		std::string className = {};
 //		auto test = typeid(*node).name(); // need only for debug
@@ -87,6 +88,8 @@ ImRect imGuiLayer::renderTree(cocos2d::Vector<Node *> n) {
 			nodeFlags |= ImGuiTreeNodeFlags_Selected;
 		}
 		if (node->getChildren().empty()) {
+			nodeFlags |= ImGuiTreeNodeFlags_Leaf;
+		} else if (node->getChildren().size() == 1 && node->getChildren().front()->getName() == "debugNode") {
 			nodeFlags |= ImGuiTreeNodeFlags_Leaf;
 		}
 		bool nodeOpen = ImGui::TreeNodeEx((void *) (intptr_t) node->_ID, nodeFlags, "%s", name.c_str());
@@ -117,6 +120,7 @@ ImRect imGuiLayer::renderPreferences(Node *node) {
 	if (ImGui::CollapsingHeader("General info")) {
 		ImGui::Text("Node Name(ID) %s", node->getName().c_str());
 		ImGui::Text("Node GUI %d", node->_ID);
+		ImGui::Text("%s", node->getDescription().c_str());
 		if (node->isRunning()) {
 			auto active = node->isVisible();
 			auto tempActive = active;

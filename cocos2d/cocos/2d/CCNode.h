@@ -136,7 +136,7 @@ public:
     static int getAttachedNodeCount();
 
 protected:
-	bool isDebugDraw = true;
+	bool isDebugDraw = false;
 	Color4F _debugColorLine = Color4F::WHITE;
 	Color4F _debugColorPoint = Color4F::RED;
 public:

@@ -227,7 +227,9 @@ void Node::cleanup()
         child->cleanup();
 }
 
-void Node::setDebug(bool) {}
+void Node::setDebug(bool value) {
+	isDebugDraw = true;
+}
 
 Node* Node::findNode(const std::string &name, Node *parent) {
 	if (parent->getName() == name) {
