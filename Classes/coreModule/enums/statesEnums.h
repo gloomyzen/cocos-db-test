@@ -10,6 +10,8 @@ namespace mb {
 			MAIN_MENU,
 			BATTLE_SCENE
 		};
+
+
 	}
 }//mb::coreModule
 

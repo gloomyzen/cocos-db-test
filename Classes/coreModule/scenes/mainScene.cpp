@@ -31,6 +31,8 @@ void mainScene::menuCloseCallback(Ref *pSender) {
 }
 
 void mainScene::setRoom(eGameStates state) {
+	auto director = Director::getInstance();
+	auto visibleSize = director->getVisibleSize();
 	if (nodes.empty()) {
 		auto currentNode = scenesFactoryInstance::getInstance().getStateRoot(state);
 		this->addChild(currentNode, eGameLayers::ROOT);
@@ -47,7 +49,9 @@ void mainScene::setRoom(eGameStates state) {
 		nodes.front()->removeFromParentAndCleanup(true);
 		nodes.erase(nodes.begin());
 	}), nullptr);
+	nextNode->setContentSize(visibleSize);
 	this->addChild(nextNode, eGameLayers::ROOT);
 	nodes.push_back(nextNode);
 	nextNode->runAction(seq);
+	director->getRunningScene()->getDefaultCamera()->setPosition(visibleSize.width/2, visibleSize.height/2);
 }

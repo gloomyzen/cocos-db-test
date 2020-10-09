@@ -20,10 +20,10 @@ namespace mb {
 			scenesFactoryInstance();
 			~scenesFactoryInstance();
 			static scenesFactoryInstance &getInstance();
-			Node* getStateRoot(eGameStates);
-			void registerState(eGameStates, std::function<Node*(Node* node)>);
+			Layer* getStateRoot(eGameStates);
+			void registerState(eGameStates, std::function<Layer*(Layer*)>);
 		private:
-			std::map<eGameStates, std::function<Node*(Node* node)>> states{};
+			std::map<eGameStates, std::function<Layer*(Layer*)>> states{};
 		};
 	}
 }//mb::coreModule

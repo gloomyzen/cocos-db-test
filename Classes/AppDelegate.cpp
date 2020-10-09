@@ -56,8 +56,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		director->setOpenGLView(glview);
 	}
 
+#ifdef DEBUG
 	// turn on display FPS
 	director->setDisplayStats(true);
+#endif
 
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0f / 60);
@@ -83,7 +85,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 
 	register_all_packages();
-	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Node* node)->Node*{
+	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{
 		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
 		node->addChild(_background);
 		auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
@@ -92,7 +94,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		return node;
 	});
 
-	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::MAIN_MENU, [](Node* node)->Node*{
+	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::MAIN_MENU, [](Layer* node)->Layer*{
 		auto meta = new mb::metaModule::metaTabs();
 		node->addChild(meta);
 

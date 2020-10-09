@@ -26,6 +26,7 @@ namespace mb {
 
 		private:
 			std::vector<Node*> nodes{};
+			cocos2d::Layer* gameLayer;
 		};
 	}
 }//mb::coreModule

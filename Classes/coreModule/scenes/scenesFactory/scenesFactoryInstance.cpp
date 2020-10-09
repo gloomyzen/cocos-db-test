@@ -19,15 +19,15 @@ scenesFactoryInstance &scenesFactoryInstance::getInstance() {
 	return *currentFactoryInstance;
 }
 
-Node *scenesFactoryInstance::getStateRoot(eGameStates state) {
+Layer *scenesFactoryInstance::getStateRoot(eGameStates state) {
 	if (states.count(state)) {
-		auto node = Node::create();
+		auto node = Layer::create();
 		return states[state](node);
 	}
-	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is not registered! Return simple node.");
-	return Node::create();
+	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is not registered! Return simple layer.");
+	return Layer::create();
 }
 
-void scenesFactoryInstance::registerState(eGameStates state, std::function<Node *(Node*)> clb) {
+void scenesFactoryInstance::registerState(eGameStates state, std::function<Layer *(Layer*)> clb) {
 	states[state] = std::move(clb);
 }
