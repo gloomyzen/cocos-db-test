@@ -1,5 +1,6 @@
 #include "scenesFactoryInstance.h"
 #include "debugModule/logManager.h"
+#include "coreModule/enums/statesEnums.h"
 #include <map>
 
 using namespace mb;
@@ -21,8 +22,9 @@ scenesFactoryInstance &scenesFactoryInstance::getInstance() {
 
 Layer *scenesFactoryInstance::getStateRoot(eGameStates state) {
 	if (states.count(state)) {
-		auto node = Layer::create();
-		return states[state](node);
+		auto layer = Layer::create();
+		layer->setName(mapSceneNames[state]);
+		return states[state](layer);
 	}
 	LOG_ERROR("scenesFactoryInstance::getStateRoot: Current state " + std::to_string(state) + " is not registered! Return simple layer.");
 	return Layer::create();
