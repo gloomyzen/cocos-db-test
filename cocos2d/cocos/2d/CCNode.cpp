@@ -229,6 +229,21 @@ void Node::cleanup()
 
 void Node::setDebug(bool) {}
 
+Node* Node::findNode(const std::string &name, Node *parent) {
+	if (parent->getName() == name) {
+		return parent;
+	}
+	Node *nodeFound = parent->getChildByName(name);
+	if (!nodeFound) {
+		auto children = parent->getChildren();
+		for (auto child: children) {
+			nodeFound = findNode(name, child);
+			if (nodeFound) break;
+		}
+	}
+	return nodeFound;
+}
+
 std::string Node::getDescription() const
 {
     return StringUtils::format("<Node | Tag = %d", _tag);

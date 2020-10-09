@@ -13,7 +13,6 @@ namespace mb {
 
 		class nodeProperties : public Node {
 		public:
-			Node* findNode(const std::string &name, Node *node);
 			/***
 		 	 * Парсинг параметров из json файла
 		 	 * @param path relative path to file

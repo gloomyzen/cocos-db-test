@@ -137,10 +137,13 @@ public:
 
 protected:
 	bool isDebugDraw = true;
+	Color4F _debugColorLine = Color4F::WHITE;
+	Color4F _debugColorPoint = Color4F::RED;
 public:
 	bool getDebug() { return isDebugDraw; }
 	virtual void setDebug(bool);
 
+	virtual Node* findNode(const std::string &name, Node *node);
     /**
      * Gets the description string. It makes debugging easier.
      * @return A string
