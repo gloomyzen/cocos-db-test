@@ -102,8 +102,9 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 					TTFConfig font;
 					font.fontFilePath = "fonts/arial.ttf";
 					font.fontSize = 12.f;
+
 					TextHAlignment hAlignment = TextHAlignment::LEFT;
-					int maxLineWidth = 0;
+					float maxLineWidth = 0.f;
 					if (object.HasMember("fontSize") && (object["fontSize"].IsFloat() || object["fontSize"].IsInt())) {
 						font.fontSize = object["fontSize"].GetFloat();
 					}
@@ -116,8 +117,23 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 					if (object.HasMember("italics") && object["italics"].IsBool()) {
 						font.italics = object["italics"].GetBool();
 					}
+					if (object.HasMember("alight") && object["alight"].IsString()) {
+						auto alight = object["alight"].GetString();
+						if (alight == std::string("center")) {
+							hAlignment = TextHAlignment::CENTER;
+						} else
+						if (alight == std::string("left")) {
+							hAlignment = TextHAlignment::LEFT;
+						} else
+						if (alight == std::string("right")) {
+							hAlignment = TextHAlignment::RIGHT;
+						}
+					}
+					if (object.HasMember("maxLineWidth") && (object["maxLineWidth"].IsFloat() || object["maxLineWidth"].IsInt())) {
+						maxLineWidth = object["maxLineWidth"].GetFloat();
+					}
 					if (object.HasMember("text") && object["text"].IsString()) {
-						label->initWithTTF(font, object["text"].GetString(), hAlignment, maxLineWidth);
+						label->initWithTTF(font, object["text"].GetString(), hAlignment, static_cast<int>(maxLineWidth));
 					} else {
 						label->setTTFConfig(font);
 						label->setAlignment(hAlignment);
