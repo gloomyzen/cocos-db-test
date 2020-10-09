@@ -33,14 +33,23 @@ void metaTabs::createPageView() {
 	pageView->setBounceEnabled(true);
 	this->addChild(pageView);
 
-	for (int i = 0; i < tabs.size(); i++) {
+	int i = 0;
+	for (const auto &item : tabs) {
 		auto page = ui::Layout::create();
 		page->setContentSize(pageView->getContentSize());
-		auto sprite = Sprite::create("images/undefined1.png");
-		sprite->setPosition(visibleSize / 2);
-		page->addChild(sprite);
+		item->setPosition(visibleSize / 2);
+		page->addChild(item);
 		pageView->insertPage(page, i);
+		++i;
 	}
+//	for (int i = 0; i < tabs.size(); i++) {
+//		auto page = ui::Layout::create();
+//		page->setContentSize(pageView->getContentSize());
+//		auto sprite = Sprite::create("images/undefined1.png");
+//		sprite->setPosition(visibleSize / 2);
+//		page->addChild(sprite);
+//		pageView->insertPage(page, i);
+//	}
 	pageView->setCurrentPageIndex(2);
 
 	pageView->addEventListener([](Ref *sender, ui::PageView::EventType type) {

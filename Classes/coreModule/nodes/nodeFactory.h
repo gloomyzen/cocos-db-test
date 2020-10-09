@@ -17,6 +17,7 @@ namespace mb {
 			TRANSFORM_COMPONENT,
 			SPRITE_COMPONENT,
 			ANIMSPRITE_COMPONENT,
+			LABEL_COMPONENT,
 		};
 
 		class nodeFactory {

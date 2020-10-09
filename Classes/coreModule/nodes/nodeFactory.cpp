@@ -12,6 +12,7 @@ std::map<std::string, eNodeFactory> componentsMap = {
 		{"TransformComponent",  eNodeFactory::TRANSFORM_COMPONENT},
 		{"SpriteComponent",     eNodeFactory::SPRITE_COMPONENT},
 		{"AnimspriteComponent", eNodeFactory::ANIMSPRITE_COMPONENT},
+		{"LabelComponent", eNodeFactory::LABEL_COMPONENT},
 };
 std::map<std::string, std::function<Node*()>> nodes{};
 
@@ -22,6 +23,7 @@ nodeFactory::nodeFactory() {
 		inited = true;
 		nodes["node"] = []()->Node* { return new Node(); };
 		nodes["sprite"] = []()->Sprite* { return new Sprite(); };
+		nodes["label"] = []()->Label* { return new Label(); };
 	}
 }
 
@@ -52,8 +54,8 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 				if (positions.Size() == 2) {
 					node->setPosition(positions[0].GetFloat(), positions[1].GetFloat());
 				} else {
-					LOG_ERROR("nodeFactory::getComponents: Component: '" + componentName + "' has '" +
-							  std::to_string(positions.Size()) + "' position keys!");
+					LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' has '%s' position keys!",
+												  componentName.c_str(), std::to_string(positions.Size()).c_str()));
 				}
 			}
 			if (object.HasMember("anchor")) {
@@ -61,8 +63,8 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 				if (anchor.Size() == 2) {
 					node->setAnchorPoint(Vec2(anchor[0].GetFloat(), anchor[1].GetFloat()));
 				} else {
-					LOG_ERROR("nodeFactory::getComponents: Component: '" + componentName + "' has '" +
-							  std::to_string(anchor.Size()) + "' anchor keys!");
+					LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' has '%s' anchor keys!",
+												  componentName.c_str(), std::to_string(anchor.Size()).c_str()));
 				}
 			}
 			if (object.HasMember("size")) {
@@ -73,8 +75,8 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 					_size.height = size[1].GetFloat();
 					node->setContentSize(_size);
 				} else {
-					LOG_ERROR("nodeFactory::getComponents: Component '" + componentName + "' has '" +
-							  std::to_string(size.Size()) + "' size keys!");
+					LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' has '%s' size keys!",
+												  componentName.c_str(), std::to_string(size.Size()).c_str()));
 				}
 			}
 			if (object.HasMember("scale") && object["scale"].IsNumber()) {
@@ -88,14 +90,44 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 					sprite->initWithFile(object["image"].GetString());
 				}
 			} else {
-				LOG_ERROR("nodeFactory::getComponents: Component '" + componentName + "' no has sprite node type!");
+				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has sprite node type!", componentName.c_str()));
 			}
 		}
 			break;
-//		case ANIMSPRITE_COMPONENT:
-//			node->addComponent<SpriteComponent>();
-//			break;
 		case ANIMSPRITE_COMPONENT:
+			break;
+		case LABEL_COMPONENT: {
+			if (auto label = dynamic_cast<Label*>(node)) {
+				if (object.HasMember("fontType") && object["fontType"].IsString() && object["fontType"].GetString() == std::string("ttf")) {
+					TTFConfig font;
+					font.fontFilePath = "fonts/arial.ttf";
+					font.fontSize = 12.f;
+					TextHAlignment hAlignment = TextHAlignment::LEFT;
+					int maxLineWidth = 0;
+					if (object.HasMember("fontSize") && (object["fontSize"].IsFloat() || object["fontSize"].IsInt())) {
+						font.fontSize = object["fontSize"].GetFloat();
+					}
+					if (object.HasMember("fontFile") && object["fontFile"].IsString()) {
+						font.fontFilePath = object["fontFile"].GetString();
+					}
+					if (object.HasMember("bold") && object["bold"].IsBool()) {
+						font.bold = object["bold"].GetBool();
+					}
+					if (object.HasMember("italics") && object["italics"].IsBool()) {
+						font.italics = object["italics"].GetBool();
+					}
+					if (object.HasMember("text") && object["text"].IsString()) {
+						label->initWithTTF(font, object["text"].GetString(), hAlignment, maxLineWidth);
+					} else {
+						label->setTTFConfig(font);
+						label->setAlignment(hAlignment);
+						label->setMaxLineWidth(maxLineWidth);
+					}
+				}
+			} else {
+				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has label node type!", componentName.c_str()));
+			}
+		}
 			break;
 	}
 }
