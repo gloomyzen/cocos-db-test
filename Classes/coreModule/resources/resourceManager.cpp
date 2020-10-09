@@ -14,7 +14,7 @@ resourceManager &resourceManager::getInstance() {
 	if (currentResourceManager == nullptr) {
 		currentResourceManager = new resourceManager();
 		// add Resources folder to search path. This is necessary when releasing for win32
-		cocos2d::FileUtils::getInstance()->addSearchPath("Resources");
+//		cocos2d::FileUtils::getInstance()->addSearchPath("Resources");
 	}
 	return *currentResourceManager;
 }

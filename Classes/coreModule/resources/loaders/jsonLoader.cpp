@@ -8,33 +8,18 @@ jsonLoader::jsonLoader() {}
 jsonLoader::~jsonLoader() {}
 
 rapidjson::Document jsonLoader::loadJson(const std::string &path) {
-//#ifdef TEST_UTILS
-	std::ifstream ifs(path + ".json", std::ifstream::in);
-	if (!ifs.is_open()) {
+	auto jsonData = cocos2d::FileUtils::getInstance()->getStringFromFile(path + ".json");
+	if (jsonData.empty()) {
 		return nullptr;
 	}
-	rapidjson::IStreamWrapper isw{ifs};
 	rapidjson::Document document{};
-	document.ParseStream(isw);
-	if (!document.HasParseError() && document.IsObject()) {
-		return document;
+	document.Parse<0>(jsonData.c_str());
+	jsonData.clear();
+	if (document.HasParseError()) {
+		CCLOG("GetParseError %u\n", document.GetParseError());
 	} else {
-		return nullptr;
+		return document;
 	}
-//#else
-//	//for production without stream
-//	auto fileUtils = cocos2d::FileUtils::getInstance();
-//	auto data = fileUtils->getDataFromFile(path + ".json");
-//	if (data.isNull()) {
-//		return nullptr;
-//	}
-//	rapidjson::Document document{};
-//	document.Parse(reinterpret_cast<const char *>(data.getBytes()));
-//	data.clear();
-//	if (!document.HasParseError() && document.IsObject()) {
-//		return document;
-//	} else {
-//		return nullptr;
-//	}
+	return nullptr;
 //#endif
 }
