@@ -4,6 +4,8 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "coreModule/nodes/nodeProperties.h"
+#include "metaModule/tabs/simpleTab.h"
+#include <vector>
 
 namespace mb {
 	namespace metaModule {
@@ -13,13 +15,9 @@ namespace mb {
 		class metaTabs : public coreModule::nodeProperties {
 		public:
 			metaTabs();
-
 			~metaTabs();
-
 			CREATE_FUNC(metaTabs);
-
 			static Node *createNode() { return metaTabs::create(); }
-
 			bool init() {
 				if (!Node::init()) {
 					return false;
@@ -30,10 +28,11 @@ namespace mb {
 		private:
 			void createPageView();
 			PageView* pageView = nullptr;
+			std::vector<simpleTab*> tabs{};
 
 		};
 	}
-}//mb::metaTabs
+}//mb::metaModule
 
 
 #endif //MERCENARY_BATTLES_METATABS_H
