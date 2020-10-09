@@ -1,3 +1,4 @@
+#ifdef DEBUG
 #include "imGuiLayer.h"
 #include <imgui/misc/cpp/imgui_stdlib.h>
 #include "coreModule/nodes/nodeProperties.h"
@@ -311,3 +312,5 @@ void imGuiLayer::debugToggleRow(cocos2d::Node* node) {
 		}
 	}
 }
+
+#endif //DEBUG

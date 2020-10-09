@@ -227,9 +227,6 @@ void Node::cleanup()
     for( const auto &child: _children)
         child->cleanup();
 }
-#if DEBUG
-	DrawNode* _debugDrawNode = nullptr;
-#endif //DEBUG
 
 void Node::setDebug(bool value) {
 #ifdef DEBUG
@@ -1198,30 +1195,13 @@ void Node::draw(Renderer* renderer, const Mat4 & transform, uint32_t flags)
 #if DEBUG
 	if (isDebugDraw) {
 		_debugDrawNode->clear();
-//		auto count = _polyInfo.triangles.indexCount / 3;
-//		auto indices = _polyInfo.triangles.indices;
-//		auto verts = _polyInfo.triangles.verts;
-//		for (unsigned int i = 0; i < count; i++) {
-//			//draw 3 lines
-//			Vec3 from = verts[indices[i * 3]].vertices;
-//			Vec3 to = verts[indices[i * 3 + 1]].vertices;
-//			_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
-//
-//			from = verts[indices[i * 3 + 1]].vertices;
-//			to = verts[indices[i * 3 + 2]].vertices;
-//			_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
-//
-//			from = verts[indices[i * 3 + 2]].vertices;
-//			to = verts[indices[i * 3]].vertices;
-//			_debugDrawNode->drawLine(Vec2(from.x, from.y), Vec2(to.x, to.y), _debugColorLine);
-//		}
 		auto anchor = getAnchorPoint();
 		auto rect = getContentSize();
 		auto pos = getPosition();
-//		Vec2 dot = {rect.width * anchor.x, rect.height * anchor.y};
-		Vec2 dot = {(pos.x + rect.width) * anchor.x, (pos.y + rect.height) * anchor.y};
+
+		Vec2 dot = {rect.width * anchor.x, rect.height * anchor.y};
 		_debugDrawNode->drawPoint(dot, 4.f, _debugColorPoint);
-		_debugDrawNode->drawRect(pos, rect, _debugColorLine);
+		_debugDrawNode->drawRect(Vec2::ZERO, rect, _debugColorLine);
 
 	}
 #endif //DEBUG

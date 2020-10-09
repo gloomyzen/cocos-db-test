@@ -107,6 +107,7 @@ class EventListener;
  - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
 
  */
+class DrawNode;
 
 class CC_DLL Node : public Ref
 {
@@ -136,9 +137,12 @@ public:
     static int getAttachedNodeCount();
 
 protected:
-	bool isDebugDraw = false;
-	Color4F _debugColorLine = Color4F::WHITE;
-	Color4F _debugColorPoint = Color4F::RED;
+		bool isDebugDraw = false;
+		Color4F _debugColorLine = Color4F::WHITE;
+		Color4F _debugColorPoint = Color4F::RED;
+#if DEBUG
+		DrawNode *_debugDrawNode = nullptr;
+#endif //DEBUG
 public:
 	bool getDebug() { return isDebugDraw; }
 	virtual void setDebug(bool);

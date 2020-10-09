@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------
 #include(${CMAKE_SOURCE_DIR}/cmake/StandardProjectSettings.cmake)
 # General dependency target
-add_library(project_dependency INTERFACE)
+add_library(project_dependency ${CMAKE_SOURCE_DIR}/lib/empty.cpp)
 
 #------------------------------------------------------------------------------
 #                         CMake modules and options
@@ -47,7 +47,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/Cache.cmake)
 #------------------------------------------------------------------------------
 #                        ImGui, included for debugging only
 #------------------------------------------------------------------------------
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if (${DEBUG})
     if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/imgui/CMakeLists.txt)
         message(FATAL_ERROR "ImGui not found, download lib/imgui or use 'git submodules update'.")
     endif ()

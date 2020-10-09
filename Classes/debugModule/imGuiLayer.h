@@ -1,6 +1,8 @@
 #ifndef MERCENARY_BATTLES_IMGUILAYER_H
 #define MERCENARY_BATTLES_IMGUILAYER_H
 
+#ifdef DEBUG
+
 #include <imgui.h>
 #include <imgui_internal.h>
 #include <CCIMGUI.h>
@@ -167,4 +169,5 @@ namespace mb {
 	}
 }//mb::debugModule
 
+#endif //DEBUG
 #endif //MERCENARY_BATTLES_IMGUILAYER_H
