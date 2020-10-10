@@ -53,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 		director->setOpenGLView(glview);
 	}
 
-#ifdef DEBUG
+#ifndef RELEASE
 	// turn on display FPS
 	director->setDisplayStats(true);
 #endif
@@ -61,13 +61,23 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0f / 60);
 
-	// Set the design resolution
-	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
-									ResolutionPolicy::NO_BORDER);
 	auto frameSize = glview->getFrameSize();
 
-	director->setContentScaleFactor(MIN(frameSize.height / designResolutionSize.height,
-										frameSize.width / designResolutionSize.width));
+	float scaleFactor = MIN(designResolutionSize.height / frameSize.height,
+							designResolutionSize.width / frameSize.width);
+
+	// Set the design resolution
+	if (frameSize.width > designResolutionSize.width) {
+		glview->setDesignResolutionSize(designResolutionSize.width + designResolutionSize.width * scaleFactor,
+										designResolutionSize.height,
+										ResolutionPolicy::EXACT_FIT);
+		director->setContentScaleFactor(director->getContentScaleFactor() + scaleFactor);
+	} else {
+		glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
+										ResolutionPolicy::NO_BORDER);
+	}
+
+	auto test = glview->getFrameSize();
 
 	register_all_packages();
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{

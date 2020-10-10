@@ -84,8 +84,6 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 			}
 			if (object.HasMember("rotation") && object["rotation"].IsNumber()) {
 				node->setRotation(object["rotation"].GetFloat());
-			} else {
-				node->setRotation(0.f);
 			}
 		}
 			break;
