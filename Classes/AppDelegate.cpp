@@ -2,6 +2,7 @@
 #include "coreModule/gameManager.h"
 #include "coreModule/enums/statesEnums.h"
 #include "coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
+#include "coreModule/resources/settings/settingManager.h"
 #include "metaModule/metaTabs.h"
 
 // #define USE_AUDIO_ENGINE 1
@@ -13,7 +14,7 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 768);
+//static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 768);
 
 AppDelegate::AppDelegate() {
 }
@@ -40,44 +41,47 @@ static int register_all_packages() {
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+	auto setting = mb::coreModule::settingManager::load();
 	// initialize director
 	auto director = Director::getInstance();
 	auto glview = director->getOpenGLView();
 	if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, designResolutionSize.width,
-																			   designResolutionSize.height));
+		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, setting.frameResolutionSize.width,
+																			   setting.frameResolutionSize.height));
 #else
 		glview = GLViewImpl::create("Mercenary Battles");
 #endif
 		director->setOpenGLView(glview);
 	}
 
-#ifndef RELEASE
 	// turn on display FPS
-	director->setDisplayStats(true);
-#endif
+	director->setDisplayStats(setting.showDisplayStats);
 
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0f / 60);
 
-	auto frameSize = glview->getFrameSize();
-
-	float scaleFactor = MIN(designResolutionSize.height / frameSize.height,
-							designResolutionSize.width / frameSize.width);
+//	auto frameSize = glview->getFrameSize();
+//
+//	float scaleFactor = MIN(designResolutionSize.height / frameSize.height,
+//							designResolutionSize.width / frameSize.width);
+//
+//	// Set the design resolution
+//	if (frameSize.width > designResolutionSize.width) {
+//		glview->setDesignResolutionSize(designResolutionSize.width + designResolutionSize.width * scaleFactor,
+//										designResolutionSize.height,
+//										ResolutionPolicy::NO_BORDER);
+//		director->setContentScaleFactor(director->getContentScaleFactor() + scaleFactor);
+//	} else {
+//		glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
+//										ResolutionPolicy::NO_BORDER);
+//	}
 
 	// Set the design resolution
-	if (frameSize.width > designResolutionSize.width) {
-		glview->setDesignResolutionSize(designResolutionSize.width + designResolutionSize.width * scaleFactor,
-										designResolutionSize.height,
-										ResolutionPolicy::EXACT_FIT);
-		director->setContentScaleFactor(director->getContentScaleFactor() + scaleFactor);
-	} else {
-		glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
-										ResolutionPolicy::NO_BORDER);
-	}
+	glview->setDesignResolutionSize( setting.designResolutionSize.width, setting.designResolutionSize.height, ResolutionPolicy::NO_BORDER);
 
-	auto test = glview->getFrameSize();
+	// Set Content Scale Factor
+	director->setContentScaleFactor( setting.frameResolutionSize.height / setting.designResolutionSize.height );
 
 	register_all_packages();
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{

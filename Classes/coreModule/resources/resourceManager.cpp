@@ -13,8 +13,12 @@ resourceManager::~resourceManager() {}
 resourceManager &resourceManager::getInstance() {
 	if (currentResourceManager == nullptr) {
 		currentResourceManager = new resourceManager();
-		// add Resources folder to search path. This is necessary when releasing for win32
-//		cocos2d::FileUtils::getInstance()->addSearchPath("Resources");
+		// todo update for ios and ipad
+//		auto fileUtils = cocos2d::FileUtils::getInstance();
+//		std::vector<std::string> searchPaths = fileUtils->getSearchPaths();
+//		searchPaths.insert(searchPaths.begin(), "iphone");
+//		searchPaths.insert(searchPaths.begin(), "ipad");
+//		fileUtils->setSearchPaths(searchPaths);
 	}
 	return *currentResourceManager;
 }
