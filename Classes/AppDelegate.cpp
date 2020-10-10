@@ -13,14 +13,7 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-//static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
-//static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
-//static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
-//static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
-static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 640);
-static cocos2d::Size smallResolutionSize = cocos2d::Size(1136, 640);//iphone se 640 x 1136
-static cocos2d::Size mediumResolutionSize = cocos2d::Size(1136, 640);//iphone 7 750 x 1334
-static cocos2d::Size largeResolutionSize = cocos2d::Size(1386, 640);//iphone x pro 1125 x 2436
+static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 768);
 
 AppDelegate::AppDelegate() {
 }
@@ -52,8 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto glview = director->getOpenGLView();
 	if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, mediumResolutionSize.width,
-																	  mediumResolutionSize.height));
+		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, designResolutionSize.width,
+																			   designResolutionSize.height));
 #else
 		glview = GLViewImpl::create("Mercenary Battles");
 #endif
@@ -69,24 +62,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	director->setAnimationInterval(1.0f / 60);
 
 	// Set the design resolution
-//	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
-//									ResolutionPolicy::NO_BORDER);
-//	auto frameSize = glview->getFrameSize();
-//	// if the frame's height is larger than the height of medium size.
-//	if (frameSize.height > mediumResolutionSize.height) {
-//		director->setContentScaleFactor(MIN(largeResolutionSize.height / designResolutionSize.height,
-//											largeResolutionSize.width / designResolutionSize.width));
-//	}
-//		// if the frame's height is larger than the height of small size.
-//	else if (frameSize.height > smallResolutionSize.height) {
-//		director->setContentScaleFactor(MIN(mediumResolutionSize.height / designResolutionSize.height,
-//											mediumResolutionSize.width / designResolutionSize.width));
-//	}
-//		// if the frame's height is smaller than the height of medium size.
-//	else {
-//		director->setContentScaleFactor(MIN(smallResolutionSize.height / designResolutionSize.height,
-//											smallResolutionSize.width / designResolutionSize.width));
-//	}
+	glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
+									ResolutionPolicy::NO_BORDER);
+	auto frameSize = glview->getFrameSize();
+
+	director->setContentScaleFactor(MIN(frameSize.height / designResolutionSize.height,
+										frameSize.width / designResolutionSize.width));
 
 	register_all_packages();
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{

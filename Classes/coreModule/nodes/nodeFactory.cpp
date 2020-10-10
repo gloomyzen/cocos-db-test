@@ -82,6 +82,11 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 			if (object.HasMember("scale") && object["scale"].IsNumber()) {
 				//todo
 			}
+			if (object.HasMember("rotation") && object["rotation"].IsNumber()) {
+				node->setRotation(object["rotation"].GetFloat());
+			} else {
+				node->setRotation(0.f);
+			}
 		}
 			break;
 		case SPRITE_COMPONENT: {
@@ -105,7 +110,7 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 
 					TextHAlignment hAlignment = TextHAlignment::LEFT;
 					float maxLineWidth = 0.f;
-					if (object.HasMember("fontSize") && (object["fontSize"].IsFloat() || object["fontSize"].IsInt())) {
+					if (object.HasMember("fontSize") && object["fontSize"].IsNumber()) {
 						font.fontSize = object["fontSize"].GetFloat();
 					}
 					if (object.HasMember("fontFile") && object["fontFile"].IsString()) {
@@ -113,9 +118,6 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 					}
 					if (object.HasMember("bold") && object["bold"].IsBool()) {
 						font.bold = object["bold"].GetBool();
-					}
-					if (object.HasMember("italics") && object["italics"].IsBool()) {
-						font.italics = object["italics"].GetBool();
 					}
 					if (object.HasMember("alight") && object["alight"].IsString()) {
 						auto alight = object["alight"].GetString();
@@ -129,7 +131,7 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName,con
 							hAlignment = TextHAlignment::RIGHT;
 						}
 					}
-					if (object.HasMember("maxLineWidth") && (object["maxLineWidth"].IsFloat() || object["maxLineWidth"].IsInt())) {
+					if (object.HasMember("maxLineWidth") && object["maxLineWidth"].IsNumber()) {
 						maxLineWidth = object["maxLineWidth"].GetFloat();
 					}
 					if (object.HasMember("text") && object["text"].IsString()) {
