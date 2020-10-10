@@ -7,14 +7,14 @@ namespace mb {
 	namespace coreModule {
 		class settingManager {
 		private:
-			settingManager(cocos2d::Size frameResolution, const cocos2d::Size designResolution, const bool showDisplayStats);
+			settingManager(cocos2d::Size frameResolution, const cocos2d::Size largeResolution, const bool showDisplayStats);
 
 		public:
 
 			static settingManager load();
 
 			const cocos2d::Size frameResolutionSize;
-			const cocos2d::Size designResolutionSize;
+			const cocos2d::Size largeResolutionSize;
 			const bool showDisplayStats;
 		};
 	}

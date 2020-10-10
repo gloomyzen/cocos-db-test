@@ -5,9 +5,9 @@
 
 using namespace mb::coreModule;
 
-settingManager::settingManager(cocos2d::Size frameResolution, const cocos2d::Size designResolution, const bool showDisplayStats) :
+settingManager::settingManager(cocos2d::Size frameResolution, const cocos2d::Size largeResolution, const bool showDisplayStats) :
 		frameResolutionSize(frameResolution )
-		, designResolutionSize(designResolution )
+		, largeResolutionSize(largeResolution )
 		, showDisplayStats( showDisplayStats )
 {}
 
@@ -15,7 +15,7 @@ settingManager settingManager::load()
 {
 	// default
 	cocos2d::Size frameResolution( 1024, 768 );
-	cocos2d::Size designResolution( 480, 320 );
+	cocos2d::Size largeResolution( 480, 320 );
 	auto stats = false;
 
 	// load json
@@ -26,13 +26,13 @@ settingManager settingManager::load()
 	if( doc.HasParseError() )
 	{
 		LOG_ERROR("settingManager::load: json parse error");
-		return settingManager(frameResolution, designResolution, stats);
+		return settingManager(frameResolution, largeResolution, stats);
 	}
 
 	if( doc.IsNull() )
 	{
 		LOG_ERROR("settingManager::load: json is empty");
-		return settingManager(frameResolution, designResolution, stats);
+		return settingManager(frameResolution, largeResolution, stats);
 	}
 
 	const auto frameResolutionItr = doc.FindMember( "frameResolution" );
@@ -47,21 +47,21 @@ settingManager settingManager::load()
 			frameResolution.setSize( xItr->value.GetInt(), yItr->value.GetInt() );
 	}
 
-	const auto designResolutionItr = doc.FindMember( "designResolution" );
-	if( doc.MemberEnd() != designResolutionItr )
+	const auto largeResolutionItr = doc.FindMember( "largeResolution" );
+	if( doc.MemberEnd() != largeResolutionItr )
 	{
-		const auto xItr = designResolutionItr->value.FindMember( "x" );
-		const auto yItr = designResolutionItr->value.FindMember( "y" );
-		if( designResolutionItr->value.MemberEnd() != xItr
+		const auto xItr = largeResolutionItr->value.FindMember( "x" );
+		const auto yItr = largeResolutionItr->value.FindMember( "y" );
+		if( largeResolutionItr->value.MemberEnd() != xItr
 			&& xItr->value.IsInt()
 			&& frameResolutionItr->value.MemberEnd() != yItr
 			&& yItr->value.IsInt() )
-			designResolution.setSize( xItr->value.GetInt(), yItr->value.GetInt() );
+			largeResolution.setSize( xItr->value.GetInt(), yItr->value.GetInt() );
 	}
 
 	const auto showDisplayStatsItr = doc.FindMember( "showDisplayStats" );
 	if( doc.MemberEnd() != showDisplayStatsItr )
 		stats = showDisplayStatsItr->value.GetBool();
 
-	return settingManager( frameResolution, designResolution, stats );
+	return settingManager( frameResolution, largeResolution, stats );
 }

@@ -14,8 +14,6 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-//static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 768);
-
 AppDelegate::AppDelegate() {
 }
 
@@ -47,8 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	auto glview = director->getOpenGLView();
 	if (!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, setting.frameResolutionSize.width,
-																			   setting.frameResolutionSize.height));
+		glview = GLViewImpl::createWithRect("Mercenary Battles", cocos2d::Rect(0, 0, setting.largeResolutionSize.width, setting.largeResolutionSize.height));
 #else
 		glview = GLViewImpl::create("Mercenary Battles");
 #endif
@@ -61,27 +58,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	// set FPS. the default value is 1.0/60 if you don't call this
 	director->setAnimationInterval(1.0f / 60);
 
-//	auto frameSize = glview->getFrameSize();
-//
-//	float scaleFactor = MIN(designResolutionSize.height / frameSize.height,
-//							designResolutionSize.width / frameSize.width);
-//
-//	// Set the design resolution
-//	if (frameSize.width > designResolutionSize.width) {
-//		glview->setDesignResolutionSize(designResolutionSize.width + designResolutionSize.width * scaleFactor,
-//										designResolutionSize.height,
-//										ResolutionPolicy::NO_BORDER);
-//		director->setContentScaleFactor(director->getContentScaleFactor() + scaleFactor);
-//	} else {
-//		glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height,
-//										ResolutionPolicy::NO_BORDER);
-//	}
-
 	// Set the design resolution
-	glview->setDesignResolutionSize( setting.designResolutionSize.width, setting.designResolutionSize.height, ResolutionPolicy::NO_BORDER);
-
-	// Set Content Scale Factor
-	director->setContentScaleFactor( setting.frameResolutionSize.height / setting.designResolutionSize.height );
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+	director->setContentScaleFactor(1);
+#else
+	glview->setDesignResolutionSize(setting.frameResolutionSize.width, setting.frameResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
+#endif
 
 	register_all_packages();
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{
