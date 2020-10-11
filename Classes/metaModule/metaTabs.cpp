@@ -9,23 +9,13 @@ using namespace ui;
 metaTabs::metaTabs() {
 	this->setName("metaTabs");
 	createPageView();
-	loadProperty("menuScene/" + this->getName(), dynamic_cast<Node*>(this));
+	loadProperty("menuScene/" + this->getName(), dynamic_cast<Node *>(this));
 }
 
 metaTabs::~metaTabs() {}
 
 void metaTabs::createPageView() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	buttonHolder = Node::create();
-	buttonHolder->setAnchorPoint(Vec2::ZERO);
-	buttonHolder->setContentSize(cocos2d::Size(visibleSize.width, 0));
-
-
-//	tabs.push_back(new simpleTab());
-//	tabs.push_back(new simpleTab());
-//	tabs.push_back(new simpleTab());//todo change this to "join in battle"
-//	tabs.push_back(new simpleTab());
-//	tabs.push_back(new simpleTab());
 
 	pageView = PageView::create();
 	pageView->setName("tabsHolder");
@@ -37,42 +27,68 @@ void metaTabs::createPageView() {
 	pageView->setBounceEnabled(true);
 	this->addChild(pageView);
 
-	int i = 0;
+	buttonHolder = Node::create();
+	addChild(buttonHolder);
+
 	{//simple page
-		auto page = new simpleTab();
-		page->setContentSize(pageView->getContentSize());
-		pageView->insertPage(page, i);
-		i++;
+		auto page = new tabsElement();
+		page->index = tabs.size();
+		page->tab = new simpleTab();
+		page->tab->setContentSize(pageView->getContentSize());
+		pageView->addPage(page->tab);
+		page->title = "Missions";
+		tabs.push_back(page);
 	};
 	{//battle page
-		auto page = new simpleTab();
-		page->setContentSize(pageView->getContentSize());
-		pageView->insertPage(page, i);
-		i++;
+		auto page = new tabsElement();
+		page->index = tabs.size();
+		page->tab = new simpleTab();
+		page->tab->setContentSize(pageView->getContentSize());
+		pageView->addPage(page->tab);
+		page->title = "Campaign";
+		tabs.push_back(page);
 	};
 	{//simple page
-		auto page = new simpleTab();
-		page->setContentSize(pageView->getContentSize());
-		pageView->insertPage(page, i);
+		auto page = new tabsElement();
+		page->index = tabs.size();
+		page->tab = new simpleTab();
+		page->tab->setContentSize(pageView->getContentSize());
+		pageView->addPage(page->tab);
+		page->title = "Heroes";
+		tabs.push_back(page);
 	};
 
-//	int i = 0;
-//	for (const auto &item : tabs) {
-//		auto page = ui::Layout::create();
-//		page->setContentSize(pageView->getContentSize());
-//		page->addChild(item);
-//		pageView->insertPage(page, i);
-//		++i;
-//	}
-	pageView->setCurrentPageIndex(2);
+	//set default opened page
+	pageView->setCurrentPageIndex(1);
 
-	pageView->addEventListener([](Ref *sender, ui::PageView::EventType type) {
+	if (buttonHolder != nullptr) {
+		float offset = 0.f;
+		float offsetX = 15.f;
+		for (auto item : tabs) {
+			item->button = new menuButton();
+			buttonHolder->addChild(item->button);
+			item->button->setPosition(Vec2(offset, 0.f));
+			offset += item->button->getContentSize().width + offsetX;
+			item->button->addTouchEventListener([this, item](Ref* sender, ui::Widget::TouchEventType type){
+				if (type == ui::Widget::TouchEventType::ENDED) {
+					pageView->scrollToItem(item->index);
+				}
+			});
+		}
+		buttonHolder->setAnchorPoint(Vec2::ZERO);
+		buttonHolder->setContentSize(cocos2d::Size(offset, tabs.front()->button->getContentSize().height));
+		buttonHolder->setPosition(Vec2((visibleSize.width/2) - (offset / 2), 0));
+	}
+
+
+
+	/*pageView->addEventListener([](Ref *sender, ui::PageView::EventType type) {
 		if (type == ui::PageView::EventType::TURNING) {
 			auto _pageView = dynamic_cast<PageView *>(sender);
 			if (_pageView != nullptr) {
 				CCLOG("current page no =%zd", _pageView->getCurrentPageIndex());
 			}
 		}
-	});
+	});*/
 
 }

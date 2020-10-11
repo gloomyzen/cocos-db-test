@@ -15,6 +15,7 @@ namespace mb {
 		using namespace ui;
 
 		struct tabsElement {
+			int index;
 			simpleTab* tab;
 			menuButton* button;
 			std::string title;
