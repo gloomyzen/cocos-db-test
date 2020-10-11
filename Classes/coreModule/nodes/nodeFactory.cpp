@@ -36,7 +36,7 @@ nodeFactory &nodeFactory::getInstance() {
 	return *currentNodeFactory;
 }
 
-void nodeFactory::getComponents(Node *node, const std::string &componentName,const rapidjson::GenericValue<rapidjson::UTF8<char>>::Object &object) {
+void nodeFactory::getComponents(Node *node, const std::string &componentName, const rapidjson::GenericValue<rapidjson::UTF8<char>>::Object &object) {
 	if (node == nullptr)
 		return;
 

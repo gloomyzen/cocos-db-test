@@ -20,6 +20,12 @@ namespace mb {
 			LABEL_COMPONENT,
 		};
 
+		static const std::vector<std::string> componentPriorityList = {
+				{"SpriteComponent"},
+				{"LabelComponent"},
+				{"TransformComponent"}
+		};
+
 		class nodeFactory {
 		public:
 			nodeFactory();

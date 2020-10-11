@@ -77,12 +77,46 @@ void nodeProperties::parseComponents(Node *node, const std::string &pathProperti
 		auto *targetNode = findNode(nodeName, node);
 		if (targetNode == nullptr) continue;
 
-		for (auto &item : propJson[nodeName].GetObject()) {
-			std::string componentName = item.name.GetString();
-			if (item.value.IsObject()) {
-				GET_NODE_FACTORY().getComponents(targetNode, componentName, item.value.GetObject());
+		for (const auto &component : componentPriorityList) {
+			if (component.empty()) {
+				LOG_ERROR(StringUtils::format("nodeProperties::parseProperty bad property '%s' in 'componentPriorityList'", component.c_str()));
+				continue;
+			}
+			const auto componentItr = propJson[nodeName].FindMember(component.c_str());
+			if(componentItr != propJson[nodeName].MemberEnd()) {
+				if (componentItr->value.IsObject()) {
+					GET_NODE_FACTORY().getComponents(targetNode, component, componentItr->value.GetObject());
+				}
 			}
 		}
+//
+//		const auto transformComponentItr = propJson[nodeName].FindMember("TransformComponent");
+//		if(transformComponentItr != propJson[nodeName].MemberEnd()) {
+//			const std::string componentName = transformComponentItr->name.GetString();
+//			if (transformComponentItr->value.IsObject()) {
+//				GET_NODE_FACTORY().getComponents(targetNode, componentName, transformComponentItr->value.GetObject());
+//			}
+//		}
+//		const auto spriteComponentItr = propJson[nodeName].FindMember("SpriteComponent");
+//		if(spriteComponentItr != propJson[nodeName].MemberEnd()) {
+//			const std::string componentName = spriteComponentItr->name.GetString();
+//			if (spriteComponentItr->value.IsObject()) {
+//				GET_NODE_FACTORY().getComponents(targetNode, componentName, spriteComponentItr->value.GetObject());
+//			}
+//		}
+//		const auto labelComponentItr = propJson[nodeName].FindMember("LabelComponent");
+//		if(labelComponentItr != propJson[nodeName].MemberEnd()) {
+//			const std::string componentName = labelComponentItr->name.GetString();
+//			if (labelComponentItr->value.IsObject()) {
+//				GET_NODE_FACTORY().getComponents(targetNode, componentName, labelComponentItr->value.GetObject());
+//			}
+//		}
+//		for (auto &item : propJson[nodeName].GetObject()) {
+//			const std::string componentName = item.name.GetString();
+//			if (item.value.IsObject()) {
+//				GET_NODE_FACTORY().getComponents(targetNode, componentName, item.value.GetObject());
+//			}
+//		}
 		if (found && !recursive) {
 			return;
 		}

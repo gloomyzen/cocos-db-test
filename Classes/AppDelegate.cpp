@@ -76,6 +76,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	});
 
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::MAIN_MENU, [](Layer* node)->Layer*{
+		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
+		node->addChild(_background);
+		_background->setAnchorPoint(Vec2(0.f, 0.f));
 		auto meta = new mb::metaModule::metaTabs();
 		node->addChild(meta);
 
