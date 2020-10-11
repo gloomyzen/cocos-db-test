@@ -13,6 +13,7 @@ std::map<std::string, eNodeFactory> componentsMap = {
 		{"SpriteComponent",     eNodeFactory::SPRITE_COMPONENT},
 		{"AnimspriteComponent", eNodeFactory::ANIMSPRITE_COMPONENT},
 		{"LabelComponent", eNodeFactory::LABEL_COMPONENT},
+		{"ButtonComponent", eNodeFactory::BUTTON_COMPONENT},
 };
 std::map<std::string, std::function<Node*()>> nodes{};
 
@@ -24,6 +25,7 @@ nodeFactory::nodeFactory() {
 		nodes["node"] = []()->Node* { return new Node(); };
 		nodes["sprite"] = []()->Sprite* { return new Sprite(); };
 		nodes["label"] = []()->Label* { return new Label(); };
+		nodes["button"] = []()->Button* { return new Button(); };
 	}
 }
 
@@ -142,6 +144,28 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 				}
 			} else {
 				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has label node type!", componentName.c_str()));
+			}
+		}
+			break;
+		case BUTTON_COMPONENT: {
+			if (auto button = dynamic_cast<Button*>(node)) {
+				std::string normalImg{};
+				std::string selectedImg{};
+				std::string disabledImg{};
+				if (object.HasMember("normalImage") && object["normalImage"].IsString()) {
+					normalImg = object["normalImage"].GetString();
+				}
+				if (object.HasMember("selectedImage") && object["selectedImage"].IsString()) {
+					selectedImg = object["selectedImage"].GetString();
+				}
+				if (object.HasMember("disabledImage") && object["disabledImage"].IsString()) {
+					disabledImg = object["disabledImage"].GetString();
+				}
+				if (!normalImg.empty()) {
+					button->init(normalImg, !selectedImg.empty() ? selectedImg : "", !disabledImg.empty() ? disabledImg : "");
+				}
+			} else {
+				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has button node type!", componentName.c_str()));
 			}
 		}
 			break;

@@ -18,9 +18,11 @@ namespace mb {
 			SPRITE_COMPONENT,
 			ANIMSPRITE_COMPONENT,
 			LABEL_COMPONENT,
+			BUTTON_COMPONENT,
 		};
 
 		static const std::vector<std::string> componentPriorityList = {
+				{"ButtonComponent"},
 				{"SpriteComponent"},
 				{"LabelComponent"},
 				{"TransformComponent"}
