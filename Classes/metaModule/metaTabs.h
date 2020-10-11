@@ -5,12 +5,20 @@
 #include "ui/CocosGUI.h"
 #include "coreModule/nodes/nodeProperties.h"
 #include "metaModule/tabs/simpleTab.h"
+#include "metaModule/widgets/menuButton.h"
 #include <vector>
+#include <string>
 
 namespace mb {
 	namespace metaModule {
 		using namespace cocos2d;
 		using namespace ui;
+
+		struct tabsElement {
+			simpleTab* tab;
+			menuButton* button;
+			std::string title;
+		};
 
 		class metaTabs : public coreModule::nodeProperties, public Node {
 		public:
@@ -28,7 +36,8 @@ namespace mb {
 		private:
 			void createPageView();
 			PageView* pageView = nullptr;
-			std::vector<simpleTab*> tabs{};
+			Node* buttonHolder = nullptr;
+			std::vector<tabsElement*> tabs{};
 
 		};
 	}

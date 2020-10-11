@@ -26,6 +26,7 @@ nodeFactory::nodeFactory() {
 		nodes["sprite"] = []()->Sprite* { return new Sprite(); };
 		nodes["label"] = []()->Label* { return new Label(); };
 		nodes["button"] = []()->Button* { return new Button(); };
+		nodes["layout"] = []()->Layout* { return new Layout(); };
 	}
 }
 

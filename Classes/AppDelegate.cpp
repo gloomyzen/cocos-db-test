@@ -68,6 +68,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	register_all_packages();
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::BATTLE_SCENE, [](Layer* node)->Layer*{
 		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
+		_background->setName("background");
+		_background->setAnchorPoint(Vec2(0.f, 0.f));
 		node->addChild(_background);
 		auto label = Label::createWithTTF("Battle scene", "fonts/Marker Felt.ttf", 24);
 		node->addChild(label);
@@ -77,8 +79,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	GET_SCENES_FACTORY().registerState(mb::coreModule::eGameStates::MAIN_MENU, [](Layer* node)->Layer*{
 		auto _background = cocos2d::Sprite::create("images/ui/windows/testWindow/background.png");
-		node->addChild(_background);
+		_background->setName("background");
 		_background->setAnchorPoint(Vec2(0.f, 0.f));
+		node->addChild(_background);
 		auto meta = new mb::metaModule::metaTabs();
 		node->addChild(meta);
 

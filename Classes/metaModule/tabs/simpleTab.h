@@ -10,14 +10,14 @@ namespace mb {
 		using namespace cocos2d;
 		using namespace ui;
 
-		class simpleTab : public coreModule::nodeProperties, public Node {
+		class simpleTab : public coreModule::nodeProperties, public Layout {
 		public:
 			simpleTab();
 			~simpleTab();
 			CREATE_FUNC(simpleTab);
-			static Node *createNode() { return simpleTab::create(); }
+			static Layout *createNode() { return simpleTab::create(); }
 			bool init() {
-				if (!Node::init()) {
+				if (!Layout::init()) {
 					return false;
 				}
 				return true;

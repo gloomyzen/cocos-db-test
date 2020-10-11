@@ -16,12 +16,16 @@ metaTabs::~metaTabs() {}
 
 void metaTabs::createPageView() {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
+	buttonHolder = Node::create();
+	buttonHolder->setAnchorPoint(Vec2::ZERO);
+	buttonHolder->setContentSize(cocos2d::Size(visibleSize.width, 0));
 
-	tabs.push_back(new simpleTab());
-	tabs.push_back(new simpleTab());
-	tabs.push_back(new simpleTab());//todo change this to "join in battle"
-	tabs.push_back(new simpleTab());
-	tabs.push_back(new simpleTab());
+
+//	tabs.push_back(new simpleTab());
+//	tabs.push_back(new simpleTab());
+//	tabs.push_back(new simpleTab());//todo change this to "join in battle"
+//	tabs.push_back(new simpleTab());
+//	tabs.push_back(new simpleTab());
 
 	pageView = PageView::create();
 	pageView->setName("tabsHolder");
@@ -34,13 +38,32 @@ void metaTabs::createPageView() {
 	this->addChild(pageView);
 
 	int i = 0;
-	for (const auto &item : tabs) {
-		auto page = ui::Layout::create();
+	{//simple page
+		auto page = new simpleTab();
 		page->setContentSize(pageView->getContentSize());
-		page->addChild(item);
 		pageView->insertPage(page, i);
-		++i;
-	}
+		i++;
+	};
+	{//battle page
+		auto page = new simpleTab();
+		page->setContentSize(pageView->getContentSize());
+		pageView->insertPage(page, i);
+		i++;
+	};
+	{//simple page
+		auto page = new simpleTab();
+		page->setContentSize(pageView->getContentSize());
+		pageView->insertPage(page, i);
+	};
+
+//	int i = 0;
+//	for (const auto &item : tabs) {
+//		auto page = ui::Layout::create();
+//		page->setContentSize(pageView->getContentSize());
+//		page->addChild(item);
+//		pageView->insertPage(page, i);
+//		++i;
+//	}
 	pageView->setCurrentPageIndex(2);
 
 	pageView->addEventListener([](Ref *sender, ui::PageView::EventType type) {
