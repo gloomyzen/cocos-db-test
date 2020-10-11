@@ -15,7 +15,7 @@ namespace mb {
 			menuButton();
 			~menuButton();
 			CREATE_FUNC(menuButton);
-			bool init() {
+			bool init() override {
 				if (!Button::init()) {
 					return false;
 				}

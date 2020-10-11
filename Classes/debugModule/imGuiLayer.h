@@ -17,8 +17,6 @@ namespace mb {
 	namespace debugModule {
 		class imGuiLayer : public cocos2d::Layer {
 		protected:
-			cocos2d::Sprite *_background;
-
 			void _onStart();
 
 			void update(float dt) override {
@@ -28,17 +26,10 @@ namespace mb {
 			}
 
 		public:
+			imGuiLayer() {}
+			~imGuiLayer() = default;
+
 			CREATE_FUNC(imGuiLayer);
-
-			static cocos2d::Scene* createScene()
-			{
-				auto scene = cocos2d::Scene::create();
-				auto layer = imGuiLayer::create();
-
-				scene->addChild(layer);
-				return scene;
-			}
-			imGuiLayer() : _background(nullptr) {}
 
 			bool init() override {
 				if (!Layer::init()) {
@@ -144,7 +135,7 @@ namespace mb {
 //			}
 
 		private:
-			std::vector<dragonBones::CCArmatureDisplay*> _armatures;
+//			std::vector<dragonBones::CCArmatureDisplay*> _armatures;
 			/// Debug data
 			void debugToggleRow(Node *);
 			/// Node editor

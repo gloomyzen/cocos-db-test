@@ -3,6 +3,7 @@
 #include <string>
 #include "debugModule/logManager.h"
 #include "ui/CocosGUI.h"
+#include "dragonBones/cocos2dx/CCDragonBonesHeaders.h"
 
 using namespace mb::coreModule;
 using namespace cocos2d;
@@ -14,6 +15,7 @@ std::map<std::string, eNodeFactory> componentsMap = {
 		{"AnimspriteComponent", eNodeFactory::ANIMSPRITE_COMPONENT},
 		{"LabelComponent", eNodeFactory::LABEL_COMPONENT},
 		{"ButtonComponent", eNodeFactory::BUTTON_COMPONENT},
+		{"DragonbonesComponent", eNodeFactory::DRAGONBONES_COMPONENT},
 };
 std::map<std::string, std::function<Node*()>> nodes{};
 
