@@ -11,7 +11,7 @@ namespace mb {
 
 	namespace coreModule {
 
-		class nodeProperties : public Node {
+		class nodeProperties {
 		public:
 			/***
 		 	 * Парсинг параметров из json файла

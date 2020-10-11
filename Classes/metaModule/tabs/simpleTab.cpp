@@ -1,15 +1,19 @@
 #include "simpleTab.h"
+#include "metaModule/widgets/menuButton.h"
 
 using namespace mb::metaModule;
 
 
 simpleTab::simpleTab() {
 	this->setName("simpleTab");
-	loadProperty("menuScene/tabs/" + this->getName(), dynamic_cast<Node*>(this));
+	loadProperty("menuScene/tabs/" + this->getName(), dynamic_cast<Node *>(this));
 	auto visibleSize = Director::getInstance()->getVisibleSize();
-	 if (auto label = dynamic_cast<Label*>(findNode("comingSoon", this))) {
-	 	label->setPosition(visibleSize / 2);
-	 }
+	if (auto label = dynamic_cast<Label *>(findNode("comingSoon", this))) {
+		label->setPosition(visibleSize / 2);
+	}
+	auto button = new menuButton();
+	addChild(button);
+
 }
 
 simpleTab::~simpleTab() = default;

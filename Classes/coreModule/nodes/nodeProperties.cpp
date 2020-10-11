@@ -28,7 +28,7 @@ void nodeProperties::loadProperty(const std::string &path, Node *node) {
 
 	/// If the first named element is different from the current node, add the new node as a child to the current node
 	Node* usedNode;
-	if (json["name"].GetString() != this->getName()) {
+	if (json["name"].GetString() != node->getName()) {
 		usedNode = GET_NODE_FACTORY().createNodeWithType(json["type"].GetString());
 		usedNode->setName(json["name"].GetString());
 		node->addChild(usedNode);
@@ -74,7 +74,7 @@ void nodeProperties::parseComponents(Node *node, const std::string &pathProperti
 		if (!propJson[nodeName].IsObject()) {
 			continue;
 		}
-		auto *targetNode = findNode(nodeName, node);
+		auto *targetNode = node->findNode(nodeName, node);
 		if (targetNode == nullptr) continue;
 
 		for (const auto &component : componentPriorityList) {
@@ -89,34 +89,7 @@ void nodeProperties::parseComponents(Node *node, const std::string &pathProperti
 				}
 			}
 		}
-//
-//		const auto transformComponentItr = propJson[nodeName].FindMember("TransformComponent");
-//		if(transformComponentItr != propJson[nodeName].MemberEnd()) {
-//			const std::string componentName = transformComponentItr->name.GetString();
-//			if (transformComponentItr->value.IsObject()) {
-//				GET_NODE_FACTORY().getComponents(targetNode, componentName, transformComponentItr->value.GetObject());
-//			}
-//		}
-//		const auto spriteComponentItr = propJson[nodeName].FindMember("SpriteComponent");
-//		if(spriteComponentItr != propJson[nodeName].MemberEnd()) {
-//			const std::string componentName = spriteComponentItr->name.GetString();
-//			if (spriteComponentItr->value.IsObject()) {
-//				GET_NODE_FACTORY().getComponents(targetNode, componentName, spriteComponentItr->value.GetObject());
-//			}
-//		}
-//		const auto labelComponentItr = propJson[nodeName].FindMember("LabelComponent");
-//		if(labelComponentItr != propJson[nodeName].MemberEnd()) {
-//			const std::string componentName = labelComponentItr->name.GetString();
-//			if (labelComponentItr->value.IsObject()) {
-//				GET_NODE_FACTORY().getComponents(targetNode, componentName, labelComponentItr->value.GetObject());
-//			}
-//		}
-//		for (auto &item : propJson[nodeName].GetObject()) {
-//			const std::string componentName = item.name.GetString();
-//			if (item.value.IsObject()) {
-//				GET_NODE_FACTORY().getComponents(targetNode, componentName, item.value.GetObject());
-//			}
-//		}
+
 		if (found && !recursive) {
 			return;
 		}

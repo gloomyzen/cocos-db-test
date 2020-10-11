@@ -10,7 +10,7 @@ namespace mb {
 		using namespace cocos2d;
 		using namespace ui;
 
-		class simpleTab : public coreModule::nodeProperties {
+		class simpleTab : public coreModule::nodeProperties, public Node {
 		public:
 			simpleTab();
 			~simpleTab();

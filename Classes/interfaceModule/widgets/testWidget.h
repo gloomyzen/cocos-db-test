@@ -8,7 +8,7 @@ namespace mb {
 	namespace interfaceModule {
 		using namespace cocos2d;
 
-		class testWidget : public coreModule::nodeProperties {
+		class testWidget : public coreModule::nodeProperties, public Node {
 		public:
 			testWidget();
 			~testWidget();

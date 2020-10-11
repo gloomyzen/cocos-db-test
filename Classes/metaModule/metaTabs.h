@@ -12,7 +12,7 @@ namespace mb {
 		using namespace cocos2d;
 		using namespace ui;
 
-		class metaTabs : public coreModule::nodeProperties {
+		class metaTabs : public coreModule::nodeProperties, public Node {
 		public:
 			metaTabs();
 			~metaTabs();
