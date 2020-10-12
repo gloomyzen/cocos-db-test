@@ -186,11 +186,15 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 						auto textData = CCFactory::getFactory()->loadTextureAtlasData(object["texFile"].GetString());
 						usedArmature[textData->name] = true;
 					}
-					dragonbones = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
-					dragonbones->setScale(0.3f);
-					dragonbones->setPosition(333.f, 26.f);
-					dragonbones->getArmature()->setCacheFrameRate(24);
-					dragonbones->getAnimation()->play("Idle");
+					for (int i = 0; i < 6; ++i) {
+						auto bone = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
+						dragonbones->addChild(bone);
+						bone->setScale(1.f);
+//						bone->setPosition(333.f, 26.f);
+						bone->getArmature()->setCacheFrameRate(24);
+						bone->getAnimation()->play("Idle", 9999);
+					}
+
 				} else if (object.HasMember("file")) {
 					//
 				}
