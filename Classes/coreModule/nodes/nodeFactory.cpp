@@ -8,6 +8,7 @@
 using namespace mb::coreModule;
 using namespace cocos2d;
 using namespace cocos2d::ui;
+using namespace dragonBones;
 
 std::map<std::string, eNodeFactory> componentsMap = {
 		{"TransformComponent",  eNodeFactory::TRANSFORM_COMPONENT},
@@ -19,6 +20,9 @@ std::map<std::string, eNodeFactory> componentsMap = {
 };
 std::map<std::string, std::function<Node*()>> nodes{};
 
+//todo remove this later
+static std::map<std::string, bool> usedArmature{};
+
 nodeFactory *currentNodeFactory = nullptr;
 
 nodeFactory::nodeFactory() {
@@ -29,6 +33,7 @@ nodeFactory::nodeFactory() {
 		nodes["label"] = []()->Label* { return new Label(); };
 		nodes["button"] = []()->Button* { return new Button(); };
 		nodes["layout"] = []()->Layout* { return new Layout(); };
+		nodes["dragonbones"] = []()->CCArmatureDisplay* { return new CCArmatureDisplay(); };
 	}
 }
 
@@ -169,6 +174,29 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 				}
 			} else {
 				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has button node type!", componentName.c_str()));
+			}
+		}
+			break;
+		case DRAGONBONES_COMPONENT: {
+			//CCArmatureDisplay
+			if (auto dragonbones = dynamic_cast<CCArmatureDisplay*>(node)) {
+				if (object.HasMember("texFile") && object.HasMember("skeFile")) {
+					if (usedArmature.find(object["name"].GetString()) == usedArmature.end()) {
+						auto test = CCFactory::getFactory()->loadDragonBonesData(object["skeFile"].GetString());
+						auto textData = CCFactory::getFactory()->loadTextureAtlasData(object["texFile"].GetString());
+						usedArmature[textData->name] = true;
+					}
+					dragonbones = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
+					dragonbones->setScale(0.3f);
+					dragonbones->setPosition(333.f, 26.f);
+					dragonbones->getArmature()->setCacheFrameRate(24);
+					dragonbones->getAnimation()->play("Idle");
+				} else if (object.HasMember("file")) {
+					//
+				}
+				//CCFactory::getFactory().
+			} else {
+				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has DragonBones node type!", componentName.c_str()));
 			}
 		}
 			break;
