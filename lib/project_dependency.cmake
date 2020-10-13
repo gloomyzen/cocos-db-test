@@ -60,14 +60,14 @@ endif ()
 #------------------------------------------------------------------------------
 #                               Rapidjson
 #------------------------------------------------------------------------------
-if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/rapidjson/include)
-    message(FATAL_ERROR "Rapidjson not found, download lib/rapidjson or use 'git submodules update'.")
-endif()
-add_library(rapidjson_target INTERFACE)
-target_include_directories(rapidjson_target INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/rapidjson/include>
-        )
-target_link_libraries(project_dependency INTERFACE rapidjson_target)
+#if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/rapidjson/include)
+#    message(FATAL_ERROR "Rapidjson not found, download lib/rapidjson or use 'git submodules update'.")
+#endif()
+#add_library(rapidjson_target INTERFACE)
+#target_include_directories(rapidjson_target INTERFACE
+#        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/rapidjson/include>
+#        )
+#target_link_libraries(project_dependency INTERFACE rapidjson_target)
 
 #------------------------------------------------------------------------------
 #                               DragonBones
@@ -80,7 +80,7 @@ include(${CMAKE_SOURCE_DIR}/cmake/DragonBones.cmake)
 #target_include_directories(dragonbones_target INTERFACE
 #        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/lib/dragonBones/>
 #        )
-target_link_libraries(dragonbones_target PRIVATE rapidjson_target cocos2d)
+target_link_libraries(dragonbones_target PRIVATE cocos2d)
 target_link_libraries(project_dependency INTERFACE dragonbones_target)
 
 #------------------------------------------------------------------------------

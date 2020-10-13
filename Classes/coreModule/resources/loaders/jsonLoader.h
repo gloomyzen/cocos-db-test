@@ -2,11 +2,11 @@
 #define MERCENARY_BATTLES_JSONLOADER_H
 
 #include <fstream>
-#include "rapidjson/document.h"
-#include <rapidjson/istreamwrapper.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/ostreamwrapper.h>
+#include "json/document.h"
+#include "json/istreamwrapper.h"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
+#include "json/ostreamwrapper.h"
 #include <string>
 
 namespace mb {

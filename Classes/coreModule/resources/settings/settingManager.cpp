@@ -1,6 +1,6 @@
 #include "settingManager.h"
-#include "rapidjson/document.h"
-#include <rapidjson/ostreamwrapper.h>
+#include "json/document.h"
+#include "json/ostreamwrapper.h"
 #include "debugModule/logManager.h"
 
 using namespace mb::coreModule;

@@ -4,7 +4,7 @@
 #include "debugModule/logManager.h"
 #include "cocos2d.h"
 #include <string>
-#include "rapidjson/document.h"
+#include "json/document.h"
 
 namespace mb {
 	using namespace cocos2d;

@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include <functional>
-#include "rapidjson/document.h"
+#include "json/document.h"
 
 #define GET_NODE_FACTORY() mb::coreModule::nodeFactory::getInstance()
 
