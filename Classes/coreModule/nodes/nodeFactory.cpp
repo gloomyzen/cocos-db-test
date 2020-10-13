@@ -178,7 +178,6 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 		}
 			break;
 		case DRAGONBONES_COMPONENT: {
-			//CCArmatureDisplay
 			if (auto dragonbones = dynamic_cast<CCArmatureDisplay*>(node)) {
 				if (object.HasMember("texFile") && object.HasMember("skeFile")) {
 					if (usedArmature.find(object["name"].GetString()) == usedArmature.end()) {
@@ -186,6 +185,7 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 						auto textData = CCFactory::getFactory()->loadTextureAtlasData(object["texFile"].GetString());
 						usedArmature[textData->name] = true;
 					}
+					//todo change current type CCArmatureDisplay to armatureHolderNode with slots for CCArmatureDisplay
 					for (int i = 0; i < 6; ++i) {
 						auto bone = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
 						dragonbones->addChild(bone);
@@ -198,7 +198,6 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 				} else if (object.HasMember("file")) {
 					//
 				}
-				//CCFactory::getFactory().
 			} else {
 				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has DragonBones node type!", componentName.c_str()));
 			}

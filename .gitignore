@@ -102,6 +102,10 @@ proj.ios_mac/ios/*.xcodeproj/project.xcworkspace
 proj.ios_mac/ios/*.xcodeproj/xcuserdata/
 proj.ios_mac/ios/*.build/
 proj.ios_mac/ios/*.xcodeproj/
+proj.ios_mac/ios/CMakeScripts
+proj.ios_mac/ios/Debug-*
+proj.ios_mac/ios/engine
+proj.ios_mac/ios/lib
 !*.pch
 .cxx
 
