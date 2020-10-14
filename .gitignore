@@ -141,10 +141,9 @@ venv
 *Makefile
 
 ######## Resoures
-Resources/*
-!Resources/config
-!Resources/nodes
-!Resources/properties
+Resources/fonts
+Resources/images
+Resources/sounds
 
 ######## utilities
 ##Update assets
