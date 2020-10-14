@@ -142,6 +142,9 @@ venv
 
 ######## Resoures
 Resources/*
+!Resources/config
+!Resources/nodes
+!Resources/properties
 
 ######## utilities
 ##Update assets
