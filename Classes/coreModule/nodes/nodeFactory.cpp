@@ -4,6 +4,7 @@
 #include "debugModule/logManager.h"
 #include "ui/CocosGUI.h"
 #include "dragonBones/cocos2dx/CCDragonBonesHeaders.h"
+#include "coreModule/nodes/armatureHolderNode.h"
 
 using namespace mb::coreModule;
 using namespace cocos2d;
@@ -33,7 +34,7 @@ nodeFactory::nodeFactory() {
 		nodes["label"] = []()->Label* { return new Label(); };
 		nodes["button"] = []()->Button* { return new Button(); };
 		nodes["layout"] = []()->Layout* { return new Layout(); };
-		nodes["dragonbones"] = []()->CCArmatureDisplay* { return new CCArmatureDisplay(); };
+		nodes["dragonbones"] = []()->armatureHolderNode* { return new armatureHolderNode(); };
 	}
 }
 
@@ -178,25 +179,25 @@ void nodeFactory::getComponents(Node *node, const std::string &componentName, co
 		}
 			break;
 		case DRAGONBONES_COMPONENT: {
-			if (auto dragonbones = dynamic_cast<CCArmatureDisplay*>(node)) {
+			if (auto dragonbones = dynamic_cast<armatureHolderNode*>(node)) {
 				if (object.HasMember("texFile") && object.HasMember("skeFile")) {
 					if (usedArmature.find(object["name"].GetString()) == usedArmature.end()) {
 						auto test = CCFactory::getFactory()->loadDragonBonesData(object["skeFile"].GetString());
 						auto textData = CCFactory::getFactory()->loadTextureAtlasData(object["texFile"].GetString());
 						usedArmature[textData->name] = true;
 					}
-					//todo change current type CCArmatureDisplay to armatureHolderNode with slots for CCArmatureDisplay
-					for (int i = 0; i < 6; ++i) {
-						auto bone = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
-						dragonbones->addChild(bone);
-						bone->setScale(1.f);
-//						bone->setPosition(333.f, 26.f);
+					auto bone = CCFactory::getFactory()->buildArmatureDisplay(object["name"].GetString());
+					if (bone->getArmature()) {
+						//todo get attr: frameRate, animationName, skinName, isLoop
 						bone->getArmature()->setCacheFrameRate(24);
 						bone->getAnimation()->play("Idle", 9999);
+						dragonbones->addArmature(bone);
+					} else {
+						LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Can't get any armature from factory!"));
 					}
 
 				} else if (object.HasMember("file")) {
-					//
+					//todo get from file
 				}
 			} else {
 				LOG_ERROR(StringUtils::format("nodeFactory::getComponents: Component '%s' no has DragonBones node type!", componentName.c_str()));
