@@ -1,4 +1,10 @@
 {
   "type": "node",
-  "name": "battleScene"
+  "name": "battleScene",
+  "child": [
+    {
+      "type": "dragonbones",
+      "name": "anim"
+    }
+  ]
 }

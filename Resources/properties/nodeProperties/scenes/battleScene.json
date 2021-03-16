@@ -5,5 +5,16 @@
       "pivot": [ 0.5, 0.5 ],
       "stretch": [ 1.0, 1.0 ]
     }
+  },
+  "anim": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
+    },
+    "dragonbonesComponent": {
+      "name": "cPlant",
+      "texFile": "images/characters/carnivorous-plant/anim/cPlant_tex.json",
+      "skeFile": "images/characters/carnivorous-plant/anim/cPlant_ske.json"
+    }
   }
 }
