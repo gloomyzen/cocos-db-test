@@ -119,10 +119,10 @@ protected:
 
 public:
     Armature() :
+        _replaceTextureAtlasData(nullptr),
         _animation(nullptr),
         _proxy(nullptr),
-        _clock(nullptr),
-        _replaceTextureAtlasData(nullptr)
+        _clock(nullptr)
     {
         _onClear();
     }
@@ -548,7 +548,7 @@ public:
     }
 
 public: // For WebAssembly.
-    IAnimatable* getAnimatable() const { return (IAnimatable*)this; }
+    IAnimatable* getAnimatable() { return dynamic_cast<IAnimatable*>(this); }
 };
 
 DRAGONBONES_NAMESPACE_END

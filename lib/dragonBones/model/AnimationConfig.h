@@ -306,14 +306,14 @@ public:
     void removeBoneMask(Armature* armature, const std::string& boneName, bool recursive);
 
 public: // For WebAssembly.
-    int getFadeOutMode() const { return (int)fadeOutMode; }
-    void setFadeOutMode(int value) { fadeOutMode = (AnimationFadeOutMode)value; }
+    int getFadeOutMode() const { return static_cast<int>(fadeOutMode); }
+    void setFadeOutMode(int value) { fadeOutMode = static_cast<AnimationFadeOutMode>(value); }
 
-    int getFadeOutTweenType() const { return (int)fadeOutTweenType; }
-    void setFadeOutTweenType(int value) { fadeOutTweenType = (TweenType)value; }
+    int getFadeOutTweenType() const { return static_cast<int>(fadeOutTweenType); }
+    void setFadeOutTweenType(int value) { fadeOutTweenType = static_cast<TweenType>(value); }
 
-    int getFadeInTweenType() const { return (int)fadeInTweenType; }
-    void setFadeInTweenType(int value) { fadeInTweenType = (TweenType)value; }
+    int getFadeInTweenType() const { return static_cast<int>(fadeInTweenType); }
+    void setFadeInTweenType(int value) { fadeInTweenType = static_cast<TweenType>(value); }
 };
 
 DRAGONBONES_NAMESPACE_END

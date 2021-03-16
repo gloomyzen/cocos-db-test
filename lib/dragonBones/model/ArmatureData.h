@@ -296,8 +296,8 @@ public:
     }
 
 public: // For WebAssembly.
-    int getType() const { return (int)type; }
-    void setType(int value) { type = (ArmatureType)value; }
+    int getType() const { return static_cast<int>(type); }
+    void setType(int value) { type = static_cast<ArmatureType>(value); }
 
     Rectangle* getAABB() { return &aabb; }
     const std::vector<std::string>& getAnimationNames() const { return animationNames; }
@@ -496,8 +496,8 @@ protected:
 public: // For WebAssembly.
     static ColorTransform* getDefaultColor() { return &DEFAULT_COLOR; }
 
-    int getBlendMode() const { return (int)blendMode; }
-    void setBlendMode(int value) { blendMode = (BlendMode)value; }
+    int getBlendMode() const { return static_cast<int>(blendMode); }
+    void setBlendMode(int value) { blendMode = static_cast<BlendMode>(value); }
 
     ColorTransform* getColor() const { return color; }
     void setColor(ColorTransform* value) { color = value; }

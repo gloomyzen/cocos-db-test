@@ -41,7 +41,7 @@ DRAGONBONES_NAMESPACE_BEGIN
  */
 class IArmatureProxy : public IEventDispatcher
 {
-    ABSTRACT_CLASS(IArmatureProxy);
+    ABSTRACT_CLASS(IArmatureProxy)
 
 public:
     /**

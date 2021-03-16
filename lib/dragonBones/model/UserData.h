@@ -158,8 +158,8 @@ protected:
     virtual void _onClear() override;
 
 public: // For WebAssembly.
-    int getType() const { return (int)type; }
-    void setType(int value) { type = (ActionType)value; }
+    int getType() const { return static_cast<int>(type); }
+    void setType(int value) { type = static_cast<ActionType>(value); }
 
     const BoneData* getBone() const { return bone; }
     void setBone(const BoneData* value) { bone = value; }

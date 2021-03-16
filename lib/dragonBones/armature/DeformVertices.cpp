@@ -26,7 +26,8 @@ void DeformVertices::init(const VerticesData* verticesDataValue, Armature* armat
             vertexCount = verticesData->weight->count * 2;
         }
         else {
-            vertexCount = verticesData->data->intArray[verticesData->offset + (unsigned)BinaryOffset::MeshVertexCount] * 2;
+            vertexCount = static_cast<unsigned int>(
+                verticesData->data->intArray[verticesData->offset + static_cast<unsigned>(BinaryOffset::MeshVertexCount)] * 2);
         }
 
         verticesDirty = true;

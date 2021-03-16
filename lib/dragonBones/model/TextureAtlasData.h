@@ -39,7 +39,7 @@ DRAGONBONES_NAMESPACE_BEGIN
  */
 class TextureAtlasData : public BaseObject
 {
-    ABSTRACT_CLASS(TextureAtlasData);
+    ABSTRACT_CLASS(TextureAtlasData)
 
 public:
     /**

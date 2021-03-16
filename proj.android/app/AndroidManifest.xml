@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.efreyu.cocosdb"
+    package="com.efreyu.mercenary-battles"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -14,10 +14,11 @@
         
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
-                   android:value="MyGame" />
+                   android:value="mercenary-battles" />
 
         <activity
             android:name="org.cocos2dx.cpp.AppActivity"
+            android:allowBackup="true"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"

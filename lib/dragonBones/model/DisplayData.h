@@ -69,8 +69,8 @@ protected:
     virtual void _onClear() override;
 
 public: // For WebAssembly.
-    int getType() const { return (int)type; }
-    void setType(int value) { type = (DisplayType)value; }
+    int getType() const { return static_cast<int>(type); }
+    void setType(int value) { type = static_cast<DisplayType>(value); }
 
     Transform* getTransform() { return &transform; }
 

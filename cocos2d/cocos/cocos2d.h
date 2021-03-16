@@ -180,6 +180,9 @@ THE SOFTWARE.
 #include "platform/CCPlatformMacros.h"
 #include "platform/CCSAXParser.h"
 
+//utility
+#include "utility/taskHolder.h"
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     #include "platform/ios/CCApplication-ios.h"
     #include "platform/ios/CCGLViewImpl-ios.h"
@@ -274,5 +277,9 @@ NS_CC_BEGIN
 CC_DLL const char* cocos2dVersion();
 
 NS_CC_END
+
+// Strings
+
+#define STRING_FORMAT(string, ...) cocos2d::StringUtils::format(string, ##__VA_ARGS__)
 
 #endif // __COCOS2D_H__

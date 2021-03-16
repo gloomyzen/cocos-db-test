@@ -57,7 +57,7 @@ bool TimelineState::_setCurrentTime(float passedTime)
     else if (_actionTimeline == nullptr || _timeScale != 1.0f || _timeOffset != 0.0f) // Action timeline or has scale and offset.
     {
         const auto playTimes = _animationState->playTimes;
-        const auto totalTime = playTimes * _duration;
+        const auto totalTime = static_cast<float>(playTimes) * _duration;
 
         passedTime *= _timeScale;
         if (_timeOffset != 0.0f) 
@@ -72,7 +72,7 @@ bool TimelineState::_setCurrentTime(float passedTime)
                 playState = 1;
             }
 
-            currentPlayTimes = playTimes;
+            currentPlayTimes = static_cast<int>(playTimes);
             if (passedTime < 0.0f) 
             {
                 currentTime = 0.0f;
@@ -92,12 +92,12 @@ bool TimelineState::_setCurrentTime(float passedTime)
             if (passedTime < 0.0f)
             {
                 passedTime = -passedTime;
-                currentPlayTimes = (int)(passedTime / _duration);
+                currentPlayTimes = static_cast<int>(passedTime / _duration);
                 currentTime = _duration - fmod(passedTime, _duration);
             }
             else 
             {
-                currentPlayTimes = (int)(passedTime / _duration);
+                currentPlayTimes = static_cast<int>(passedTime / _duration);
                 currentTime = fmod(passedTime, _duration);
             }
         }
@@ -143,7 +143,7 @@ void TimelineState::init(Armature* armature, AnimationState* animationState, Tim
     _animationData = _animationState->_animationData;
 
     _frameRate = _animationData->parent->frameRate;
-    _frameRateR = 1.0f / _frameRate;
+    _frameRateR = 1.0f / static_cast<float>(_frameRate);
     _position = _animationState->_position;
     _duration = _animationState->_duration;
     _dragonBonesData = _animationData->parent->parent;
@@ -156,10 +156,10 @@ void TimelineState::init(Armature* armature, AnimationState* animationState, Tim
         _timelineArray = _dragonBonesData->timelineArray;
         _frameIndices = &(_dragonBonesData->frameIndices);
 
-        _frameCount = _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineKeyFrameCount];
-        _frameValueOffset = _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineFrameValueOffset];
-        _timeScale = 100.0f / _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineScale];
-        _timeOffset = _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineOffset] * 0.01f;
+        _frameCount = _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineKeyFrameCount)];
+        _frameValueOffset = _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineFrameValueOffset)];
+        _timeScale = 100.0f / _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineScale)];
+        _timeOffset = _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineOffset)] * 0.01f;
     }
 }
 
@@ -169,12 +169,12 @@ void TimelineState::update(float passedTime)
     {
         if (_frameCount > 1) 
         {
-            const auto timelineFrameIndex = (unsigned)(currentTime * _frameRate);
-            const auto frameIndex = (*_frameIndices)[_timelineData->frameIndicesOffset + timelineFrameIndex];
-            if ((unsigned)_frameIndex != frameIndex)
+            const auto timelineFrameIndex = static_cast<unsigned>(currentTime * static_cast<float>(_frameRate));
+            const auto frameIndex = (*_frameIndices)[static_cast<unsigned int>(_timelineData->frameIndicesOffset) + timelineFrameIndex];
+            if (static_cast<unsigned>(_frameIndex) != frameIndex)
             {
-                _frameIndex = frameIndex;
-                _frameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineFrameOffset + _frameIndex];
+                _frameIndex = static_cast<int>(frameIndex);
+                _frameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineFrameOffset) + static_cast<unsigned int>(_frameIndex)];
 
                 _onArriveAtFrame();
             }
@@ -184,7 +184,7 @@ void TimelineState::update(float passedTime)
             _frameIndex = 0;
             if (_timelineData != nullptr) // May be pose timeline.
             { 
-                _frameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineFrameOffset];
+                _frameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineFrameOffset)];
             }
 
             _onArriveAtFrame();
@@ -214,33 +214,33 @@ void TweenTimelineState::_onArriveAtFrame()
     if (
         _frameCount > 1 &&
         (
-            (unsigned)_frameIndex != _frameCount - 1 ||
+            static_cast<unsigned>(_frameIndex) != _frameCount - 1 ||
             _animationState->playTimes == 0 ||
             _animationState->getCurrentPlayTimes() < _animationState->playTimes - 1
         )
     ) 
     {
-        _tweenType = (TweenType)_frameArray[_frameOffset + (unsigned)BinaryOffset::FrameTweenType]; // TODO recode ture tween type.
+        _tweenType = static_cast<TweenType>(_frameArray[_frameOffset + static_cast<unsigned>(BinaryOffset::FrameTweenType)]); // TODO recode ture tween type.
         _tweenState = _tweenType == TweenType::None ? TweenState::Once : TweenState::Always;
 
         if (_tweenType == TweenType::Curve) 
         {
-            _curveCount = _frameArray[_frameOffset + (unsigned)BinaryOffset::FrameTweenEasingOrCurveSampleCount];
+            _curveCount = static_cast<unsigned>(_frameArray[_frameOffset + static_cast<unsigned>(BinaryOffset::FrameTweenEasingOrCurveSampleCount)]);
         }
         else if (_tweenType != TweenType::None && _tweenType != TweenType::Line) 
         {
-            _tweenEasing = _frameArray[_frameOffset + (unsigned)BinaryOffset::FrameTweenEasingOrCurveSampleCount] * 0.01;
+            _tweenEasing = static_cast<float>(_frameArray[_frameOffset + static_cast<unsigned>(BinaryOffset::FrameTweenEasingOrCurveSampleCount)] * 0.01);
         }
 
         _framePosition = _frameArray[_frameOffset] * _frameRateR;
 
-        if ((unsigned)_frameIndex == _frameCount - 1)
+        if (static_cast<unsigned>(_frameIndex) == _frameCount - 1)
         {
             _frameDurationR = 1.0f / (_animationData->duration - _framePosition);
         }
         else 
         {
-            const auto nextFrameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + (unsigned)BinaryOffset::TimelineFrameOffset + _frameIndex + 1];
+            const auto nextFrameOffset = _animationData->frameOffset + _timelineArray[_timelineData->offset + static_cast<unsigned>(BinaryOffset::TimelineFrameOffset) + static_cast<unsigned int>(_frameIndex) + 1];
             const auto frameDuration = _frameArray[nextFrameOffset] * _frameRateR - _framePosition;
 
             if (frameDuration > 0.0f) // Fixed animation data bug.
@@ -267,7 +267,7 @@ void TweenTimelineState::_onUpdateFrame()
 
         if (_tweenType == TweenType::Curve)
         {
-            _tweenProgress = TweenTimelineState::_getEasingCurveValue(_tweenProgress, _frameArray, _curveCount, _frameOffset + (unsigned)BinaryOffset::FrameCurveSamples);
+            _tweenProgress = TweenTimelineState::_getEasingCurveValue(_tweenProgress, _frameArray, _curveCount, _frameOffset + static_cast<unsigned>(BinaryOffset::FrameCurveSamples));
         }
         else if (_tweenType != TweenType::Line)
         {

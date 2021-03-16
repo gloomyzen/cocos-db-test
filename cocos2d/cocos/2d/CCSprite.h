@@ -626,7 +626,11 @@ CC_CONSTRUCTOR_ACCESS :
 
     virtual void setVertexLayout();
     virtual void updateShaders(const char* vert, const char* frag);
-    
+
+    virtual RenderMode getRenderMode() const;
+    virtual void setCorrectPixelTexture();
+    static void setUsePixelMode(bool value);
+
 protected:
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);

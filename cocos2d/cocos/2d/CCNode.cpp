@@ -44,6 +44,8 @@ THE SOFTWARE.
 #include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
 #include "CCDrawNode.h"
+#include "utility/taskHolder.h"
+#include "base/CCAsyncTaskPool.h"
 
 
 #if CC_NODE_RENDER_SUBPIXEL
@@ -75,6 +77,7 @@ Node::Node()
 , _skewX(0.0f)
 , _skewY(0.0f)
 , _anchorPoint(0, 0)
+, _pivotPoint(0, 0)
 , _contentSize(Size::ZERO)
 , _contentSizeDirty(true)
 , _transformDirty(true)
@@ -89,7 +92,7 @@ Node::Node()
 , _parent(nullptr)
 // "whole screen" objects. like Scenes and Layers, should set _ignoreAnchorPointForPosition to true
 , _tag(Node::INVALID_TAG)
-, _name("")
+, _name("Node")
 , _hashOfName(0)
 // userData is always inited as nil
 , _userData(nullptr)
@@ -108,7 +111,7 @@ Node::Node()
 , _displayedColor(Color3B::WHITE)
 , _realColor(Color3B::WHITE)
 , _cascadeColorEnabled(false)
-, _cascadeOpacityEnabled(false)
+, _cascadeOpacityEnabled(true)
 , _cameraMask(1)
 , _onEnterCallback(nullptr)
 , _onExitCallback(nullptr)
@@ -246,15 +249,15 @@ void Node::setDebug(bool value) {
 #endif
 	}
 
-Node* Node::findNode(const std::string &name, Node *parent) {
-	if (parent->getName() == name) {
-		return parent;
+Node* Node::findNode(const std::string &name) {
+	if (getName() == name) {
+		return this;
 	}
-	Node *nodeFound = parent->getChildByName(name);
+	Node *nodeFound = getChildByName(name);
 	if (!nodeFound) {
-		auto children = parent->getChildren();
+		auto children = getChildren();
 		for (auto child: children) {
-			nodeFound = findNode(name, child);
+			nodeFound = child->findNode(name);
 			if (nodeFound) break;
 		}
 	}
@@ -662,6 +665,19 @@ void Node::setAnchorPoint(const Vec2& point)
     }
 }
 
+void Node::setPivotPoint(const Vec2& point) {
+    _pivotPoint = point;
+	_transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
+const Vec2 &Node::getPivotPoint() const {
+    return _pivotPoint;
+}
+
+void Node::setMarkDirty() {
+	_transformUpdated = _transformDirty = _inverseDirty = true;
+}
+
 /// contentSize getter
 const Size& Node::getContentSize() const
 {
@@ -677,6 +693,14 @@ void Node::setContentSize(const Size & size)
         _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
+}
+
+void Node::setStretch(float w, float h) {
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto _size = cocos2d::Size();
+	_size.width = visibleSize.width * w;
+	_size.height = visibleSize.height * h;
+	setContentSize(_size);
 }
 
 // isRunning getter
@@ -1015,6 +1039,13 @@ void Node::addChild(Node *child)
 {
     CCASSERT( child != nullptr, "Argument must be non-nil");
     this->addChild(child, child->getLocalZOrder(), child->_name);
+    if (auto item = dynamic_cast<taskHolder*>(child)) {
+		auto atp = cocos2d::AsyncTaskPool::getInstance();
+		atp->enqueue(cocos2d::AsyncTaskPool::TaskType::TASK_OTHER, [](void*){}, nullptr,
+					[item]() {
+						item->executeTasks();
+					 });
+    }
 }
 
 void Node::removeFromParent()
@@ -1715,6 +1746,10 @@ const Mat4& Node::getNodeToParentTransform() const
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
+        }
+        if (_parent) {
+            x += _parent->getContentSize().width * _pivotPoint.x;
+            y += _parent->getContentSize().height * _pivotPoint.y;
         }
 
         bool needsSkewMatrix = ( _skewX || _skewY );

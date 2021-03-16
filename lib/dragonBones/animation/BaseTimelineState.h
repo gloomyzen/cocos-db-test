@@ -131,11 +131,11 @@ private:
         }
 
         const auto segmentCount = count + 1; // + 2 - 1
-        const auto valueIndex = (unsigned)(progress * segmentCount);
+        const auto valueIndex = static_cast<unsigned>(progress * static_cast<float>(segmentCount));
         const auto fromValue = valueIndex == 0 ? 0.0f : samples[offset + valueIndex - 1];
         const auto toValue = (valueIndex == segmentCount - 1) ? 10000.0f : samples[offset + valueIndex];
 
-        return (fromValue + (toValue - fromValue) * (progress * segmentCount - valueIndex)) * 0.0001f;
+        return (fromValue + (toValue - fromValue) * (progress * static_cast<float>(segmentCount) - static_cast<float>(valueIndex))) * 0.0001f;
     }
 
 protected:

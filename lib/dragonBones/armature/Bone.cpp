@@ -261,7 +261,7 @@ void Bone::update(int cacheFrameIndex)
 
     if (cacheFrameIndex >= 0 && _cachedFrameIndices != nullptr) 
     {
-        const auto cachedFrameIndex = (*_cachedFrameIndices)[cacheFrameIndex];
+        const auto cachedFrameIndex = (*_cachedFrameIndices)[static_cast<unsigned long>(cacheFrameIndex)];
         if (cachedFrameIndex >= 0 && _cachedFrameIndex == cachedFrameIndex) // Same cache.
         {
             _transformDirty = false;
@@ -292,7 +292,7 @@ void Bone::update(int cacheFrameIndex)
             else if (_cachedFrameIndex >= 0) // Same cache, but not set index yet.
             {
                 _transformDirty = false;
-                (*_cachedFrameIndices)[cacheFrameIndex] = _cachedFrameIndex;
+                (*_cachedFrameIndices)[static_cast<unsigned long>(cacheFrameIndex)] = _cachedFrameIndex;
             }
             else // Dirty.
             {
@@ -337,12 +337,12 @@ void Bone::update(int cacheFrameIndex)
 
             if (isCache && _cachedFrameIndices != nullptr) 
             {
-                _cachedFrameIndex = (*_cachedFrameIndices)[cacheFrameIndex] = _armature->_armatureData->setCacheFrame(globalTransformMatrix, global);
+                _cachedFrameIndex = (*_cachedFrameIndices)[static_cast<unsigned long>(cacheFrameIndex)] = _armature->_armatureData->setCacheFrame(globalTransformMatrix, global);
             }
         }
         else 
         {
-            _armature->_armatureData->getCacheFrame(globalTransformMatrix, global, _cachedFrameIndex);
+            _armature->_armatureData->getCacheFrame(globalTransformMatrix, global, static_cast<unsigned int>(_cachedFrameIndex));
         }
         //
     }

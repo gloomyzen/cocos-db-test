@@ -38,9 +38,9 @@ void BaseObject::setMaxCount(std::size_t classType, unsigned maxCount)
         if (iterator != _poolsMap.end())
         {
             auto& pool = iterator->second;
-            if (pool.size() > (size_t)maxCount)
+            if (pool.size() > static_cast<size_t>(maxCount))
             {
-                for (auto i = (size_t)maxCount, l = pool.size(); i < l; ++i)
+                for (auto i = static_cast<size_t>(maxCount), l = pool.size(); i < l; ++i)
                 {
                     delete pool[i];
                 }
@@ -57,9 +57,9 @@ void BaseObject::setMaxCount(std::size_t classType, unsigned maxCount)
         for (auto& pair : _poolsMap)
         {
             auto& pool = pair.second;
-            if (pool.size() > (size_t)maxCount)
+            if (pool.size() > static_cast<size_t>(maxCount))
             {
-                for (auto i = (size_t)maxCount, l = pool.size(); i < l; ++i)
+                for (auto i = static_cast<size_t>(maxCount), l = pool.size(); i < l; ++i)
                 {
                     delete pool[i];
                 }

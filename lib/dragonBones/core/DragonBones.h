@@ -350,7 +350,7 @@ inline int indexOf(const std::vector<T>& vector, const T& value)
     {
         if (vector[i] == value)
         {
-            return (int) i;
+            return static_cast<int>(i);
         }
     }
     

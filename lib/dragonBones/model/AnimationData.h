@@ -248,8 +248,8 @@ protected:
     virtual void _onClear() override;
 
 public: // For WebAssembly.
-    int getType() const { return (int)type; }
-    void setType(int value) { type = (TimelineType)value; }
+    int getType() const { return static_cast<int>(type); }
+    void setType(int value) { type = static_cast<TimelineType>(value); }
 };
 
 DRAGONBONES_NAMESPACE_END

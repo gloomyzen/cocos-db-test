@@ -45,7 +45,7 @@ DRAGONBONES_NAMESPACE_BEGIN
  */
 class BoundingBoxData : public BaseObject 
 {
-    ABSTRACT_CLASS(BoundingBoxData);
+    ABSTRACT_CLASS(BoundingBoxData)
 
 public:
     /**
@@ -105,8 +105,8 @@ public:
     ) = 0;
 
 public: // For WebAssembly.
-    int getType() const { return (int)type; }
-    void setType(int value) { type = (BoundingBoxType)value; }
+    int getType() const { return static_cast<int>(type); }
+    void setType(int value) { type = static_cast<BoundingBoxType>(value); }
 };
 /**
  * - The rectangle bounding box data.

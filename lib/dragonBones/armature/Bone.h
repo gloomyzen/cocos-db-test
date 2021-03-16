@@ -227,8 +227,8 @@ public:
     }
 
 public: // For WebAssembly.
-    inline int getOffsetMode() const { return (int)offsetMode; }
-    inline void setOffsetMode(int value) { offsetMode = (OffsetMode)value; }
+    inline int getOffsetMode() const { return static_cast<int>(offsetMode); }
+    inline void setOffsetMode(int value) { offsetMode = static_cast<OffsetMode>(value); }
 };
 
 DRAGONBONES_NAMESPACE_END

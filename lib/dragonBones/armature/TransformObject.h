@@ -42,7 +42,7 @@ DRAGONBONES_NAMESPACE_BEGIN
  */
 class TransformObject : public BaseObject
 {
-    ABSTRACT_CLASS(TransformObject);
+    ABSTRACT_CLASS(TransformObject)
 
 protected:
     static Matrix _helpMatrix;

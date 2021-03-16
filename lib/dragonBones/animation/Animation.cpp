@@ -40,7 +40,7 @@ void Animation::_fadeOut(AnimationConfig* animationConfig)
         case AnimationFadeOutMode::SameLayer:
             for (const auto animationState : _animationStates)
             {
-                if (animationState->layer == (unsigned)animationConfig->layer)
+                if (animationState->layer == static_cast<unsigned>(animationConfig->layer))
                 {
                     animationState->fadeOut(animationConfig->fadeOutTime, animationConfig->pauseFadeOut);
                 }
@@ -60,7 +60,7 @@ void Animation::_fadeOut(AnimationConfig* animationConfig)
         case AnimationFadeOutMode::SameLayerAndGroup:
             for (const auto animationState : _animationStates)
             {
-                if (animationState->layer == (unsigned)animationConfig->layer && animationState->group == animationConfig->group)
+                if (animationState->layer == static_cast<unsigned>(animationConfig->layer) && animationState->group == animationConfig->group)
                 {
                     animationState->fadeOut(animationConfig->fadeOutTime, animationConfig->pauseFadeOut);
                 }
@@ -306,7 +306,7 @@ AnimationState* Animation::playConfig(AnimationConfig* animationConfig)
 
         if (animationConfig->playTimes < 0) 
         {
-            animationConfig->playTimes = animationData->playTimes;
+            animationConfig->playTimes = static_cast<int>(animationData->playTimes);
         }
     }
     else 
@@ -431,7 +431,7 @@ AnimationState* Animation::fadeIn(
 )
 {
     _animationConfig->clear();
-    _animationConfig->fadeOutMode = (AnimationFadeOutMode)fadeOutMode;
+    _animationConfig->fadeOutMode = static_cast<AnimationFadeOutMode>(fadeOutMode);
     _animationConfig->playTimes = playTimes;
     _animationConfig->layer = layer;
     _animationConfig->fadeInTime = fadeInTime;

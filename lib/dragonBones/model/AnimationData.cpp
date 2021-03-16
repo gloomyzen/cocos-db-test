@@ -68,19 +68,19 @@ void AnimationData::cacheFrames(unsigned frameRate)
         return;
     }
 
-    cacheFrameRate = std::max(std::ceil(frameRate * scale), 1.0f);
+    cacheFrameRate = std::max(std::ceil(static_cast<float>(frameRate) * scale), 1.0f);
     const auto cacheFrameCount = std::ceil(cacheFrameRate * duration) + 1; // Cache one more frame.
 
-    cachedFrames.resize(cacheFrameCount, false);
+    cachedFrames.resize(static_cast<unsigned long>(cacheFrameCount), false);
 
     for (const auto bone : parent->sortedBones)
     {
-        boneCachedFrameIndices[bone->name].resize(cacheFrameCount, -1);
+        boneCachedFrameIndices[bone->name].resize(static_cast<unsigned long>(cacheFrameCount), -1);
     }
 
     for (const auto slot : parent->sortedSlots)
     {
-        slotCachedFrameIndices[slot->name].resize(cacheFrameCount, -1);
+        slotCachedFrameIndices[slot->name].resize(static_cast<unsigned long>(cacheFrameCount), -1);
     }
 }
 

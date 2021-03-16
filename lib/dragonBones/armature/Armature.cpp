@@ -92,7 +92,7 @@ void Armature::_sortZOrder(const int16_t* slotIndices, unsigned offset)
     {
         for (std::size_t i = 0, l = slotDatas.size(); i < l; ++i) 
         {
-            const auto slotIndex = isOriginal ? i : (std::size_t)slotIndices[offset + i];
+            const auto slotIndex = isOriginal ? i : static_cast<std::size_t>(slotIndices[offset + i]);
             if (slotIndex < 0 || slotIndex >= l)
             {
                 continue;
@@ -102,7 +102,7 @@ void Armature::_sortZOrder(const int16_t* slotIndices, unsigned offset)
             const auto slot = getSlot(slotData->name);
             if (slot != nullptr) 
             {
-                slot->_setZorder(i);
+                slot->_setZorder(static_cast<int>(i));
             }
         }
 
