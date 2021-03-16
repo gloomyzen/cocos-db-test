@@ -1,5 +1,5 @@
-#ifndef MB_CUSTOMNODETYPES_H
-#define MB_CUSTOMNODETYPES_H
+#ifndef MERCENARY_BATTLES_CUSTOMNODETYPES_H
+#define MERCENARY_BATTLES_CUSTOMNODETYPES_H
 
 #include "cocos2d.h"
 #include "common/coreModule/nodes/nodeProperties.h"
@@ -12,4 +12,4 @@ namespace mb::interfaceModule {
     };
 }// namespace mb::interfaceModule
 
-#endif// MB_CUSTOMNODETYPES_H
+#endif// MERCENARY_BATTLES_CUSTOMNODETYPES_H

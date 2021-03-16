@@ -1,5 +1,5 @@
-#ifndef MB_CARDPROGRESSBAR_H
-#define MB_CARDPROGRESSBAR_H
+#ifndef MERCENARY_BATTLES_CARDPROGRESSBAR_H
+#define MERCENARY_BATTLES_CARDPROGRESSBAR_H
 
 #include "cocos2d.h"
 #include "common/coreModule/nodes/nodeProperties.h"
@@ -24,4 +24,4 @@ namespace mb::interfaceModule {
 }// namespace mb::interfaceModule
 
 
-#endif// MB_CARDPROGRESSBAR_H
+#endif// MERCENARY_BATTLES_CARDPROGRESSBAR_H

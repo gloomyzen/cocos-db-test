@@ -1,9 +1,8 @@
-#ifndef MB_NOTIFYWINDOW_H
-#define MB_NOTIFYWINDOW_H
+#ifndef MERCENARY_BATTLES_NOTIFYWINDOW_H
+#define MERCENARY_BATTLES_NOTIFYWINDOW_H
 
 #include "cocos2d.h"
 #include "common/coreModule/scenes/windows/windowBase.h"
-#include "databasesModule/coursesDatabase.h"
 
 namespace mb::interfaceModule {
 
@@ -18,4 +17,4 @@ namespace mb::interfaceModule {
 }// namespace mb::interfaceModule
 
 
-#endif// MB_NOTIFYWINDOW_H
+#endif// MERCENARY_BATTLES_NOTIFYWINDOW_H

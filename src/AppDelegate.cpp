@@ -5,14 +5,14 @@
 #include "common/coreModule/resources/settings/settingManager.h"
 //all profile block header
 #include "common/profileModule/profileManager.h"
-#include "localProfile/localProfileBlock.h"
+//#include "localProfile/localProfileBlock.h"
 //all databases header
 #include "common/databaseModule/databaseInterface.h"
 #include "common/databaseModule/databaseManager.h"
-#include "databasesModule/coursesDatabase.h"
-#include "databasesModule/ipaDatabase.h"
+//#include "databasesModule/coursesDatabase.h"
+//#include "databasesModule/ipaDatabase.h"
 //all scenes
-#include "coursesListModule/coursesListScene.h"
+#include "battleModule/battleScene.h"
 //widgets
 #include "interfaceModule/customNodeTypes.h"
 
@@ -92,23 +92,22 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	register_all_packages();
 	// register all profile
-	GET_PROFILE().registerBlock("local", [](){ return new cardsApp::localProfile::localProfileBlock(); });
+//	GET_PROFILE().registerBlock("local", [](){ return new cardsApp::localProfile::localProfileBlock(); });
 	GET_PROFILE().executeLoad();
 	// register all databases
-	GET_DATABASE_MANAGER().registerDatabase({"coursesDb", "properties/database/library/db.json"}, new cardsApp::databasesModule::coursesDatabase());
-	GET_DATABASE_MANAGER().registerDatabase({"ipaDb", "properties/database/dictionary/db.json"}, new cardsApp::databasesModule::ipaDatabase());
+//	GET_DATABASE_MANAGER().registerDatabase({"coursesDb", "properties/database/library/db.json"}, new cardsApp::databasesModule::coursesDatabase());
 	GET_DATABASE_MANAGER().executeLoadData();
 	//register external node types
-	cardsApp::interfaceModule::customNodeTypes::registerAllCustomNodes();
+	mb::interfaceModule::customNodeTypes::registerAllCustomNodes();
 	// register all states
-	GET_SCENES_FACTORY().registerState("coursesListScene", [](Layer* node)->Layer*{
-		auto scene = new cardsApp::coursesListModule::coursesListScene();
+	GET_SCENES_FACTORY().registerState("battleScene", [](Layer* node)->Layer*{
+		auto scene = new mb::battleModule::battleScene();
 		node->addChild(scene);
 		return node;
 	});
 
 	//run first scene
-	GET_GAME_MANAGER().run("coursesListScene");
+	GET_GAME_MANAGER().run("battleScene");
 
 	return true;
 }
