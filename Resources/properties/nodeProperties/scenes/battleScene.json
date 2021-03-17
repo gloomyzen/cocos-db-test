@@ -12,9 +12,9 @@
       "pivot": [ 0.5, 0.5 ]
     },
     "dragonbonesComponent": {
-      "name": "cPlant",
-      "texFile": "images/characters/carnivorous-plant/anim/cPlant_tex.json",
-      "skeFile": "images/characters/carnivorous-plant/anim/cPlant_ske.json"
+      "name": "Grunt",
+      "texFile": "images/characters/orc-chief-grunt/anim/Grunt_tex.json",
+      "skeFile": "images/characters/orc-chief-grunt/anim/Grunt_ske.json"
     }
   }
 }
