@@ -6,6 +6,16 @@
       "stretch": [ 1.0, 1.0 ]
     }
   },
+  "bg": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ],
+      "size": [ 5000.0, 5000.0 ]
+    },
+    "spriteComponent": {
+      "image": "images/general/cardBg.png"
+    }
+  },
   "anim": {
     "transformComponent": {
       "anchor": [ 0.5, 0.5 ],

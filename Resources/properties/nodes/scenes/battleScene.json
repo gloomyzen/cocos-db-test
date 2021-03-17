@@ -3,6 +3,10 @@
   "name": "battleScene",
   "child": [
     {
+      "type": "sprite",
+      "name": "bg"
+    },
+    {
       "type": "dragonbones",
       "name": "anim"
     }
