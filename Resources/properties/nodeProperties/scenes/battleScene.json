@@ -15,16 +15,5 @@
     "spriteComponent": {
       "image": "images/general/cardBg.png"
     }
-  },
-  "anim": {
-    "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ]
-    },
-    "dragonbonesComponent": {
-      "name": "Grunt",
-      "texFile": "images/characters/orc-chief-grunt/anim/Grunt_tex.json",
-      "skeFile": "images/characters/orc-chief-grunt/anim/Grunt_ske.json"
-    }
   }
 }
