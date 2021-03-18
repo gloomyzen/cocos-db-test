@@ -15,8 +15,15 @@
 #include "battleModule/battleScene.h"
 //widgets
 #include "interfaceModule/customNodeTypes.h"
+#include "LAppLive2DManager.hpp"
+#include "LAppDefine.hpp"
+#include "LAppPal.hpp"
 
 #define USE_AUDIO_ENGINE 1
+
+#if USE_AUDIO_ENGINE && USE_SIMPLE_AUDIO_ENGINE
+#error "Don't use AudioEngine and SimpleAudioEngine at the same time. Please just select one in your game!"
+#endif
 
 #if USE_AUDIO_ENGINE
 #include "editor-support/cocostudio/SimpleAudioEngine.h"

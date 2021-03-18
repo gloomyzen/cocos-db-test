@@ -14,3 +14,7 @@
 	path = cocos2d
 	url = git@github.com:gloomyzen/cocos2d.git
 	branch = master
+[submodule "lib/live2d"]
+	path = lib/live2d
+	url = git@github.com:gloomyzen/cocos2d-x-live2d.git
+	branch = master

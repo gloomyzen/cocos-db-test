@@ -10,7 +10,9 @@ battleScene::battleScene() {
 std::deque<nodeTasks> battleScene::getTasks() {
     std::deque<nodeTasks> result;
 
-    result.emplace_back([this]() { return eTasksStatus::STATUS_OK; });
+    result.emplace_back([this]() {
+        return eTasksStatus::STATUS_OK;
+    });
 
     return result;
 }

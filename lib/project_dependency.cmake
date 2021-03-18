@@ -83,6 +83,17 @@ target_link_libraries(project_dependency INTERFACE dragonbones_target)
 #set_project_warnings(dragonbones_target warning)
 
 #------------------------------------------------------------------------------
+#                               live2d
+#------------------------------------------------------------------------------
+if (NOT EXISTS ${CMAKE_SOURCE_DIR}/lib/live2d/CMakeLists.txt)
+    message(FATAL_ERROR "live2d not found, check folder lib/live2d.")
+endif()
+#include(${CMAKE_SOURCE_DIR}/lib/live2d/CMakeLists.txt)
+add_subdirectory(lib/live2d)
+target_link_libraries(project_dependency INTERFACE cc_live2d)
+#set_project_warnings(dragonbones_target warning)
+
+#------------------------------------------------------------------------------
 #                               Build Interface for all dependency
 #------------------------------------------------------------------------------
 target_include_directories(project_dependency INTERFACE
