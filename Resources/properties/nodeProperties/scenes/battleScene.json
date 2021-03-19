@@ -15,5 +15,16 @@
     "spriteComponent": {
       "image": "images/general/cardBg.png"
     }
+  },
+  "anim": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
+    },
+    "dragonbonesComponent": {
+      "name": "mecha_1004d",
+      "texFile": "images/characters/mecha_1004d/mecha_1004d_tex.json",
+      "skeFile": "images/characters/mecha_1004d/mecha_1004d_ske.json"
+    }
   }
 }

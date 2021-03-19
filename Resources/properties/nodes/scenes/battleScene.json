@@ -5,6 +5,10 @@
     {
       "type": "sprite",
       "name": "bg"
+    },
+    {
+      "type": "dragonbones",
+      "name": "anim"
     }
   ]
 }
