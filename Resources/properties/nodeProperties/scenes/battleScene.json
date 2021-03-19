@@ -19,14 +19,14 @@
   "anim": {
     "transformComponent": {
       "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ]
+      "pivot": [ 0.5, 0.5 ],
+      "scale": 0.5
     },
     "dragonbonesComponent": {
       "name": "Grunt",
       "texFile": "images/characters/orc-chief-grunt/Grunt_tex.json",
       "skeFile": "images/characters/orc-chief-grunt/Grunt_ske.json",
-      "animation": "idle",
-      "playTimes": 15
+      "animation": "idle"
     }
   }
 }
