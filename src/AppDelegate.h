@@ -2,8 +2,6 @@
 #define _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "LAppAllocator.hpp"
-#include "live2d/Framework/src/CubismFramework.hpp"
 
 /**
 @brief    The cocos2d Application.
@@ -36,12 +34,6 @@ class AppDelegate : private cocos2d::Application {
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
-
-  private:
-    cocos2d::EventListenerCustom* _recreatedEventlistener;
-
-    LAppAllocator _cubismAllocator;
-    Csm::CubismFramework::Option _cubismOption;
 };
 
 #endif// _APP_DELEGATE_H_

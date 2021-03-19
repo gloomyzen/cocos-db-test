@@ -15,9 +15,6 @@
 #include "battleModule/battleScene.h"
 //widgets
 #include "interfaceModule/customNodeTypes.h"
-#include "LAppLive2DManager.hpp"
-#include "LAppDefine.hpp"
-#include "LAppPal.hpp"
 
 #define USE_AUDIO_ENGINE 1
 
