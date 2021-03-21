@@ -10,6 +10,7 @@
 #include "common/databaseModule/databaseInterface.h"
 #include "databasesModule/databaseManager.h"
 #include "databasesModule/charactersDatabase.h"
+#include "databasesModule/buildingsDatabase.h"
 //all scenes
 #include "battleModule/battleScene.h"
 //widgets
@@ -37,6 +38,7 @@ AppDelegate::~AppDelegate() {
 	CocosDenshion::SimpleAudioEngine::getInstance()->end();
 #endif
     GET_PROFILE().cleanup();
+    GET_DATABASE_MANAGER().cleanup();
 }
 
 // if you want a different context, modify the value of glContextAttrs
@@ -100,6 +102,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	GET_PROFILE().executeLoad();
 	// register all databases
 	GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB, "properties/database/characters/db.json", new charactersDatabase());
+	GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::BUILDING_DB, "properties/database/buildings/db.json", new buildingsDatabase());
 	GET_DATABASE_MANAGER().executeLoadData();
 	//register external node types
 	mb::interfaceModule::customNodeTypes::registerAllCustomNodes();

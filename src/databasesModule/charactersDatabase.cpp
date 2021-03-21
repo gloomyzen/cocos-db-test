@@ -54,36 +54,28 @@ bool sCharacterData::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::
     } else {
         return false;
     }
-    if (object["propertyPath"].IsString()) {
-        bonesString = object["propertyPath"].GetString();
-    } else {
-        return false;
-    }
-    if (object["iconPath"].IsString()) {
-        iconPatch = object["iconPath"].GetString();
-    } else {
-        return false;
-    }
+    if (object.HasMember("propertyPath") && object["propertyPath"].IsString()) bonesString = object["propertyPath"].GetString();
+    if (object.HasMember("iconPath") && object["iconPath"].IsString()) iconPatch = object["iconPath"].GetString();
     return true;
 }
 
 bool sCharacterStats::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject& object) {
-    if (object["hp"].IsNumber()) {
+    if (object.HasMember("hp") && object["hp"].IsNumber()) {
         hp = object["hp"].GetFloat();
     } else {
         return false;
     }
-    if (object["attackMin"].IsNumber() && object["attackMax"].IsNumber()) {
+    if (object.HasMember("attackMin") && object.HasMember("attackMax") && object["attackMin"].IsNumber() && object["attackMax"].IsNumber()) {
         attack = std::make_pair(object["attackMin"].GetFloat(), object["attackMax"].GetFloat());
     } else {
         return false;
     }
-    if (object["speed"].IsNumber()) {
+    if (object.HasMember("speed") && object["speed"].IsNumber()) {
         speed = object["speed"].GetFloat();
     } else {
         return false;
     }
-    if (object["attackSpeed"].IsNumber()) {
+    if (object.HasMember("attackSpeed") && object["attackSpeed"].IsNumber()) {
         attackSpeed = object["attackSpeed"].GetFloat();
     } else {
         return false;

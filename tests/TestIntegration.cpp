@@ -1,6 +1,7 @@
 #include "cocos2d.h"
 #include "databasesModule/databaseManager.h"
 #include "databasesModule/charactersDatabase.h"
+#include "databasesModule/buildingsDatabase.h"
 #include "common/databaseModule/databaseManagerInterface.h"
 #include "common/utilityModule/stringUtility.h"
 #include <gtest/gtest.h>
@@ -40,7 +41,7 @@ TEST_F(TempClass, commonStringUtilsTest) {
     EXPECT_EQ(stringArray2.front(),  std::string("test"));
 }
 
-TEST_F(TempClass, databaseTest) {
+TEST_F(TempClass, databaseCharacterTest) {
     using namespace mb::databasesModule;
 
     GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB, "properties/database/characters/db.json", new charactersDatabase());
@@ -61,4 +62,24 @@ TEST_F(TempClass, databaseTest) {
     EXPECT_TRUE(character->stats->hp != 0.f);
     EXPECT_TRUE(character->stats->speed != 0.f);
     EXPECT_TRUE(character->stats->attackSpeed != 0.f);
+}
+
+TEST_F(TempClass, databaseBuildsTest) {
+    using namespace mb::databasesModule;
+
+    GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::BUILDING_DB, "properties/database/buildings/db.json", new buildingsDatabase());
+    GET_DATABASE_MANAGER().executeLoadData();
+    auto buildsDb = GET_DATABASE_MANAGER().getDatabase<buildingsDatabase>(databaseManager::eDatabaseList::BUILDING_DB);
+    EXPECT_TRUE(buildsDb->isLoaded());
+    EXPECT_TRUE(!buildsDb->getBuildings().empty());
+    auto buildID = 30001;
+    auto build = buildsDb->getBuildById(buildID);
+    EXPECT_TRUE(build);
+    EXPECT_EQ(build->id, buildID);
+    EXPECT_TRUE(build->level != 0);
+    EXPECT_TRUE(build->craftTime != 0);
+    EXPECT_TRUE(build->incomeA != 0);
+    EXPECT_TRUE(build->incomeB != 0);
+    EXPECT_TRUE(build->unitIdA != 0);
+    EXPECT_TRUE(build->unitIdB != 0);
 }
