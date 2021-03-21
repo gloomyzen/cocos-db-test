@@ -40,7 +40,10 @@ void charactersDatabase::load(const rapidjson::Document& json) {
 }
 
 sCharacterData* charactersDatabase::getCharacterById(int id) {
-    //todo
+    auto find = charactersDb.find(id);
+    if (find != charactersDb.end()) {
+        return find->second;
+    }
     return nullptr;
 }
 bool sCharacterData::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject& object) {
