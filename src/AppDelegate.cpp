@@ -9,8 +9,7 @@
 //all databases header
 #include "common/databaseModule/databaseInterface.h"
 #include "databasesModule/databaseManager.h"
-//#include "databasesModule/coursesDatabase.h"
-//#include "databasesModule/ipaDatabase.h"
+#include "databasesModule/charactersDatabase.h"
 //all scenes
 #include "battleModule/battleScene.h"
 //widgets
@@ -27,6 +26,7 @@
 #endif
 
 USING_NS_CC;
+using namespace mb::databasesModule;
 
 AppDelegate::AppDelegate() {
 
@@ -99,7 +99,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 //	GET_PROFILE().registerBlock("local", [](){ return new cardsApp::localProfile::localProfileBlock(); });
 	GET_PROFILE().executeLoad();
 	// register all databases
-//	GET_DATABASE_MANAGER().registerDatabase({"coursesDb", "properties/database/library/db.json"}, new cardsApp::databasesModule::coursesDatabase());
+	GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB, "properties/database/characters/db.json", new charactersDatabase());
 	GET_DATABASE_MANAGER().executeLoadData();
 	//register external node types
 	mb::interfaceModule::customNodeTypes::registerAllCustomNodes();

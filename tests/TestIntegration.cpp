@@ -1,12 +1,13 @@
 #include "cocos2d.h"
-#include "common/databaseModule/databaseInterface.h"
+#include "databasesModule/databaseManager.h"
+#include "databasesModule/charactersDatabase.h"
 #include "common/databaseModule/databaseManagerInterface.h"
 #include "common/utilityModule/stringUtility.h"
 #include <gtest/gtest.h>
 
 using namespace common::utilityModule;
 using namespace common::databaseModule;
-using namespace cardsApp::databasesModule;
+//using namespace mb::databasesModule;
 
 int main(int argc, char** argv) {
     testing::InitGoogleTest(&argc, argv);
@@ -37,4 +38,13 @@ TEST_F(TempClass, commonStringUtilsTest) {
     auto stringArray2 = stringUtility::explodeString("TEST ROOM IS AWESOME!", &stringUtility::toLowerString);
     EXPECT_TRUE(!stringArray2.empty());
     EXPECT_EQ(stringArray2.front(),  std::string("test"));
+}
+
+TEST_F(TempClass, databaseTest) {
+    using namespace mb::databasesModule;
+
+    GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB, "properties/database/characters/db.json", new charactersDatabase());
+    GET_DATABASE_MANAGER().executeLoadData();
+    auto characterDb = GET_DATABASE_MANAGER().getDatabase<charactersDatabase>(databaseManager::eDatabaseList::CHARACTER_DB);
+    EXPECT_TRUE(characterDb->isLoaded());
 }
