@@ -1,7 +1,7 @@
-#include "common/databaseModule/databaseInterface.h"
-#include "common/databaseModule/databaseManager.h"
-#include "common/utilityModule/stringUtility.h"
 #include "cocos2d.h"
+#include "common/databaseModule/databaseInterface.h"
+#include "common/databaseModule/databaseManagerInterface.h"
+#include "common/utilityModule/stringUtility.h"
 #include <gtest/gtest.h>
 
 using namespace common::utilityModule;
