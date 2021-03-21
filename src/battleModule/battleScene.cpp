@@ -13,7 +13,8 @@ std::deque<nodeTasks> battleScene::getTasks() {
 
     result.emplace_back([this]() {
         //------------ player base
-//        auto billboard = dynamic_cast<Sprite*>(findNode("ground"));
+        auto billboard = dynamic_cast<Sprite*>(findNode("ground"));
+           billboard->setGlobalZOrder(-1.f);
 //
 //        billboard->setRotation3D(cocos2d::Vec3(-50.f, 0.f, 0.f));
 //        auto anim = dynamic_cast<Node*>(findNode("anim"));

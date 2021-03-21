@@ -84,7 +84,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	director->setAnimationInterval(1.0f / 60);
 
 	// set project view mode
-	director->setProjection(Director::Projection::_3D);
+	director->setProjection(Director::Projection::_2D);
     cocos2d::Sprite::setUsePixelMode(currentResolution->spritePixel);
 
 	// Set the design resolution
