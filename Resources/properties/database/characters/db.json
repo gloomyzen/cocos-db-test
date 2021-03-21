@@ -1,28 +1,112 @@
 {
   "characters": {
-    "11001": {
+    "20001": {
       "propertyPath": "properties/nodeProperties/battle/characters/slimeBasic",
-      "iconPath": "images/characters/slimeBasic/icon/icon.png"
+      "iconPath": "images/characters/slimeBasic/icon/icon.png",
+      "hp": 5.0,
+      "attackMin": 1.0,
+      "attackMax": 2.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     },
-    "11002": {
+    "20002": {
+      "propertyPath": "properties/nodeProperties/battle/characters/slimeBasicB",
+      "iconPath": "images/characters/slimeBasic/icon/icon.png",
+      "hp": 6.0,
+      "attackMin": 1.5,
+      "attackMax": 3.0,
+      "speed": 0.8,
+      "attackSpeed": 0.9
+    },
+    "20003": {
       "propertyPath": "properties/nodeProperties/battle/characters/slimeDefender",
-      "iconPath": "images/characters/slimeDefender/icon/icon.png"
+      "iconPath": "images/characters/slimeDefender/icon/icon.png",
+      "hp": 6.0,
+      "attackMin": 2.0,
+      "attackMax": 3.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     },
-    "11003": {
+    "20004": {
+      "propertyPath": "properties/nodeProperties/battle/characters/slimeDefenderB",
+      "iconPath": "images/characters/slimeDefender/icon/icon.png",
+      "hp": 6.5,
+      "attackMin": 2.5,
+      "attackMax": 4.0,
+      "speed": 0.8,
+      "attackSpeed": 0.9
+    },
+    "20005": {
       "propertyPath": "properties/nodeProperties/battle/characters/slimeCaster",
-      "iconPath": "images/characters/slimeCaster/icon/icon.png"
+      "iconPath": "images/characters/slimeCaster/icon/icon.png",
+      "hp": 7.0,
+      "attackMin": 3.0,
+      "attackMax": 4.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     },
-    "11004": {
+    "20006": {
+      "propertyPath": "properties/nodeProperties/battle/characters/slimeCasterB",
+      "iconPath": "images/characters/slimeCaster/icon/icon.png",
+      "hp": 7.5,
+      "attackMin": 3.5,
+      "attackMax": 5.0,
+      "speed": 0.8,
+      "attackSpeed": 0.9
+    },
+    "20007": {
       "propertyPath": "properties/nodeProperties/battle/characters/slimeAttacker",
-      "iconPath": "images/characters/slimeAttacker/icon/icon.png"
+      "iconPath": "images/characters/slimeAttacker/icon/icon.png",
+      "hp": 8.0,
+      "attackMin": 4.0,
+      "attackMax": 5.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     },
-    "11005": {
+    "20008": {
+      "propertyPath": "properties/nodeProperties/battle/characters/slimeAttackerB",
+      "iconPath": "images/characters/slimeAttacker/icon/icon.png",
+      "hp": 8.5,
+      "attackMin": 4.5,
+      "attackMax": 6.0,
+      "speed": 0.8,
+      "attackSpeed": 0.9
+    },
+    "20009": {
       "propertyPath": "properties/nodeProperties/battle/characters/orcChiefGrunt",
-      "iconPath": "images/characters/orcChiefGrunt/icon/icon.png"
+      "iconPath": "images/characters/orcChiefGrunt/icon/icon.png",
+      "hp": 15.0,
+      "attackMin": 4.5,
+      "attackMax": 5.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     },
-    "11006": {
+    "20010": {
+      "propertyPath": "properties/nodeProperties/battle/characters/orcChiefGruntB",
+      "iconPath": "images/characters/orcChiefGrunt/icon/icon.png",
+      "hp": 15.5,
+      "attackMin": 5.0,
+      "attackMax": 6.0,
+      "speed": 1.0,
+      "attackSpeed": 1.0
+    },
+    "20011": {
       "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpy",
-      "iconPath": ""
+      "iconPath": "",
+      "hp": 17.0,
+      "attackMin": 5.5,
+      "attackMax": 6.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
+    },
+    "20012": {
+      "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpyB",
+      "iconPath": "",
+      "hp": 17.5,
+      "attackMin": 7.0,
+      "attackMax": 7.5,
+      "speed": 1.0,
+      "attackSpeed": 1.0
     }
   }
 }

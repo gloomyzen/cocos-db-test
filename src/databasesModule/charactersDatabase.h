@@ -8,13 +8,23 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <tuple>
 
 namespace mb::databasesModule {
+
+    struct sCharacterStats {
+        float hp;
+        std::pair<float, float> attack; //attack min and max
+        float speed = 1.0f;
+        float attackSpeed = 1.0f;
+        bool load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject&);
+    };
 
     struct sCharacterData {
         int id;
         std::string bonesString;
         std::string iconPatch;
+        sCharacterStats* stats = nullptr;
         bool load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject&);
     };
 

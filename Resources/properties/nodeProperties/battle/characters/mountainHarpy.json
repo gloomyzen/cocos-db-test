@@ -2,7 +2,8 @@
   "bones": {
     "transformComponent": {
       "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ]
+      "pivot": [ 0.5, 0.5 ],
+      "scale": 0.5
     },
     "dragonbonesComponent": {
       "name": "Grunt",

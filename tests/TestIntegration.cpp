@@ -48,9 +48,17 @@ TEST_F(TempClass, databaseTest) {
     auto characterDb = GET_DATABASE_MANAGER().getDatabase<charactersDatabase>(databaseManager::eDatabaseList::CHARACTER_DB);
     EXPECT_TRUE(characterDb->isLoaded());
     EXPECT_TRUE(!characterDb->getCharacters().empty());
-    auto characterId = 11001;
+    auto characterId = 20001;
     auto character = characterDb->getCharacterById(characterId);
+    EXPECT_TRUE(character);
     EXPECT_EQ(character->id, characterId);
     EXPECT_TRUE(!character->bonesString.empty());
     EXPECT_TRUE(!character->iconPatch.empty());
+
+    EXPECT_TRUE(character->stats);
+    EXPECT_TRUE(character->stats->attack.first != 0.f);
+    EXPECT_TRUE(character->stats->attack.second != 0.f);
+    EXPECT_TRUE(character->stats->hp != 0.f);
+    EXPECT_TRUE(character->stats->speed != 0.f);
+    EXPECT_TRUE(character->stats->attackSpeed != 0.f);
 }
