@@ -3,8 +3,40 @@
   "name": "battleScene",
   "child": [
     {
-      "type": "sprite",
-      "name": "bg"
+      "type": "sprite3d",
+      "name": "floor",
+      "child": [
+        {
+          "type": "sprite3d",
+          "name": "temp",
+          "child": [
+            {
+              "type": "sprite",
+              "name": "ground"
+            }
+          ]
+        },
+        {
+          "type": "sprite3d",
+          "name": "unit1",
+          "child": [
+            {
+              "type": "dragonbones",
+              "name": "anim"
+            }
+          ]
+        },
+        {
+          "type": "sprite3d",
+          "name": "unit2",
+          "child": [
+            {
+              "type": "dragonbones",
+              "name": "anim2"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

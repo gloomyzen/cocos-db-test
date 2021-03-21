@@ -6,14 +6,69 @@
       "stretch": [ 1.0, 1.0 ]
     }
   },
-  "bg": {
+  "ground": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
+    },
+    "spriteComponent": {
+      "image": "images/battle/base/ground.obj"
+    }
+  },
+  "ground2": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
+    },
+    "spriteComponent": {
+      "image": "images/battle/base/ground.png"
+    }
+  },
+  "floor": {
     "transformComponent": {
       "anchor": [ 0.5, 0.5 ],
       "pivot": [ 0.5, 0.5 ],
-      "size": [ 5000.0, 5000.0 ]
+      "rotation3d": [-50, 0, 0]
+    }
+  },
+  "anim": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
     },
-    "spriteComponent": {
-      "image": "images/general/cardBg.png"
+    "dragonbonesComponent": {
+      "name": "SlimeBasic",
+      "texFile": "images/characters/slimeBasic/anim/bones_tex.json",
+      "skeFile": "images/characters/slimeBasic/anim/bones_ske.json",
+      "animation": "idle"
+    }
+  },
+  "anim2": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ]
+    },
+    "dragonbonesComponent": {
+      "name": "SlimeDefender",
+      "texFile": "images/characters/slimeDefender/anim/spine_tex.json",
+      "skeFile": "images/characters/slimeDefender/anim/spine_ske.json",
+      "animation": "idle"
+    }
+  },
+  "unit1": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ],
+      "size": [100, 10],
+      "rotation3d": [50, 0, 0]
+    }
+  },
+  "unit2": {
+    "transformComponent": {
+      "anchor": [ 0.5, 0.5 ],
+      "pivot": [ 0.5, 0.5 ],
+      "size": [100, 10],
+      "rotation3d": [50, 0, 0]
     }
   }
 }

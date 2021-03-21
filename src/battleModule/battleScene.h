@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "common/coreModule/scenes/windows/windowBase.h"
 #include "common/coreModule/nodes/nodeProperties.h"
+#include "battleModule/base.h"
 
 namespace mb::battleModule {
 
@@ -14,6 +15,9 @@ namespace mb::battleModule {
         battleScene();
         ~battleScene() = default;
         std::deque<nodeTasks> getTasks() override;
+
+      private:
+        base* playerBase = nullptr;
     };
 }// namespace mb::interfaceModule
 
