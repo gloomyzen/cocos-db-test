@@ -22,6 +22,7 @@ namespace mb::databasesModule {
         int incomeB = 0;
         int unitIdA = 0;
         int unitIdB = 0;
+        std::string propertyPath;
         bool load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject&);
     };
 

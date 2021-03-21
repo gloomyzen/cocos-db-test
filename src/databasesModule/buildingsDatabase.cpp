@@ -57,5 +57,6 @@ bool sBuildData::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::Cons
     if (object.HasMember("incomeB") && object["incomeB"].IsNumber()) incomeB = object["incomeB"].GetInt();
     if (object.HasMember("unitIdA") && object["unitIdA"].IsNumber()) unitIdA = object["unitIdA"].GetInt();
     if (object.HasMember("unitIdB") && object["unitIdB"].IsNumber()) unitIdB = object["unitIdB"].GetInt();
+    if (object.HasMember("propertyPath") && object["propertyPath"].IsString()) propertyPath = object["propertyPath"].GetString();
     return true;
 }

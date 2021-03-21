@@ -83,6 +83,7 @@ TEST_F(TempClass, databaseBuildsTest) {
     EXPECT_TRUE(build->incomeB != 0);
     EXPECT_TRUE(build->unitIdA != 0);
     EXPECT_TRUE(build->unitIdB != 0);
+    EXPECT_TRUE(!build->propertyPath.empty());
 }
 
 TEST_F(TempClass, databaseToolTest) {
