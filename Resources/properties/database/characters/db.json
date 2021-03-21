@@ -2,6 +2,26 @@
   "characters": {
     "11001": {
       "prop": "properties/nodeProperties/battle/characters/slimeBasic",
+      "icon": "images/characters/slimeBasic/icon/icon.png"
+    },
+    "11002": {
+      "prop": "properties/nodeProperties/battle/characters/slimeDefender",
+      "icon": "images/characters/slimeDefender/icon/icon.png"
+    },
+    "11003": {
+      "prop": "properties/nodeProperties/battle/characters/slimeCaster",
+      "icon": "images/characters/slimeCaster/icon/icon.png"
+    },
+    "11004": {
+      "prop": "properties/nodeProperties/battle/characters/slimeAttacker",
+      "icon": "images/characters/slimeAttacker/icon/icon.png"
+    },
+    "11005": {
+      "prop": "properties/nodeProperties/battle/characters/orcChiefGrunt",
+      "icon": "images/characters/orcChiefGrunt/icon/icon.png"
+    },
+    "11006": {
+      "prop": "properties/nodeProperties/battle/characters/mountainHarpy",
       "icon": ""
     }
   }
