@@ -2,6 +2,7 @@
 #include "databasesModule/databaseManager.h"
 #include "databasesModule/charactersDatabase.h"
 #include "databasesModule/buildingsDatabase.h"
+#include "databasesModule/databaseTool.h"
 #include "common/databaseModule/databaseManagerInterface.h"
 #include "common/utilityModule/stringUtility.h"
 #include <gtest/gtest.h>
@@ -82,4 +83,13 @@ TEST_F(TempClass, databaseBuildsTest) {
     EXPECT_TRUE(build->incomeB != 0);
     EXPECT_TRUE(build->unitIdA != 0);
     EXPECT_TRUE(build->unitIdB != 0);
+}
+
+TEST_F(TempClass, databaseToolTest) {
+    using namespace mb::databasesModule;
+
+    auto buildID = 30001;
+    auto builds = databaseTool::getCharacterByBuilding(buildID);
+    EXPECT_TRUE(builds.first);
+    EXPECT_TRUE(builds.second);
 }
