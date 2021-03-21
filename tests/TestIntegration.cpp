@@ -47,4 +47,5 @@ TEST_F(TempClass, databaseTest) {
     GET_DATABASE_MANAGER().executeLoadData();
     auto characterDb = GET_DATABASE_MANAGER().getDatabase<charactersDatabase>(databaseManager::eDatabaseList::CHARACTER_DB);
     EXPECT_TRUE(characterDb->isLoaded());
+    EXPECT_TRUE(!characterDb->getCharacters().empty());
 }

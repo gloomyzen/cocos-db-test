@@ -25,7 +25,7 @@ namespace mb::databasesModule {
 
         template<typename T>
         T* getDatabase(eDatabaseList key) {
-            return getRegisteredDatabase<T*>(static_cast<int>(key));
+            return getRegisteredDatabase<T>(static_cast<int>(key));
         }
     };
 }

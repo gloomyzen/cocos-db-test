@@ -15,7 +15,7 @@ namespace mb::databasesModule {
         int id;
         std::string bonesString;
         std::string iconPatch;
-        bool load(const rapidjson::Document&);
+        bool load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject&);
     };
 
     class charactersDatabase : public common::databaseModule::databaseInterface {

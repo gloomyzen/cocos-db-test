@@ -13,14 +13,47 @@ charactersDatabase::~charactersDatabase() {
     }
 }
 void charactersDatabase::load(const rapidjson::Document& json) {
-    //todo
+    if (getPath().empty()) {
+        LOG_ERROR("charactersDatabase::load: path is empty!");
+        return;
+    }
+    if (!json.IsObject()) {
+        LOG_ERROR(STRING_FORMAT("charactersDatabase::load: file from path '%s' is not object!", getPath().c_str()));
+        return;
+    }
+    auto characters = json.FindMember("characters");
+    if (characters != json.MemberEnd() && characters->value.IsObject()) {
+        auto object = characters->value.GetObjectJ();
+        for (auto characterIt = object.MemberBegin(); characterIt != object.MemberEnd(); ++characterIt) {
+            if (characterIt->name.IsString() && characterIt->value.IsObject()) {
+                auto tempId = characterIt->name.GetString();
+                auto item = new sCharacterData();
+                item->id = std::atoi(tempId);
+                if (item->load(characterIt->value.GetObjectJ())) {
+                    charactersDb.insert({item->id, item});
+                }
+            } else {
+                LOG_ERROR(STRING_FORMAT("charactersDatabase::load: file from path '%s' has errors!", getPath().c_str()));
+            }
+        }
+    }
 }
 
 sCharacterData* charactersDatabase::getCharacterById(int id) {
     //todo
     return nullptr;
 }
-bool sCharacterData::load(const rapidjson::Document& json) {
-    //todo
-    return false;
+bool sCharacterData::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject& object) {
+    bool result = true;
+    if (object["propertyPath"].IsString()) {
+        bonesString = object["propertyPath"].GetString();
+    } else {
+        result = false;
+    }
+    if (object["iconPath"].IsString()) {
+        iconPatch = object["iconPath"].GetString();
+    } else {
+        result = false;
+    }
+    return result;
 }
