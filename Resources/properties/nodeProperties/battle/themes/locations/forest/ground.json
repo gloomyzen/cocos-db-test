@@ -13,7 +13,8 @@
   },
   "floor": {
     "transformComponent": {
-      "position": [0, 0]
+      "position": [0, 0],
+      "anchor": [ 0.0, 0.0 ]
     },
     "spriteComponent": {
       "image": "images/battle/themes/location_1/ground.png"

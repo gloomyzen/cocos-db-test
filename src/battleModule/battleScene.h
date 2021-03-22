@@ -18,14 +18,10 @@ namespace mb::battleModule {
         std::deque<nodeTasks> getTasks() override;
 
       private:
-        void initCameraHandling();
 //        base* playerBase = nullptr;
         battleField* battleFieldNode = nullptr;
         // world section
         cocos2d::Layer* world = nullptr;
-        cocos2d::Vec2 startWorldPos;
-        cocos2d::EventListenerTouchOneByOne* worldTouchListener = nullptr;
-        cocos2d::Vec2 worldTouchPos;
     };
 }// namespace mb::interfaceModule
 

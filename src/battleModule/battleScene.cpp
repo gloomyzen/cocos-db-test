@@ -9,7 +9,7 @@ battleScene::battleScene() {
     loadProperty("scenes/" + this->getName(), dynamic_cast<Node*>(this));
 }
 
-battleScene::~battleScene() { this->getEventDispatcher()->removeEventListener(worldTouchListener); }
+battleScene::~battleScene() {}
 
 std::deque<nodeTasks> battleScene::getTasks() {
     std::deque<nodeTasks> result;
@@ -35,26 +35,4 @@ std::deque<nodeTasks> battleScene::getTasks() {
     });
 
     return result;
-}
-void battleScene::initCameraHandling() {
-    startWorldPos = world->getPosition();
-    worldTouchListener = cocos2d::EventListenerTouchOneByOne::create();
-    worldTouchListener->setSwallowTouches(true);
-    worldTouchListener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
-        worldTouchPos = touch->getLocation();
-        return true;
-    };
-    worldTouchListener->onTouchMoved = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
-        auto force = 0.2f;
-        float xDiff = world->getPositionX() - (worldTouchPos.x - touch->getLocation().x);
-        //        float yDiff = startWorldPos.y + (worldTouchPos.y - touch->getLocation().y);
-        if (startWorldPos.x + 300 >= xDiff && startWorldPos.x < xDiff) {
-            world->setPositionX(world->getPositionX() - (worldTouchPos.x - touch->getLocation().x));
-        }
-        //        if (startWorldPos.y - 20 >= yDiff && startWorldPos.y + 100 < yDiff) {
-        //            world->setPositionY(yDiff);
-        //        }
-        auto test = "";
-    };
-    //    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(worldTouchListener, this);
 }
