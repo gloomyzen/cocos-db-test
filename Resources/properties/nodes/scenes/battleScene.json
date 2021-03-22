@@ -7,12 +7,22 @@
       "name": "ground",
       "child": [
         {
-          "type": "dragonbones",
-          "name": "anim"
-        },
-        {
-          "type": "dragonbones",
-          "name": "anim2"
+          "type": "node3d",
+          "name": "unit1",
+          "child": [
+            {
+              "type": "sprite",
+              "name": "glass"
+            },
+            {
+              "type": "dragonbones",
+              "name": "anim"
+            },
+            {
+              "type": "dragonbones",
+              "name": "anim2"
+            }
+          ]
         }
       ]
     }

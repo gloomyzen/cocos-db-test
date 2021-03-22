@@ -17,7 +17,7 @@ namespace mb::battleModule {
         std::deque<nodeTasks> getTasks() override;
 
       private:
-        base* playerBase = nullptr;
+//        base* playerBase = nullptr;
     };
 }// namespace mb::interfaceModule
 
