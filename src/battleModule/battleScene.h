@@ -4,7 +4,8 @@
 #include "cocos2d.h"
 #include "common/coreModule/scenes/windows/windowBase.h"
 #include "common/coreModule/nodes/nodeProperties.h"
-#include "battleModule/base.h"
+//#include "battleModule/base.h"
+#include "battleModule/battleField.h"
 
 namespace mb::battleModule {
 
@@ -18,6 +19,7 @@ namespace mb::battleModule {
 
       private:
 //        base* playerBase = nullptr;
+        battleField* battleFieldNode = nullptr;
     };
 }// namespace mb::interfaceModule
 

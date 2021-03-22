@@ -12,9 +12,9 @@ std::deque<nodeTasks> battleScene::getTasks() {
     std::deque<nodeTasks> result;
 
     result.emplace_back([this]() {
-        //------------ player base
-
-
+        battleFieldNode = new battleField();
+        battleFieldNode->loadLocation("forest");
+        addChild(battleFieldNode);
         return eTasksStatus::STATUS_OK;
     });
 

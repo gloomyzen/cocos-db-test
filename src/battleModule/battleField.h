@@ -11,11 +11,10 @@ namespace mb::battleModule {
       public:
         battleField();
         ~battleField() = default;
-        void loadLocation(std::string);
-        void offloadLocation()
+        void loadLocation(const std::string&);
 
       private:
-        cocos2d::Node rootNode = nullptr;
+        cocos2d::Node* baseNode = nullptr;
     };
 }
 
