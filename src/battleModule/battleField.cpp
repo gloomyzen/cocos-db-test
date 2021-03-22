@@ -26,17 +26,19 @@ void battleField::loadLocation(const std::string& name) {
         loadProperty(data["sky"].GetString(), sky);
         addChild(sky);
     }
+    cocos2d::Node* node = this;
     if (data.HasMember("ground") && data["ground"].IsString()) {
         auto ground = new cocos2d::Node();
         ground->setName("ground");
         loadProperty(data["ground"].GetString(), ground);
         addChild(ground);
+        node = ground;
     }
     if (data.HasMember("base") && data["base"].IsString()) {
         baseNode = new cocos2d::Node();
         baseNode->setName("base");
         loadProperty(data["base"].GetString(), baseNode);
-        addChild(baseNode);
+        node->addChild(baseNode);
     } else {
         LOG_ERROR(STRING_FORMAT("battleField::loadLocation: location '%s': base node not exist!", name.c_str()));
         return;

@@ -13,12 +13,12 @@
       ]
     },
     {
-      "type": "node3d",
-      "name": "glass1",
+      "type": "sprite",
+      "name": "floor2",
       "child": [
         {
           "type": "sprite",
-          "name": "glass1Sprite"
+          "name": "floorGlass"
         }
       ]
     }
