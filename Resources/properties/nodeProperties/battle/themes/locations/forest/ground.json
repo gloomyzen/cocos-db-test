@@ -1,1 +1,32 @@
-{}
+{
+  "ground": {
+    "transformComponent": {
+      "rotation3d": [-50, 0, 0],
+      "position": [0, -20, -20]
+    }
+  },
+  "unitHolder": {
+    "transformComponent": {
+      "rotation3d": [35, 0, 0],
+      "position": [0, -20, -20]
+    }
+  },
+  "floor": {
+    "transformComponent": {
+      "position": [0, 0]
+    },
+    "spriteComponent": {
+      "image": "images/battle/themes/location_1/ground.png"
+    }
+  },
+  "floorGlass": {
+    "transformComponent": {
+      "position": [555, 467],
+      "rotation3d": [35, 0, 0]
+    },
+    "spriteComponent": {
+      "image": "images/battle/themes/location_1/groundGrass2.png"
+    }
+  }
+
+}

@@ -1,14 +1,4 @@
 {
-  "type": "sprite",
-  "name": "example",
-  "child": [
-    {
-      "type": "sprite",
-      "name": "spriteNode"
-    },
-    {
-      "type": "label",
-      "name": "labelNode"
-    }
-  ]
+  "type": "node",
+  "name": "example"
 }

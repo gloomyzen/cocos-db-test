@@ -1,37 +1,15 @@
 {
   "battleScene": {
     "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
       "pivot": [ 0.5, 0.5 ],
+      "anchor": [ 0.5, 0.5 ],
       "stretch": [ 1.0, 1.0 ]
-    }
-  },
-  "ground": {
-    "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ],
-      "position": [0, -20, -20],
-      "rotation3d": [-50, 0, 0]
-    },
-    "spriteComponent": {
-      "image": "images/battle/base/ground.png"
-    }
-  },
-  "glass": {
-    "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ],
-      "rotation3d": [35, 0, 0],
-      "position": [217, -27]
-    },
-    "spriteComponent": {
-      "image": "images/battle/base/glass.png"
     }
   },
   "anim": {
     "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ]
+      "pivot": [ 0.5, 0.5 ],
+      "anchor": [ 0.5, 0.5 ]
     },
     "dragonbonesComponent": {
       "name": "SlimeBasic",
@@ -42,8 +20,8 @@
   },
   "anim2": {
     "transformComponent": {
-      "anchor": [ 0.5, 0.5 ],
-      "pivot": [ 0.5, 0.5 ]
+      "pivot": [ 0.5, 0.5 ],
+      "anchor": [ 0.5, 0.5 ]
     },
     "dragonbonesComponent": {
       "name": "SlimeDefender",

@@ -22,16 +22,19 @@ void battleField::loadLocation(const std::string& name) {
     setName(STRING_FORMAT("battlefield_%s", name.c_str()));
     if (data.HasMember("sky") && data["sky"].IsString()) {
         auto sky = new cocos2d::Node();
+        sky->setName("sky");
         loadProperty(data["sky"].GetString(), sky);
         addChild(sky);
     }
     if (data.HasMember("ground") && data["ground"].IsString()) {
         auto ground = new cocos2d::Node();
+        ground->setName("ground");
         loadProperty(data["ground"].GetString(), ground);
         addChild(ground);
     }
     if (data.HasMember("base") && data["base"].IsString()) {
         baseNode = new cocos2d::Node();
+        baseNode->setName("base");
         loadProperty(data["base"].GetString(), baseNode);
         addChild(baseNode);
     } else {

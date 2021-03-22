@@ -1,28 +1,26 @@
 {
-  "type": "node",
+  "type": "layer",
   "name": "battleScene",
   "child": [
     {
-      "type": "sprite",
-      "name": "ground",
+      "type": "node",
+      "name": "world"
+    },
+    {
+      "type": "node3d",
+      "name": "unit1",
       "child": [
         {
-          "type": "node3d",
-          "name": "unit1",
-          "child": [
-            {
-              "type": "sprite",
-              "name": "glass"
-            },
-            {
-              "type": "dragonbones",
-              "name": "anim"
-            },
-            {
-              "type": "dragonbones",
-              "name": "anim2"
-            }
-          ]
+          "type": "sprite",
+          "name": "glass"
+        },
+        {
+          "type": "dragonbones",
+          "name": "anim"
+        },
+        {
+          "type": "dragonbones",
+          "name": "anim2"
         }
       ]
     }

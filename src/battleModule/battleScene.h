@@ -10,16 +10,22 @@
 namespace mb::battleModule {
 
     class battleScene
-        : public common::coreModule::nodeProperties<cocos2d::Node>
+        : public common::coreModule::nodeProperties<cocos2d::Layer>
         , public taskHolder {
       public:
         battleScene();
-        ~battleScene() = default;
+        ~battleScene();
         std::deque<nodeTasks> getTasks() override;
 
       private:
+        void initCameraHandling();
 //        base* playerBase = nullptr;
         battleField* battleFieldNode = nullptr;
+        // camera section
+        cocos2d::Camera* camera = nullptr;
+        cocos2d::Vec3 startCameraPos;
+        cocos2d::EventListenerTouchOneByOne* cameraListener = nullptr;
+        cocos2d::Vec2 cameraTouchPos;
     };
 }// namespace mb::interfaceModule
 

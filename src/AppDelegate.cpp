@@ -107,10 +107,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//register external node types
 	mb::interfaceModule::customNodeTypes::registerAllCustomNodes();
 	// register all states
-	GET_SCENES_FACTORY().registerState("battleScene", [](Layer* node)->Layer*{
-		auto scene = new mb::battleModule::battleScene();
-		node->addChild(scene);
-		return node;
+	GET_SCENES_FACTORY().registerState("battleScene", [](){
+		return new mb::battleModule::battleScene();
 	});
 
 	//run first scene

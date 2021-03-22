@@ -1,14 +1,26 @@
 {
-  "type": "sprite",
-  "name": "example",
+  "type": "node",
+  "name": "ground",
   "child": [
     {
       "type": "sprite",
-      "name": "spriteNode"
+      "name": "floor",
+      "child": [
+        {
+          "type": "sprite",
+          "name": "floorGlass"
+        }
+      ]
     },
     {
-      "type": "label",
-      "name": "labelNode"
+      "type": "node3d",
+      "name": "glass1",
+      "child": [
+        {
+          "type": "sprite",
+          "name": "glass1Sprite"
+        }
+      ]
     }
   ]
 }
