@@ -3,8 +3,14 @@
   "name": "battleScene",
   "child": [
     {
-      "type": "node",
-      "name": "world"
+      "type": "scrollView",
+      "name": "scrollContainer",
+      "child": [
+        {
+          "type": "layer",
+          "name": "world"
+        }
+      ]
     },
     {
       "type": "node3d",

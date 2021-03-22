@@ -1,4 +1,5 @@
 #include "battleScene.h"
+#include "ui/CocosGUI.h"
 
 using namespace mb::battleModule;
 using namespace cocos2d;
@@ -8,41 +9,52 @@ battleScene::battleScene() {
     loadProperty("scenes/" + this->getName(), dynamic_cast<Node*>(this));
 }
 
-battleScene::~battleScene() { this->getEventDispatcher()->removeEventListener(cameraListener); }
+battleScene::~battleScene() { this->getEventDispatcher()->removeEventListener(worldTouchListener); }
 
 std::deque<nodeTasks> battleScene::getTasks() {
     std::deque<nodeTasks> result;
 
     result.emplace_back([this]() {
+        world = dynamic_cast<cocos2d::Layer*>(findNode("world"));
         battleFieldNode = new battleField();
         battleFieldNode->loadLocation("forest");
-        addChild(battleFieldNode);
-
-        initCameraHandling();
+        world->addChild(battleFieldNode);
 
         return eTasksStatus::STATUS_OK;
+    });
+
+    result.emplace_back([this]() {
+           auto scrollView = dynamic_cast<ui::ScrollView*>(findNode("scrollContainer"));
+           if (!scrollView) {
+               return eTasksStatus::STATUS_ERROR_BREAK;
+           }
+           scrollView->setInnerContainerSize(world->getContentSize());
+           world->setMarkDirty();
+
+           return eTasksStatus::STATUS_OK;
     });
 
     return result;
 }
 void battleScene::initCameraHandling() {
-    camera = Director::getInstance()->getRunningScene()->getDefaultCamera();
-    startCameraPos = camera->getPosition3D();
-    cameraListener = cocos2d::EventListenerTouchOneByOne::create();
-    cameraListener->setSwallowTouches(true);
-    cameraListener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
-        cameraTouchPos = touch->getLocation();
+    startWorldPos = world->getPosition();
+    worldTouchListener = cocos2d::EventListenerTouchOneByOne::create();
+    worldTouchListener->setSwallowTouches(true);
+    worldTouchListener->onTouchBegan = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
+        worldTouchPos = touch->getLocation();
         return true;
     };
-    cameraListener->onTouchMoved = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
-        float x = 0.f;
-        float y = 0.f;
-        float xDiff = startCameraPos.x + (cameraTouchPos.x - touch->getLocation().x);//500 +
-        float yDiff = startCameraPos.y + (cameraTouchPos.y - touch->getLocation().y);
-        if (xDiff >= startCameraPos.x && startCameraPos.x + 100 > xDiff) {
-            camera->setPositionX(startCameraPos.x + xDiff);
+    worldTouchListener->onTouchMoved = [this](cocos2d::Touch* touch, cocos2d::Event* event) {
+        auto force = 0.2f;
+        float xDiff = world->getPositionX() - (worldTouchPos.x - touch->getLocation().x);
+        //        float yDiff = startWorldPos.y + (worldTouchPos.y - touch->getLocation().y);
+        if (startWorldPos.x + 300 >= xDiff && startWorldPos.x < xDiff) {
+            world->setPositionX(world->getPositionX() - (worldTouchPos.x - touch->getLocation().x));
         }
-        if (startCameraPos.y >= yDiff && startCameraPos.y + 20 < yDiff) {}
+        //        if (startWorldPos.y - 20 >= yDiff && startWorldPos.y + 100 < yDiff) {
+        //            world->setPositionY(yDiff);
+        //        }
+        auto test = "";
     };
-//    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(cameraListener, this);
+    //    this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(worldTouchListener, this);
 }

@@ -21,11 +21,11 @@ namespace mb::battleModule {
         void initCameraHandling();
 //        base* playerBase = nullptr;
         battleField* battleFieldNode = nullptr;
-        // camera section
-        cocos2d::Camera* camera = nullptr;
-        cocos2d::Vec3 startCameraPos;
-        cocos2d::EventListenerTouchOneByOne* cameraListener = nullptr;
-        cocos2d::Vec2 cameraTouchPos;
+        // world section
+        cocos2d::Layer* world = nullptr;
+        cocos2d::Vec2 startWorldPos;
+        cocos2d::EventListenerTouchOneByOne* worldTouchListener = nullptr;
+        cocos2d::Vec2 worldTouchPos;
     };
 }// namespace mb::interfaceModule
 

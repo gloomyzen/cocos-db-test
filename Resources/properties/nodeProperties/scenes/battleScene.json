@@ -6,6 +6,27 @@
       "stretch": [ 1.0, 1.0 ]
     }
   },
+  "scrollContainer": {
+    "transformComponent": {
+      "pivot": [ 0.0, 0.0 ],
+      "anchor": [ 0.5, 0.5 ],
+      "stretch": [ 1.0, 1.0 ]
+    },
+    "scrollViewComponent": {
+      "direction": "both",
+      "inertialScroll": true,
+      "containerSize": [640, 1235],
+      "scrollPosPercent": [0, 100],
+      "bounce": true
+    }
+  },
+  "world": {
+    "transformComponent": {
+      "pivot": [ 0.0, 0.0 ],
+      "anchor": [ 0.0, 0.0 ],
+      "stretch": [ 2.0, 1.0 ]
+    }
+  },
   "anim": {
     "transformComponent": {
       "pivot": [ 0.5, 0.5 ],
