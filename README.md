@@ -24,7 +24,6 @@ For example, for Win32 -> unzip to C:/bin/cocos2dx, for MacOs /Application/Devel
 
 #### Build from sources :
 ```bash
-cd cocos-mercenary-battles
 cmake .. -DDEBUG=1
 make -j$(nproc)
 ```
@@ -33,14 +32,14 @@ make -j$(nproc)
 
 For XCode - mac project
 ```bash
-cd cocos-mercenary-battles/proj.ios_mac/mac/
+cd proj.ios_mac/mac/
 cmake ../.. -GXcode -DDEBUG=1
 sudo xcode-select --reset
 ```
 
 For XCode - ios project
 ```bash
-cd cocos-mercenary-battles/proj.ios_mac/ios/
+cd proj.ios_mac/ios/
 cmake ../.. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
 sudo xcode-select --reset
 ```

@@ -3,18 +3,8 @@
   "name": "base",
   "child": [
     {
-      "type": "node3d",
+      "type": "node",
       "name": "unit1",
-      "child": [
-        {
-          "type": "sprite",
-          "name": "glass"
-        }
-      ]
-    },
-    {
-      "type": "node3d",
-      "name": "unit2",
       "child": [
         {
           "type": "dragonbones",
@@ -23,8 +13,8 @@
       ]
     },
     {
-      "type": "node3d",
-      "name": "unit3",
+      "type": "node",
+      "name": "unit2",
       "child": [
         {
           "type": "dragonbones",

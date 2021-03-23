@@ -1,7 +1,7 @@
 #include "battleField.h"
-#include "common/coreModule/nodes/widgets/node3d.h"
 
 using namespace mb::battleModule;
+using namespace common::coreModule;
 
 battleField::battleField() {}
 
@@ -36,12 +36,18 @@ void battleField::loadLocation(const std::string& name) {
         node = ground;
     }
     if (data.HasMember("base") && data["base"].IsString()) {
-        baseNode = new common::coreModule::node3d();
+        baseNode = new node3d();
         baseNode->setName("base");
         loadProperty(data["base"].GetString(), baseNode);
         node->addChild(baseNode);
     } else {
         LOG_ERROR(STRING_FORMAT("battleField::loadLocation: location '%s': base node not exist!", name.c_str()));
         return;
+    }
+    if (data.HasMember("1stPlan") && data["1stPlan"].IsString()) {
+        auto firstPlan = new cocos2d::Node();
+        firstPlan->setName("1stPlan");
+        loadProperty(data["1stPlan"].GetString(), firstPlan);
+        node->addChild(firstPlan);
     }
 }

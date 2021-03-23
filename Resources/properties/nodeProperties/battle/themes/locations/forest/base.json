@@ -32,27 +32,15 @@
   "unit1": {
     "transformComponent": {
       "size": [100, 10],
-      "rotation3d": [50, 0, 0]
+      "rotation3d": [50, 0, 0],
+      "position": [85, 118]
     }
   },
   "unit2": {
     "transformComponent": {
       "size": [100, 10],
-      "rotation3d": [50, 0, 0]
-    }
-  },
-  "unit3": {
-    "transformComponent": {
-      "size": [100, 10],
-      "rotation3d": [50, 0, 0]
-    }
-  },
-  "glass": {
-    "transformComponent": {
-      "anchor": [ 0.0, 0.0 ]
-    },
-    "spriteComponent": {
-      "image": "images/battle/themes/location_1/grass2.png"
+      "rotation3d": [50, 0, 0],
+      "position": [779, 131]
     }
   }
 }

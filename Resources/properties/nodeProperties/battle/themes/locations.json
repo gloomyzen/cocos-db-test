@@ -2,6 +2,7 @@
   "forest": {
     "sky": "battle/themes/locations/forest/sky",
     "ground": "battle/themes/locations/forest/ground",
-    "base": "battle/themes/locations/forest/base"
+    "base": "battle/themes/locations/forest/base",
+    "1stPlan": "battle/themes/locations/forest/1stPlan"
   }
 }
