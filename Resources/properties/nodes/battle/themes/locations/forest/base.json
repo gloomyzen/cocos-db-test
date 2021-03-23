@@ -1,7 +1,36 @@
 {
-  "type": "node",
+  "type": "node3d",
   "name": "base",
   "child": [
-
+    {
+      "type": "node3d",
+      "name": "unit1",
+      "child": [
+        {
+          "type": "sprite",
+          "name": "glass"
+        }
+      ]
+    },
+    {
+      "type": "node3d",
+      "name": "unit2",
+      "child": [
+        {
+          "type": "dragonbones",
+          "name": "anim"
+        }
+      ]
+    },
+    {
+      "type": "node3d",
+      "name": "unit3",
+      "child": [
+        {
+          "type": "dragonbones",
+          "name": "anim2"
+        }
+      ]
+    }
   ]
 }

@@ -1,4 +1,5 @@
 #include "battleField.h"
+#include "common/coreModule/nodes/widgets/node3d.h"
 
 using namespace mb::battleModule;
 
@@ -35,7 +36,7 @@ void battleField::loadLocation(const std::string& name) {
         node = ground;
     }
     if (data.HasMember("base") && data["base"].IsString()) {
-        baseNode = new cocos2d::Node();
+        baseNode = new common::coreModule::node3d();
         baseNode->setName("base");
         loadProperty(data["base"].GetString(), baseNode);
         node->addChild(baseNode);
