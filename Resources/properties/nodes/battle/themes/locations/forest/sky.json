@@ -5,10 +5,6 @@
     {
       "type": "sprite",
       "name": "skySprite"
-    },
-    {
-      "type": "sprite",
-      "name": "skySprite2"
     }
   ]
 }

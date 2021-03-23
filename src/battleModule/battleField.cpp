@@ -22,10 +22,12 @@ void battleField::loadLocation(const std::string& name) {
     auto data = doc[name.c_str()].GetObjectJ();
     setName(STRING_FORMAT("battlefield_%s", name.c_str()));
     if (data.HasMember("sky") && data["sky"].IsString()) {
+        auto skyHolder = new cocos2d::ParallaxNode();
         auto sky = new cocos2d::Node();
+        skyHolder->addChild(sky, -1, cocos2d::Vec2(0.05f,0.0f), Vec2::ZERO);
         sky->setName("sky");
         loadProperty(data["sky"].GetString(), sky);
-        addChild(sky);
+        addChild(skyHolder);
     }
     cocos2d::Node* node = this;
     if (data.HasMember("ground") && data["ground"].IsString()) {

@@ -1,21 +1,7 @@
 {
-  "sky": {
-    "transformComponent": {
-      "position": [-800, 0]
-    }
-  },
   "skySprite": {
     "transformComponent": {
-      "position": [-300, -346],
-      "anchor": [ 0.0, 0.0 ]
-    },
-    "spriteComponent": {
-      "image": "images/battle/themes/location_1/sky.png"
-    }
-  },
-  "skySprite2": {
-    "transformComponent": {
-      "position": [1620, -346],
+      "position": [-300, -200],
       "anchor": [ 0.0, 0.0 ]
     },
     "spriteComponent": {
