@@ -21,6 +21,16 @@
           "name": "floorGlass"
         }
       ]
+    },
+    {
+      "type": "sprite",
+      "name": "floor3",
+      "child": [
+        {
+          "type": "sprite",
+          "name": "floorGlass"
+        }
+      ]
     }
   ]
 }

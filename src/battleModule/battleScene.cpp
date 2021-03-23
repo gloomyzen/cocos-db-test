@@ -28,7 +28,8 @@ std::deque<nodeTasks> battleScene::getTasks() {
            if (!scrollView) {
                return eTasksStatus::STATUS_ERROR_BREAK;
            }
-           scrollView->setInnerContainerSize(world->getContentSize());
+           auto worldSize = world->getContentSize();
+           scrollView->setInnerContainerSize(cocos2d::Size(worldSize.width * 0.8f, worldSize.height * 0.8f));
            world->setMarkDirty();
 
            return eTasksStatus::STATUS_OK;

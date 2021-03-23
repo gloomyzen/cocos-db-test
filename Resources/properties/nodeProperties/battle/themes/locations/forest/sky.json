@@ -1,7 +1,12 @@
 {
+  "sky": {
+    "transformComponent": {
+      "position": [-800, 0]
+    }
+  },
   "skySprite": {
     "transformComponent": {
-      "position": [-250, -346],
+      "position": [-300, -346],
       "anchor": [ 0.0, 0.0 ]
     },
     "spriteComponent": {
@@ -10,7 +15,7 @@
   },
   "skySprite2": {
     "transformComponent": {
-      "position": [1670, -346],
+      "position": [1620, -346],
       "anchor": [ 0.0, 0.0 ]
     },
     "spriteComponent": {
