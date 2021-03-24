@@ -4,8 +4,9 @@
 #include "cocos2d.h"
 #include "common/coreModule/scenes/windows/windowBase.h"
 #include "common/coreModule/nodes/nodeProperties.h"
-//#include "battleModule/base.h"
 #include "battleModule/battleField.h"
+#include "battleModule/playerData/playerData.h"
+#include <tuple>
 
 namespace mb::battleModule {
 
@@ -18,10 +19,11 @@ namespace mb::battleModule {
         std::deque<nodeTasks> getTasks() override;
 
       private:
-//        base* playerBase = nullptr;
         battleField* battleFieldNode = nullptr;
         // world section
         cocos2d::Layer* world = nullptr;
+        std::pair<playerData*, playerData*> player;
+
     };
 }// namespace mb::interfaceModule
 

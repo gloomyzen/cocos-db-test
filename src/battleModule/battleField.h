@@ -13,6 +13,7 @@ namespace mb::battleModule {
         battleField();
         ~battleField() = default;
         void loadLocation(const std::string&);
+        common::coreModule::node3d* getBaseNode() { return baseNode; }
 
       private:
         common::coreModule::node3d* baseNode = nullptr;
