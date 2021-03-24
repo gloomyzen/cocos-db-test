@@ -24,5 +24,6 @@ void battleObject::setObjectSize(battleObject::eBattleObjectSize size) {
         name = STRING_FORMAT("%sLarge", this->getName().c_str());
         break;
     }
-    //todo wip
+    loadComponent(this, name);
+    removeJsonData();
 }

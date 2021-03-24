@@ -8,4 +8,6 @@ playerData::~playerData() {}
 
 void playerData::init() {
     castle = new battleObject();
+    castle->setObjectSize(battleObject::eBattleObjectSize::LARGE);
+    baseNode->addChild(castle);
 }

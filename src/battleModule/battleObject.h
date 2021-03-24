@@ -1,11 +1,9 @@
 #ifndef MERCENARY_BATTLES_BATTLEOBJECT_H
 #define MERCENARY_BATTLES_BATTLEOBJECT_H
 
-#include "battleModule/battleField.h"
-#include "battleModule/playerData/playerData.h"
 #include "cocos2d.h"
 #include "common/coreModule/nodes/nodeProperties.h"
-#include "common/coreModule/scenes/windows/windowBase.h"
+#include "common/coreModule/nodes/widgets/node3d.h"
 #include <tuple>
 
 namespace mb::battleModule {

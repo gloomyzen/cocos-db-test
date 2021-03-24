@@ -2,7 +2,6 @@
 #define MERCENARY_BATTLES_BATTLEFIELD_H
 
 #include "cocos2d.h"
-#include "common/coreModule/scenes/windows/windowBase.h"
 #include "common/coreModule/nodes/nodeProperties.h"
 #include "common/coreModule/nodes/widgets/node3d.h"
 #include <string>
