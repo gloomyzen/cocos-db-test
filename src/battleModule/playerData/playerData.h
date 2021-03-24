@@ -5,6 +5,7 @@
 #include "common/coreModule/nodes/nodeProperties.h"
 #include "common/coreModule/nodes/widgets/node3d.h"
 #include "common/coreModule/scenes/windows/windowBase.h"
+#include "battleModule/battleObject.h"
 #include <string>
 
 namespace mb::battleModule {
@@ -34,6 +35,7 @@ namespace mb::battleModule {
         ePlayerFraction playerFraction = ePlayerFraction::HUMAN;
         bool isRealUser = false;
         common::coreModule::node3d* baseNode = nullptr; //is not owner
+        battleObject* castle = nullptr;
     };
 }// namespace mb::battleModule
 

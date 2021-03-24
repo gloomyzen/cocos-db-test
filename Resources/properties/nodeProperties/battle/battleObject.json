@@ -1,0 +1,23 @@
+{
+  "battleObject": {
+    "transformComponent": {
+      "rotation3d": [35, 0, 0],
+      "position": [0, -20, -20]
+    }
+  },
+  "battleObjectSmall": {
+    "transformComponent": {
+      "size": [100, 20]
+    }
+  },
+  "battleObjectMedium": {
+    "transformComponent": {
+      "size": [180, 30]
+    }
+  },
+  "battleObjectLarge": {
+    "transformComponent": {
+      "size": [340, 50]
+    }
+  }
+}
