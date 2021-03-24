@@ -11,7 +11,7 @@
       "incomeB": 20,
       "unitIdA": 20001,
       "unitIdB": 20002,
-      "propertyPath": "properties/nodeProperties/battle/buildings/camp"
+      "propertyPath": "properties/nodeProperties/battle/buildings/slimeTree"
     },
     "30002": {
       "level": 2,
@@ -24,7 +24,7 @@
       "incomeB": 40,
       "unitIdA": 20003,
       "unitIdB": 20004,
-      "propertyPath": "properties/nodeProperties/battle/buildings/camp"
+      "propertyPath": "properties/nodeProperties/battle/buildings/slimeCamp"
     },
     "30003": {
       "level": 3,
@@ -37,7 +37,7 @@
       "incomeB": 60,
       "unitIdA": 20005,
       "unitIdB": 20006,
-      "propertyPath": "properties/nodeProperties/battle/buildings/camp"
+      "propertyPath": "properties/nodeProperties/battle/buildings/slimeSkull"
     },
     "30004": {
       "level": 4,
