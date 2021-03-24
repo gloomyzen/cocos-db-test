@@ -7,7 +7,9 @@
 #include <string>
 
 namespace mb::battleModule {
-    class battleField : public common::coreModule::nodeProperties<cocos2d::Node> {
+    class battleField
+        : public common::coreModule::nodeProperties
+        , public cocos2d::Node {
       public:
         battleField();
         ~battleField() = default;
@@ -17,7 +19,7 @@ namespace mb::battleModule {
       private:
         common::coreModule::node3d* baseNode = nullptr;
     };
-}
+}// namespace mb::battleModule
 
 
 #endif// MERCENARY_BATTLES_BATTLEFIELD_H
