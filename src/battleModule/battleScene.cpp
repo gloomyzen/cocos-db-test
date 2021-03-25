@@ -43,7 +43,7 @@ std::deque<nodeTasks> battleScene::getTasks() {
         player.first->setPlayerPosition(playerData::ePlayerPosition::LEFT);
         player.first->setPlayerFraction(playerData::ePlayerFraction::HUMAN);
         player.first->setRealUser(true);
-        player.first->setBaseNode(battleFieldNode->getBaseNode());
+        player.first->setBattleField(battleFieldNode);
         player.first->init();
 
         player.second = new playerData();
@@ -51,7 +51,7 @@ std::deque<nodeTasks> battleScene::getTasks() {
         player.second->setPlayerPosition(playerData::ePlayerPosition::RIGHT);
         player.second->setPlayerFraction(playerData::ePlayerFraction::ORC);
         player.second->setRealUser(false);
-        player.second->setBaseNode(battleFieldNode->getBaseNode());
+        player.second->setBattleField(battleFieldNode);
         player.second->init();
 
         return eTasksStatus::STATUS_OK;

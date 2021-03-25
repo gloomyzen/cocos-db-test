@@ -5,6 +5,7 @@
 #include "common/coreModule/nodes/nodeProperties.h"
 #include "common/coreModule/nodes/widgets/node3d.h"
 #include "battleModule/battleObject.h"
+#include "battleModule/battleField.h"
 #include <string>
 
 namespace mb::battleModule {
@@ -24,17 +25,20 @@ namespace mb::battleModule {
         ePlayerFraction getPlayerFraction() { return playerFraction; }
         void setRealUser(bool value) { isRealUser = value; }
         bool getRealUser() const { return isRealUser; }
-        void setBaseNode(common::coreModule::node3d* node) { baseNode = node; }
+        void setBattleField(battleField* value) { bf = value; }
 
         void init();
 
       private:
+        void initCastle();
+
         ePlayerPosition playerPosition = ePlayerPosition::LEFT;
         ePlayerMode playerMode = ePlayerMode::PVE;
         ePlayerFraction playerFraction = ePlayerFraction::HUMAN;
         bool isRealUser = false;
-        common::coreModule::node3d* baseNode = nullptr; //is not owner
+        battleField* bf = nullptr; //is not owner
         battleObject* castle = nullptr;
+        bool inited = false;
     };
 }// namespace mb::battleModule
 

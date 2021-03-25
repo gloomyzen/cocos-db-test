@@ -6,7 +6,6 @@ using namespace common::coreModule;
 battleField::battleField() {}
 
 void battleField::loadLocation(const std::string& name) {
-    // load json
     const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile("properties/nodeProperties/battle/themes/locations.json");
     rapidjson::Document doc;
     doc.Parse<0>(regionStr.c_str());
@@ -52,4 +51,55 @@ void battleField::loadLocation(const std::string& name) {
         loadProperty(data["1stPlan"].GetString(), firstPlan);
         node->addChild(firstPlan);
     }
+    if (data.HasMember("baseData") && data["baseData"].IsString()) {
+        initBaseData(data["baseData"].GetString());
+    }
+}
+battleField::sBattleFieldData battleField::getBaseData() {
+    return baseData;
+}
+
+void battleField::initBaseData(const std::string& path) {
+    if (path.empty()) {
+        LOG_ERROR("battleField::initBaseData: path is empty");
+        return;
+    }
+    const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile(STRING_FORMAT("properties/nodeProperties/%s.json", path.c_str()));
+    rapidjson::Document doc;
+    doc.Parse<0>(regionStr.c_str());
+
+    if (doc.HasParseError() || doc.IsNull() || !doc.IsObject()) {
+        LOG_ERROR("battleField::initBaseData: json parse error");
+        return;
+    }
+    auto data = doc.GetObjectJ();
+    auto castle = data.FindMember("castle");
+    if (castle != data.MemberEnd()) {
+        auto x = castle->value.FindMember("x");
+        auto y = castle->value.FindMember("y");
+        if (x != castle->value.MemberEnd() && x->value.IsNumber()) {
+            baseData.castlePos.x = x->value.GetFloat();
+        }
+        if (y != castle->value.MemberEnd() && y->value.IsNumber()) {
+            baseData.castlePos.y = y->value.GetFloat();
+        }
+    }
+    auto builds = data.FindMember("builds");
+    if (builds != data.MemberEnd() && builds->value.IsObject()) {
+        for (auto it = builds->value.MemberBegin(); it != builds->value.MemberEnd(); ++it) {
+            if (it->value.IsObject()) {
+                auto pos = cocos2d::Vec2::ZERO;
+                auto x = it->value.FindMember("x");
+                auto y = it->value.FindMember("y");
+                if (x != it->value.MemberEnd() && x->value.IsNumber()) {
+                    pos.x = x->value.GetFloat();
+                }
+                if (y != it->value.MemberEnd() && y->value.IsNumber()) {
+                    pos.y = y->value.GetFloat();
+                }
+                baseData.buildingPos.push_back(pos);
+            }
+        }
+    }
+
 }

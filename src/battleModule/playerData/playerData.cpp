@@ -7,7 +7,15 @@ playerData::playerData() {}
 playerData::~playerData() {}
 
 void playerData::init() {
+    if (inited || !bf)
+        return;
+    inited = true;
+    initCastle();
+}
+
+void playerData::initCastle() {
+    //init castle
     castle = new battleObject();
     castle->setObjectSize(battleObject::eBattleObjectSize::LARGE);
-    baseNode->addChild(castle);
+    bf->getBaseNode()->addChild(castle);
 }
