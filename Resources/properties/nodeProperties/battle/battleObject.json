@@ -1,14 +1,14 @@
 {
   "battleObject": {
     "transformComponent": {
-      "position": [0, -20, -20]
+      "position": [0, 0, 0]
     }
   },
   "objectHolder": {
     "transformComponent": {
-      "rotation3d": [50, 0, 0],
-      "position": [0, -20, -20],
-      "pivot": [ 0.5, 1.0 ],
+      "rotation3d": [35, 0, 0],
+      "position": [0, 0, 0],
+      "pivot": [ 0.5, 0.0 ],
       "anchor": [ 0.5, 0.0 ]
     }
   },

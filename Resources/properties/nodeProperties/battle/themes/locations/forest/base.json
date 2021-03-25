@@ -32,14 +32,14 @@
   "unit1": {
     "transformComponent": {
       "size": [100, 10],
-      "rotation3d": [50, 0, 0],
+      "rotation3d": [35, 0, 0],
       "position": [85, 118]
     }
   },
   "unit2": {
     "transformComponent": {
       "size": [100, 10],
-      "rotation3d": [50, 0, 0],
+      "rotation3d": [35, 0, 0],
       "position": [779, 131]
     }
   }

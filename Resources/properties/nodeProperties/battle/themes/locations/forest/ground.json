@@ -1,7 +1,7 @@
 {
   "ground": {
     "transformComponent": {
-      "rotation3d": [-50, 0, 0],
+      "rotation3d": [-35, 0, 0],
       "position": [-800, 58, 76]
     }
   },

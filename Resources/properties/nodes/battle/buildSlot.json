@@ -1,0 +1,10 @@
+{
+  "type": "soundButton",
+  "name": "buildSlot",
+  "child": [
+    {
+      "type": "sprite",
+      "name": "bg"
+    }
+  ]
+}
