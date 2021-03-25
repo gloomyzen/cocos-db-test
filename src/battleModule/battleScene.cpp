@@ -39,17 +39,17 @@ std::deque<nodeTasks> battleScene::getTasks() {
     result.emplace_back([this]() {
         // init players
         player.first = new playerData();
-        player.first->setPlayerMode(playerData::ePlayerMode::PVE);
-        player.first->setPlayerPosition(playerData::ePlayerPosition::LEFT);
-        player.first->setPlayerFraction(playerData::ePlayerFraction::HUMAN);
+        player.first->setPlayerMode(ePlayerMode::PVE);
+        player.first->setPlayerPosition(ePlayerPosition::LEFT);
+        player.first->setPlayerFraction(ePlayerFraction::HUMAN);
         player.first->setRealUser(true);
         player.first->setBattleField(battleFieldNode);
         player.first->init();
 
         player.second = new playerData();
-        player.second->setPlayerMode(playerData::ePlayerMode::PVE);
-        player.second->setPlayerPosition(playerData::ePlayerPosition::RIGHT);
-        player.second->setPlayerFraction(playerData::ePlayerFraction::ORC);
+        player.second->setPlayerMode(ePlayerMode::PVE);
+        player.second->setPlayerPosition(ePlayerPosition::RIGHT);
+        player.second->setPlayerFraction(ePlayerFraction::ORC);
         player.second->setRealUser(false);
         player.second->setBattleField(battleFieldNode);
         player.second->init();

@@ -6,6 +6,7 @@ using namespace mb::battleModule;
 battleObject::battleObject() {
     this->setName("battleObject");
     loadProperty("battle/" + this->getName(), this);
+    holder = dynamic_cast<cocos2d::Node*>(findNode("objectHolder"));
 }
 
 battleObject::~battleObject() {}
@@ -27,3 +28,4 @@ void battleObject::setObjectSize(battleObject::eBattleObjectSize size) {
     loadComponent(this, name);
     removeJsonData();
 }
+cocos2d::Node* battleObject::getHolder() { return holder; }

@@ -6,14 +6,22 @@
 #include "common/coreModule/nodes/widgets/node3d.h"
 #include "battleModule/battleObject.h"
 #include "battleModule/battleField.h"
+#include <map>
 #include <string>
 
 namespace mb::battleModule {
+
+    enum class ePlayerPosition { LEFT = 0, RIGHT };
+    enum class ePlayerMode { PVE = 0, PVP };
+    enum class ePlayerFraction { HUMAN = 0, ORC };
+
+    static const std::map<ePlayerFraction, std::string> fractionNames = {
+        {ePlayerFraction::ORC, "orc"},
+        {ePlayerFraction::HUMAN, "human"},
+    };
+
     class playerData {
       public:
-        enum class ePlayerPosition { LEFT = 0, RIGHT };
-        enum class ePlayerMode { PVE = 0, PVP };
-        enum class ePlayerFraction { HUMAN = 0, ORC };
         playerData();
         ~playerData();
 

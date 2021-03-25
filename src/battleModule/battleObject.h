@@ -16,6 +16,10 @@ namespace mb::battleModule {
         battleObject();
         ~battleObject();
         void setObjectSize(eBattleObjectSize);
+        cocos2d::Node* getHolder();
+
+      private:
+        cocos2d::Node* holder = nullptr;
     };
 }// namespace mb::battleModule
 
