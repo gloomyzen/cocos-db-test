@@ -12,6 +12,7 @@ void playerData::init() {
         return;
     inited = true;
     initCastle();
+    initBuilds();
 }
 
 void playerData::initCastle() {
@@ -22,6 +23,8 @@ void playerData::initCastle() {
     auto pos = bf->getBaseData().castlePos;
     if (playerPosition == ePlayerPosition::RIGHT) {
         auto bfSize = bf->getBaseNode()->getContentSize();
+        pos.x += castle->getContentSize().width;
+        pos.x = bfSize.width - pos.x;
     }
     castle->setPosition(pos);
     auto sprite = new nodeWithProperties<cocos2d::Sprite>();
@@ -38,4 +41,14 @@ void playerData::initCastle() {
         sprite->setFlippedX(true);
     }
     castle->getHolder()->addChild(sprite);
+}
+
+void playerData::initBuilds() {
+    auto positions = bf->getBaseData().buildingPos;
+    if (playerPosition == ePlayerPosition::RIGHT) {
+        std::reverse(positions.begin(), positions.end());
+    }
+    for (const auto& item : positions) {
+        //
+    }
 }

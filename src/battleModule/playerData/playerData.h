@@ -39,6 +39,7 @@ namespace mb::battleModule {
 
       private:
         void initCastle();
+        void initBuilds();
 
         ePlayerPosition playerPosition = ePlayerPosition::LEFT;
         ePlayerMode playerMode = ePlayerMode::PVE;
