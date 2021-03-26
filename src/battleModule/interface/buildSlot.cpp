@@ -10,11 +10,11 @@ buildSlot::buildSlot() {
 
 buildSlot::~buildSlot() {}
 
-common::coreModule::eventNode::eventTouchClb buildSlot::getOnTouchEnded() {
-    return clickAvailable ? eventNode::getOnTouchEnded() : nullptr;
-}
-
 void buildSlot::setClickAvailable(bool value) {
-    clickAvailable = value;
+    if (value) {
+        loadComponent(this, "buildSlotGreen");
+    } else {
+        loadComponent(this, "buildSlotRed");
+    }
     setClickable(value);
 }

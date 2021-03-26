@@ -5,10 +5,16 @@
       "pivot": [ 0.0, 0.0 ],
       "size": [120, 120],
       "scale": [1.0, 0.67]
-    },
+    }
+  },
+  "buildSlotRed": {
     "buttonComponent": {
-      "image": "images/battle/ui/green.png",
-      "disabled": "images/battle/ui/red.png"
+      "image": "images/battle/ui/red.png"
+    }
+  },
+  "buildSlotGreen": {
+    "buttonComponent": {
+      "image": "images/battle/ui/green.png"
     }
   }
 }
