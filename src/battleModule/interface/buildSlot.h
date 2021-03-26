@@ -3,11 +3,11 @@
 
 #include "cocos2d.h"
 #include "common/coreModule/nodes/nodeProperties.h"
-#include "common/coreModule/nodes/widgets/soundButton.h"
+#include "common/coreModule/nodes/widgets/buttonNode.h"
 
 namespace mb::battleModule {
 
-    class buildSlot : public common::coreModule::soundButton {
+    class buildSlot : public common::coreModule::buttonNode {
       public:
         buildSlot();
         ~buildSlot();
