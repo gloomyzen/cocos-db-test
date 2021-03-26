@@ -11,6 +11,12 @@ namespace mb::battleModule {
       public:
         buildSlot();
         ~buildSlot();
+
+        eventTouchClb getOnTouchEnded() override;
+        void setClickAvailable(bool);
+
+      private:
+        bool clickAvailable = false;
     };
 }// namespace mb::battleModule
 

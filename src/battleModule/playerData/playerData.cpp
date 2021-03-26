@@ -59,5 +59,8 @@ void playerData::initBuilds() {
         slot->setPosition(item);
 //        slotHolder->getHolder()->addChild(slot);
         bf->getBaseNode()->addChild(slot);
+        if (item == positions.front()) {
+            slot->setClickAvailable(true);
+        }
     }
 }

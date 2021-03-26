@@ -7,7 +7,8 @@
       "scale": [1.0, 0.67]
     },
     "buttonComponent": {
-      "image": "images/battle/ui/red.png"
+      "image": "images/battle/ui/green.png",
+      "disabled": "images/battle/ui/red.png"
     }
   }
 }
