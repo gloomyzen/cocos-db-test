@@ -1,11 +1,12 @@
 #ifndef MERCENARY_BATTLES_PLAYERDATA_H
 #define MERCENARY_BATTLES_PLAYERDATA_H
 
+#include "battleModule/battleField.h"
+#include "battleModule/battleObject.h"
+#include "battleModule/interface/buildSlot.h"
 #include "cocos2d.h"
 #include "common/coreModule/nodes/nodeProperties.h"
 #include "common/coreModule/nodes/widgets/node3d.h"
-#include "battleModule/battleObject.h"
-#include "battleModule/battleField.h"
 #include <map>
 #include <string>
 
@@ -16,8 +17,14 @@ namespace mb::battleModule {
     enum class ePlayerFraction { HUMAN = 0, ORC };
 
     static const std::map<ePlayerFraction, std::string> fractionNames = {
-        {ePlayerFraction::ORC, "orc"},
-        {ePlayerFraction::HUMAN, "human"},
+        { ePlayerFraction::ORC, "orc" },
+        { ePlayerFraction::HUMAN, "human" },
+    };
+
+    struct sPlayerBuild {
+        int level = 0;
+        buildSlot* slot = nullptr;
+        cocos2d::Vec2 pos;
     };
 
     class playerData {
@@ -45,9 +52,10 @@ namespace mb::battleModule {
         ePlayerMode playerMode = ePlayerMode::PVE;
         ePlayerFraction playerFraction = ePlayerFraction::HUMAN;
         bool isRealUser = false;
-        battleField* bf = nullptr; //is not owner
+        battleField* bf = nullptr;// is not owner
         battleObject* castle = nullptr;
         bool inited = false;
+        std::map<int, sPlayerBuild> playerBuilds;
     };
 }// namespace mb::battleModule
 

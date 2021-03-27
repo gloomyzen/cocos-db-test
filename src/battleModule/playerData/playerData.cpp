@@ -1,6 +1,5 @@
 #include "playerData.h"
 #include "common/debugModule/logManager.h"
-#include "battleModule/interface/buildSlot.h"
 
 using namespace mb::battleModule;
 using namespace common::coreModule;
@@ -52,15 +51,16 @@ void playerData::initBuilds() {
         std::reverse(positions.begin(), positions.end());
     }
 
-    for (const auto& item : positions) {
-//        auto slotHolder = new battleObject();
-//        slotHolder->setObjectSize(battleObject::eBattleObjectSize::SMALL);
-        auto slot = new buildSlot();
-        slot->setPosition(item);
-//        slotHolder->getHolder()->addChild(slot);
-        bf->getBaseNode()->addChild(slot);
-        if (item == positions.front()) {
-            slot->setClickAvailable(true);
+    for (size_t i = 0; i < positions.size(); ++i) {
+        sPlayerBuild playerBuild;
+        playerBuild.level = i + 1;
+        playerBuild.slot = new buildSlot();
+        playerBuild.pos = positions[i];
+        playerBuild.slot->setPosition(positions[i]);
+        bf->getBaseNode()->addChild(playerBuild.slot);
+        if (i == 0) {
+            playerBuild.slot->setClickAvailable(true);
         }
+        playerBuilds.insert({ playerBuild.level, playerBuild });
     }
 }
