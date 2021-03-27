@@ -24,6 +24,7 @@
 
 #if USE_AUDIO_ENGINE
 #include "editor-support/cocostudio/SimpleAudioEngine.h"
+#include "common/audioModule/audioEngine.h"
 #endif
 
 USING_NS_CC;
@@ -35,6 +36,7 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() {
 #if USE_AUDIO_ENGINE
+    GET_AUDIO_ENGINE().cleanup();
 	CocosDenshion::SimpleAudioEngine::getInstance()->end();
 #endif
     GET_PROFILE().cleanup();
@@ -97,6 +99,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
 
 	register_all_packages();
+    //preload sounds
+#if USE_AUDIO_ENGINE
+    GET_AUDIO_ENGINE().stopAllEffects();
+    GET_AUDIO_ENGINE().stopBackgroundMusic();
+#endif
 	// register all profile
 //	GET_PROFILE().registerBlock("local", [](){ return new cardsApp::localProfile::localProfileBlock(); });
 	GET_PROFILE().executeLoad();
