@@ -12,9 +12,15 @@ buildSlot::~buildSlot() {}
 
 void buildSlot::setClickAvailable(bool value) {
     if (value) {
-        loadComponent(this, "buildSlotGreen");
+//        setName("buildSlotGreen");
+//        loadComponent(this, "buildSlotGreen");
+        this->loadTexture("images/battle/ui/green.png");
     } else {
-        loadComponent(this, "buildSlotRed");
+//        setName("buildSlotRed");
+//        loadComponent(this, "buildSlotRed");
+        this->loadTexture("images/battle/ui/red.png");
+//        this->loadTextureNormal("images/battle/ui/red.png");
     }
+//    loadComponent(this, this->getName());
     setClickable(value);
 }
