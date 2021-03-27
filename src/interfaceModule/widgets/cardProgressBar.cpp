@@ -4,7 +4,7 @@ using namespace mb::interfaceModule;
 
 cardProgressBar::cardProgressBar() {
     this->setName("cardProgressBar");
-    loadProperty("widgets/" + this->getName(), dynamic_cast<cocos2d::Sprite*>(this));
+    loadProperty("widgets/" + this->getName(), this);
     progressBar = dynamic_cast<cocos2d::ui::Scale9Sprite*>(findNode("progressBar"));
     progressBarSize = this->getContentSize();
     setProgress(0);

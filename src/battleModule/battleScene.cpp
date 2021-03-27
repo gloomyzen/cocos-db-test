@@ -46,6 +46,7 @@ std::deque<nodeTasks> battleScene::getTasks() {
         player.first->setBattleField(battleFieldNode);
         player.first->init();
 
+
         player.second = new playerData();
         player.second->setPlayerMode(ePlayerMode::PVE);
         player.second->setPlayerPosition(ePlayerPosition::RIGHT);

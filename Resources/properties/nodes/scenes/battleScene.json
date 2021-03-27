@@ -11,6 +11,16 @@
           "name": "world"
         }
       ]
+    },
+    {
+      "type": "layer",
+      "name": "uiLayer",
+      "child": [
+        {
+          "type": "iconLabelBattle",
+          "name": "incomeLabel"
+        }
+      ]
     }
   ]
 }

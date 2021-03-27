@@ -58,9 +58,6 @@ void playerData::initBuilds() {
         playerBuild.pos = positions[i];
         playerBuild.slot->setPosition(positions[i]);
         bf->getBaseNode()->addChild(playerBuild.slot);
-        if (i == 0) {
-            playerBuild.slot->setClickAvailable(true);
-        }
         playerBuilds.insert({ playerBuild.level, playerBuild });
     }
 }

@@ -44,6 +44,8 @@ namespace mb::battleModule {
 
         void init();
 
+        std::map<int, sPlayerBuild> getPlayerBuilds() { return playerBuilds; };
+
       private:
         void initCastle();
         void initBuilds();
