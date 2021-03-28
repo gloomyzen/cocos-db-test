@@ -19,6 +19,10 @@
         {
           "type": "battleIncomeWidget",
           "name": "incomeGoldWidget"
+        },
+        {
+          "type": "battleIncomeWidget",
+          "name": "incomeTrophiesWidget"
         }
       ]
     }

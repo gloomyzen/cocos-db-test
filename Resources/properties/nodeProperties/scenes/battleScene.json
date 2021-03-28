@@ -32,5 +32,11 @@
       "pivot": [ 0.0, 1.0 ],
       "position": [10, -62]
     }
+  },
+  "incomeTrophiesWidget": {
+    "transformComponent": {
+      "pivot": [ 0.0, 1.0 ],
+      "position": [130, -62]
+    }
   }
 }

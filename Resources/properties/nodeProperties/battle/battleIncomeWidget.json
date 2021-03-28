@@ -10,8 +10,8 @@
   },
   "icon": {
     "transformComponent": {
-      "anchor": [ 0.0, 0.0 ],
-      "pivot": [ 0.16, 0.28 ],
+      "anchor": [ 0.0, 0.5 ],
+      "pivot": [ 0.16, 0.5 ],
       "scale": [ 1.5, 1.5 ]
     }
   },

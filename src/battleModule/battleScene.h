@@ -24,6 +24,8 @@ namespace mb::battleModule {
         // world section
         cocos2d::Layer* world = nullptr;
         std::pair<playerData*, playerData*> player;
+        int gold = 100;
+        int trophies = 0;
     };
 }// namespace mb::battleModule
 

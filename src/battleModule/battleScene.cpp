@@ -1,6 +1,7 @@
 #include "battleScene.h"
 #include "battleModule/interface/battleIncomeWidget.h"
 #include "ui/CocosGUI.h"
+#include "common/debugModule/logManager.h"
 
 using namespace mb::battleModule;
 using namespace cocos2d;
@@ -61,11 +62,25 @@ std::deque<nodeTasks> battleScene::getTasks() {
 
     result.emplace_back([this]() {
         // ui
-        auto incomeWidget = dynamic_cast<battleIncomeWidget*>(findNode("incomeGoldWidget"));
-        incomeWidget->setIcon(battleIncomeWidget::eIconLabelTypes::GOLD);
-        incomeWidget->setData(0);
+        auto goldWidget = dynamic_cast<battleIncomeWidget*>(findNode("incomeGoldWidget"));
+        goldWidget->setIcon(battleIncomeWidget::eIconLabelTypes::GOLD);
+        goldWidget->setData(gold);
+
+        auto trophiesWidget = dynamic_cast<battleIncomeWidget*>(findNode("incomeTrophiesWidget"));
+        trophiesWidget->setIcon(battleIncomeWidget::eIconLabelTypes::TROPHIES);
+        trophiesWidget->setData(trophies);
 
         return eTasksStatus::STATUS_OK;
+    });
+
+    result.emplace_back([this]() {
+            for (auto& [_, build] : player.first->getPlayerBuilds()) {
+                build.slot->setOnTouchEnded([&](){
+                    //todo wip
+                });
+            }
+
+           return eTasksStatus::STATUS_OK;
     });
 
     return result;
