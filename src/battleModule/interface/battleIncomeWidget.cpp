@@ -28,3 +28,14 @@ void battleIncomeWidget::setIcon(battleIncomeWidget::eIconLabelTypes type) {
         }
     }
 }
+void battleIncomeWidget::setData(int income) {
+    if (auto label = dynamic_cast<cocos2d::Label*>(findNode("label"))) {
+        if (income < 0) {
+            label->setString("0");
+        } else if (income >= 10000) {
+            label->setString("9999+");
+        } else {
+            label->setString(std::to_string(income));
+        }
+    }
+}

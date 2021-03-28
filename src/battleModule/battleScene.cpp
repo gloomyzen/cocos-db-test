@@ -63,7 +63,7 @@ std::deque<nodeTasks> battleScene::getTasks() {
         // ui
         auto incomeWidget = dynamic_cast<battleIncomeWidget*>(findNode("incomeGoldWidget"));
         incomeWidget->setIcon(battleIncomeWidget::eIconLabelTypes::GOLD);
-
+        incomeWidget->setData(0);
 
         return eTasksStatus::STATUS_OK;
     });

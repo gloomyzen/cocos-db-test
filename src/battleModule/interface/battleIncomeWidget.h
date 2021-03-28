@@ -16,6 +16,7 @@ namespace mb::battleModule {
         ~battleIncomeWidget() override;
         CREATE_FUNC(battleIncomeWidget);
         void setIcon(eIconLabelTypes);
+        void setData(int);
     };
 }// namespace mb::battleModule
 
