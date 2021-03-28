@@ -17,8 +17,8 @@
       "name": "uiLayer",
       "child": [
         {
-          "type": "iconLabelBattle",
-          "name": "incomeLabel"
+          "type": "battleIncomeWidget",
+          "name": "incomeGoldWidget"
         }
       ]
     }

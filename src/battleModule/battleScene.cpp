@@ -1,4 +1,5 @@
 #include "battleScene.h"
+#include "battleModule/interface/battleIncomeWidget.h"
 #include "ui/CocosGUI.h"
 
 using namespace mb::battleModule;
@@ -54,6 +55,15 @@ std::deque<nodeTasks> battleScene::getTasks() {
         player.second->setRealUser(false);
         player.second->setBattleField(battleFieldNode);
         player.second->init();
+
+        return eTasksStatus::STATUS_OK;
+    });
+
+    result.emplace_back([this]() {
+        // ui
+        auto incomeWidget = dynamic_cast<battleIncomeWidget*>(findNode("incomeGoldWidget"));
+        incomeWidget->setIcon(battleIncomeWidget::eIconLabelTypes::GOLD);
+
 
         return eTasksStatus::STATUS_OK;
     });

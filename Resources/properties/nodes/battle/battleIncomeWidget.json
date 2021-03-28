@@ -1,6 +1,6 @@
 {
   "type": "sprite",
-  "name": "iconLabel",
+  "name": "battleIncomeWidget",
   "child": [
     {
       "type": "sprite",

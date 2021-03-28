@@ -1,5 +1,5 @@
 {
-  "iconLabel": {
+  "battleIncomeWidget": {
     "transformComponent": {
       "anchor": [ 0.0, 0.0 ],
       "pivot": [ 0.0, 0.0 ]
@@ -13,9 +13,6 @@
       "anchor": [ 0.0, 0.0 ],
       "pivot": [ 0.16, 0.28 ],
       "scale": [ 1.5, 1.5 ]
-    },
-    "spriteComponent": {
-      "image": "images/battle/ui/iconGold.png"
     }
   },
   "label": {
@@ -33,5 +30,9 @@
       "alight": "right",
       "maxLineWidth": 200
     }
+  },
+  "settings": {
+    "gold": "images/battle/ui/iconGold.png",
+    "trophies": "images/battle/ui/iconDiamond.png"
   }
 }

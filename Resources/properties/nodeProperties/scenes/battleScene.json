@@ -27,7 +27,7 @@
       "stretch": [ 2.0, 1.0 ]
     }
   },
-  "incomeLabel": {
+  "incomeGoldWidget": {
     "transformComponent": {
       "pivot": [ 0.0, 1.0 ],
       "position": [10, -62]

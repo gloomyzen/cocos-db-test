@@ -1,5 +1,5 @@
-#ifndef MERCENARY_BATTLES_ICONLABEL_H
-#define MERCENARY_BATTLES_ICONLABEL_H
+#ifndef MERCENARY_BATTLES_BATTLEINCOMEWIDGET_H
+#define MERCENARY_BATTLES_BATTLEINCOMEWIDGET_H
 
 #include "cocos/ui/CocosGUI.h"
 #include "cocos2d.h"
@@ -7,16 +7,17 @@
 
 namespace mb::battleModule {
 
-    class iconLabel
+    class battleIncomeWidget
         : public common::coreModule::nodeProperties
         , public cocos2d::Sprite {
       public:
         enum class eIconLabelTypes { GOLD = 0, TROPHIES };
-        iconLabel();
-        ~iconLabel() override;
-        CREATE_FUNC(iconLabel);
+        battleIncomeWidget();
+        ~battleIncomeWidget() override;
+        CREATE_FUNC(battleIncomeWidget);
+        void setIcon(eIconLabelTypes);
     };
 }// namespace mb::battleModule
 
 
-#endif// MERCENARY_BATTLES_ICONLABEL_H
+#endif// MERCENARY_BATTLES_BATTLEINCOMEWIDGET_H
