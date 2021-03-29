@@ -22,6 +22,7 @@ namespace mb::localProfile {
         std::map<int, int>& getAllHeroes() { return localHeroes; }
         bool hasHero(int id);
         bool addHero(int id);
+        bool removeHero(int id);
 
 
       private:

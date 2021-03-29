@@ -48,13 +48,6 @@ sBuildData* buildingsDatabase::getBuildById(int id) {
 
 bool sBuildData::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>::ConstObject& object) {
     if (object.HasMember("level") && object["level"].IsNumber()) level = object["level"].GetInt();
-    if (object.HasMember("cost") && object["cost"].IsNumber()) cost = object["cost"].GetInt();
-    if (object.HasMember("craftTime") && object["craftTime"].IsNumber()) craftTime = object["craftTime"].GetInt();
-    if (object.HasMember("upgradeCost") && object["upgradeCost"].IsNumber()) upgradeCost = object["upgradeCost"].GetInt();
-    if (object.HasMember("trophiesCost") && object["trophiesCost"].IsNumber()) trophiesCost = object["trophiesCost"].GetInt();
-    if (object.HasMember("trophiesUpgrade") && object["trophiesUpgrade"].IsNumber()) trophiesUpgrade = object["trophiesUpgrade"].GetInt();
-    if (object.HasMember("incomeA") && object["incomeA"].IsNumber()) incomeA = object["incomeA"].GetInt();
-    if (object.HasMember("incomeB") && object["incomeB"].IsNumber()) incomeB = object["incomeB"].GetInt();
     if (object.HasMember("unitIdA") && object["unitIdA"].IsNumber()) unitIdA = object["unitIdA"].GetInt();
     if (object.HasMember("unitIdB") && object["unitIdB"].IsNumber()) unitIdB = object["unitIdB"].GetInt();
     if (object.HasMember("propertyPath") && object["propertyPath"].IsString()) propertyPath = object["propertyPath"].GetString();

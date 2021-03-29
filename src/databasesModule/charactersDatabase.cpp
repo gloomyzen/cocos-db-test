@@ -70,15 +70,12 @@ bool sCharacterStats::load(const rapidjson::GenericValue<rapidjson::UTF8<char>>:
     } else {
         return false;
     }
-    if (object.HasMember("speed") && object["speed"].IsNumber()) {
-        speed = object["speed"].GetFloat();
-    } else {
-        return false;
-    }
-    if (object.HasMember("attackSpeed") && object["attackSpeed"].IsNumber()) {
-        attackSpeed = object["attackSpeed"].GetFloat();
-    } else {
-        return false;
-    }
+    if (object.HasMember("speed") && object["speed"].IsNumber()) speed = object["speed"].GetFloat();
+    if (object.HasMember("attackSpeed") && object["attackSpeed"].IsNumber()) attackSpeed = object["attackSpeed"].GetFloat();
+
+    if (object.HasMember("cost") && object["cost"].IsNumber()) craft.cost = object["cost"].GetInt();
+    if (object.HasMember("trophiesCost") && object["trophiesCost"].IsNumber()) craft.trophiesCost = object["trophiesCost"].GetInt();
+    if (object.HasMember("craftTime") && object["craftTime"].IsNumber()) craft.craftTime = object["craftTime"].GetInt();
+    if (object.HasMember("income") && object["income"].IsNumber()) craft.income = object["income"].GetInt();
     return true;
 }

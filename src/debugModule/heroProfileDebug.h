@@ -15,8 +15,10 @@ namespace mb::debugProfile {
       private:
         void profileWindow(bool* windowOpened);
         void leftList();
+        void rightData();
 
         bool isOpened = false;
+        int lastOpenedHero = -1;
     };
 }
 

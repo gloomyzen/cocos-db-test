@@ -13,13 +13,6 @@ namespace mb::databasesModule {
     struct sBuildData {
         int id;
         int level = 1;
-        int cost = 0;
-        int craftTime = 0;
-        int upgradeCost = 0;
-        int trophiesCost = 0;
-        int trophiesUpgrade = 0;
-        int incomeA = 0;
-        int incomeB = 0;
         int unitIdA = 0;
         int unitIdB = 0;
         std::string propertyPath;

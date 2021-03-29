@@ -141,7 +141,10 @@ endif ()
 #------------------------------------------------------------------------------
 #                               Tests section
 #------------------------------------------------------------------------------
-if (DEBUG)
-    enable_testing()
-    add_subdirectory(tests)
+if (ANDROID OR IOS)
+    return()
+    if (DEBUG)
+        enable_testing()
+        add_subdirectory(tests)
+    endif ()
 endif ()
