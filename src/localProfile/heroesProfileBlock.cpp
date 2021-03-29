@@ -1,6 +1,6 @@
 #include "heroesProfileBlock.h"
 
-using namespace cardsApp::localProfile;
+using namespace mb::localProfile;
 using namespace rapidjson;
 
 heroesProfileBlock::heroesProfileBlock() {}

@@ -2,6 +2,12 @@
 #include "battleModule/interface/battleIncomeWidget.h"
 #include "ui/CocosGUI.h"
 #include "common/debugModule/logManager.h"
+#include "common/coreModule/gameManager.h"
+#include "common/coreModule/scenes/mainScene.h"
+
+#ifdef DEBUG
+#include "debugModule/heroProfileDebug.h"
+#endif
 
 using namespace mb::battleModule;
 using namespace cocos2d;
@@ -9,6 +15,15 @@ using namespace cocos2d;
 battleScene::battleScene() {
     this->setName("battleScene");
     loadProperty("scenes/" + this->getName(), dynamic_cast<Node*>(this));
+
+#ifdef DEBUG
+    if (GET_GAME_MANAGER().getMainScene()->getImGuiLayer()) {
+        GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->resetDebugModules();
+        GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->addDebugModules([](){
+               debugProfile::heroProfileDebug::getInstance().update();
+        });
+    }
+#endif
 }
 
 battleScene::~battleScene() {}

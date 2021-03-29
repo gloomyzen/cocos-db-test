@@ -9,7 +9,7 @@
 #include <utility>
 #include <vector>
 
-namespace cardsApp::localProfile {
+namespace mb::localProfile {
 
     class heroesProfileBlock : public common::profileModule::profileBlockInterface {
       public:
@@ -27,7 +27,7 @@ namespace cardsApp::localProfile {
       private:
         std::map<int, int> localHeroes;
     };
-}// namespace cardsApp::localProfile
+}// namespace mb::localProfile
 
 
 #endif// MERCENARY_BATTLES_HEROESPROFILEBLOCK_H

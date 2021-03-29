@@ -95,7 +95,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     GET_AUDIO_ENGINE().stopAllEffects();
     GET_AUDIO_ENGINE().stopBackgroundMusic();
     // register all profile
-    GET_PROFILE().registerBlock("heroes", [](){ return new cardsApp::localProfile::heroesProfileBlock(); });
+    GET_PROFILE().registerBlock("heroes", [](){ return new mb::localProfile::heroesProfileBlock(); });
     GET_PROFILE().executeLoad();
     // register all databases
     GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB,
