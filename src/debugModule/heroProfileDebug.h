@@ -13,6 +13,9 @@ namespace mb::debugProfile {
         void update();
 
       private:
+        void profileWindow(bool* windowOpened);
+        void leftList();
+
         bool isOpened = false;
     };
 }
