@@ -19,6 +19,8 @@ namespace mb::battleModule {
         ~battleScene();
         std::deque<nodeTasks> getTasks() override;
 
+        void onBuildClick(sPlayerBuild&);
+
       private:
         battleField* battleFieldNode = nullptr;
         // world section

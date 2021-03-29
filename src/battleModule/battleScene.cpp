@@ -74,9 +74,9 @@ std::deque<nodeTasks> battleScene::getTasks() {
     });
 
     result.emplace_back([this]() {
-            for (auto& [_, build] : player.first->getPlayerBuilds()) {
-                build.slot->setOnTouchEnded([&](){
-                    //todo wip
+            for (auto& item : player.first->getPlayerBuilds()) {
+                item.second.slot->setOnTouchEnded([this, &item](){
+                       onBuildClick(item.second);
                 });
             }
 
@@ -84,4 +84,9 @@ std::deque<nodeTasks> battleScene::getTasks() {
     });
 
     return result;
+}
+
+void battleScene::onBuildClick(sPlayerBuild& build) {
+    //todo wip нужно делать сцену для выбора героев в колоду игрока, чтобы можно было корректно тестить постройки
+    LOG_ERROR(STRING_FORMAT("yep %d", build.level));
 }

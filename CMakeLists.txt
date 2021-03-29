@@ -4,14 +4,10 @@ set(APP_NAME mercenary-battles)
 
 project(${APP_NAME})
 
-if (ANDROID OR IOS)
-    add_definitions(-DRELEASE=1)
+if (${DEBUG})
+    add_definitions(-DDEBUG=1)
 else ()
-    if (${DEBUG})
-        add_definitions(-DDEBUG=1)
-    else ()
-        add_definitions(-DRELEASE=1)
-    endif ()
+    add_definitions(-DRELEASE=1)
 endif ()
 
 if (XCODE)

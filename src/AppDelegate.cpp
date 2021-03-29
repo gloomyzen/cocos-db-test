@@ -6,7 +6,7 @@
 #include "common/coreModule/scenes/scenesFactory/scenesFactoryInstance.h"
 // all profile block header
 #include "common/profileModule/profileManager.h"
-//#include "localProfile/localProfileBlock.h"
+#include "localProfile/heroesProfileBlock.h"
 // all databases header
 #include "common/databaseModule/databaseInterface.h"
 #include "databasesModule/buildingsDatabase.h"
@@ -95,7 +95,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     GET_AUDIO_ENGINE().stopAllEffects();
     GET_AUDIO_ENGINE().stopBackgroundMusic();
     // register all profile
-    //	GET_PROFILE().registerBlock("local", [](){ return new cardsApp::localProfile::localProfileBlock(); });
+    GET_PROFILE().registerBlock("heroes", [](){ return new cardsApp::localProfile::heroesProfileBlock(); });
     GET_PROFILE().executeLoad();
     // register all databases
     GET_DATABASE_MANAGER().addDatabase(databaseManager::eDatabaseList::CHARACTER_DB,
