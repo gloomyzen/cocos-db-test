@@ -38,7 +38,7 @@ void heroProfileDebug::update() {
 void heroProfileDebug::profileWindow(bool* windowOpened) {
     ImGui::SetNextWindowSize(ImVec2(static_cast<float>(400), static_cast<float>(350)),
                              ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Heroes list", reinterpret_cast<bool*>(windowOpened))) {
+    if (!ImGui::Begin("Heroes database", reinterpret_cast<bool*>(windowOpened))) {
         ImGui::End();
         return;
     }

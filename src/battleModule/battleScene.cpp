@@ -7,6 +7,7 @@
 
 #ifdef DEBUG
 #include "debugModule/heroProfileDebug.h"
+#include "debugModule/soundLibraryDebug.h"
 #endif
 
 using namespace mb::battleModule;
@@ -21,6 +22,7 @@ battleScene::battleScene() {
         GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->resetDebugModules();
         GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->addDebugModules([](){
                debugProfile::heroProfileDebug::getInstance().update();
+               debugProfile::soundLibraryDebug::getInstance().update();
         });
     }
 #endif
