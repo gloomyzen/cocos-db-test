@@ -29,15 +29,15 @@ TEST_F(TempClass, cocos2dSimpleIntegrationTest) {
 }
 
 TEST_F(TempClass, commonStringUtilsTest) {
-    EXPECT_EQ(stringUtility::capitalizeString("test room is awesome!"), std::string("Test room is awesome!"));
-    EXPECT_EQ(stringUtility::toLowerString("Test RoOm IS aweSome!"), std::string("test room is awesome!"));
-    auto stringArray = stringUtility::explodeString("test room is awesome!");
+    EXPECT_EQ(utilityModule::capitalizeString("test room is awesome!"), std::string("Test room is awesome!"));
+    EXPECT_EQ(utilityModule::toLowerString("Test RoOm IS aweSome!"), std::string("test room is awesome!"));
+    auto stringArray = utilityModule::explodeString("test room is awesome!");
     EXPECT_TRUE(!stringArray.empty());
     EXPECT_TRUE(stringArray.size() == 4);
-    auto stringArray1 = stringUtility::explodeString("test room is awesome!", &stringUtility::capitalizeString);
+    auto stringArray1 = utilityModule::explodeString("test room is awesome!", &utilityModule::capitalizeString);
     EXPECT_TRUE(!stringArray1.empty());
     EXPECT_EQ(stringArray1.front(),  std::string("Test"));
-    auto stringArray2 = stringUtility::explodeString("TEST ROOM IS AWESOME!", &stringUtility::toLowerString);
+    auto stringArray2 = utilityModule::explodeString("TEST ROOM IS AWESOME!", &utilityModule::toLowerString);
     EXPECT_TRUE(!stringArray2.empty());
     EXPECT_EQ(stringArray2.front(),  std::string("test"));
 }
