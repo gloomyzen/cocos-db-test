@@ -94,4 +94,4 @@ SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: c++17
 TabWidth: 4
-UseTab: Always
+UseTab: Never

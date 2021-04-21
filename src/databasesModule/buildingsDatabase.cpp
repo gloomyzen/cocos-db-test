@@ -1,4 +1,5 @@
 #include "buildingsDatabase.h"
+#include "common/utilityModule/stringUtility.h"
 
 using namespace mb::databasesModule;
 
@@ -21,7 +22,7 @@ void buildingsDatabase::load(const rapidjson::Document& json) {
     }
     auto buildings = json.FindMember("buildings");
     if (buildings != json.MemberEnd() && buildings->value.IsObject()) {
-        auto object = buildings->value.GetObjectJ();
+        auto object = buildings->value.GetObject();
         for (auto buildIt = object.MemberBegin(); buildIt != object.MemberEnd(); ++buildIt) {
             if (buildIt->name.IsString() && buildIt->value.IsObject()) {
                 auto tempId = buildIt->name.GetString();
