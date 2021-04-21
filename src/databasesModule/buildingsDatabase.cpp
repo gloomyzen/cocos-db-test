@@ -1,4 +1,5 @@
 #include "buildingsDatabase.h"
+#include "common/utilityModule/stringUtility.h"
 
 using namespace mb::databasesModule;
 
@@ -21,13 +22,13 @@ void buildingsDatabase::load(const rapidjson::Document& json) {
     }
     auto buildings = json.FindMember("buildings");
     if (buildings != json.MemberEnd() && buildings->value.IsObject()) {
-        auto object = buildings->value.GetObjectJ();
+        auto object = buildings->value.GetObject();
         for (auto buildIt = object.MemberBegin(); buildIt != object.MemberEnd(); ++buildIt) {
             if (buildIt->name.IsString() && buildIt->value.IsObject()) {
                 auto tempId = buildIt->name.GetString();
                 auto item = new sBuildData();
                 item->id = std::atoi(tempId);
-                if (item->load(buildIt->value.GetObjectJ())) {
+                if (item->load(buildIt->value.GetObject())) {
                     buildingsDb.insert({ item->id, item });
                 }
             } else {

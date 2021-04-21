@@ -1,6 +1,7 @@
 #include "charactersDatabase.h"
 #include "common/coreModule/resources/resourceManager.h"
 #include "common/debugModule/logManager.h"
+#include "common/utilityModule/stringUtility.h"
 
 using namespace mb::databasesModule;
 
@@ -23,13 +24,13 @@ void charactersDatabase::load(const rapidjson::Document& json) {
     }
     auto characters = json.FindMember("characters");
     if (characters != json.MemberEnd() && characters->value.IsObject()) {
-        auto object = characters->value.GetObjectJ();
+        auto object = characters->value.GetObject();
         for (auto characterIt = object.MemberBegin(); characterIt != object.MemberEnd(); ++characterIt) {
             if (characterIt->name.IsString() && characterIt->value.IsObject()) {
                 auto tempId = characterIt->name.GetString();
                 auto item = new sCharacterData();
                 item->id = std::atoi(tempId);
-                if (item->load(characterIt->value.GetObjectJ())) {
+                if (item->load(characterIt->value.GetObject())) {
                     charactersDb.insert({item->id, item});
                 }
             } else {

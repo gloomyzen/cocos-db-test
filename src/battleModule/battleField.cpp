@@ -1,4 +1,5 @@
 #include "battleField.h"
+#include "common/utilityModule/stringUtility.h"
 
 using namespace mb::battleModule;
 using namespace common::coreModule;
@@ -18,7 +19,7 @@ void battleField::loadLocation(const std::string& name) {
         LOG_ERROR(STRING_FORMAT("battleField::loadLocation: location '%s' not found or object is not valid!", name.c_str()));
         return;
     }
-    auto data = doc[name.c_str()].GetObjectJ();
+    auto data = doc[name.c_str()].GetObject();
     setName(STRING_FORMAT("battlefield_%s", name.c_str()));
     if (data.HasMember("sky") && data["sky"].IsString()) {
         auto skyHolder = new cocos2d::ParallaxNode();
@@ -72,7 +73,7 @@ void battleField::initBaseData(const std::string& path) {
         LOG_ERROR("battleField::initBaseData: json parse error");
         return;
     }
-    auto data = doc.GetObjectJ();
+    auto data = doc.GetObject();
     auto castle = data.FindMember("castle");
     if (castle != data.MemberEnd()) {
         auto x = castle->value.FindMember("x");

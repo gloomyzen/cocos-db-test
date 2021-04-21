@@ -1,11 +1,9 @@
 #ifdef DEBUG
 
 #include "soundLibraryDebug.h"
-#include "CCImGuiLayer.h"
 #include "cocos2d.h"
-#include <CCIMGUI.h>
-#include <imgui.h>
-#include <imgui_internal.h>
+#include "ImGuiEXT/imgui/imgui.h"
+#include "ImGuiEXT/imgui/imgui_internal.h"
 #include "common/audioModule/audioEngine.h"
 
 using namespace mb::debugProfile;
@@ -45,7 +43,7 @@ void soundLibraryDebug::soundWindow(bool* windowOpened) {
     ImGui::BeginChild("sounds");
     ImGui::PushID("sounds");
 
-    auto effects = GET_AUDIO_ENGINE().getAllEffects();
+    auto effects = GET_AUDIO_ENGINE().getAllSounds();
     const char* items[effects.size()];
     static int currentEffect = 0;
     int countEffects = 0;
@@ -56,35 +54,7 @@ void soundLibraryDebug::soundWindow(bool* windowOpened) {
 
     ImGui::Combo("Effects", &currentEffect, items, IM_ARRAYSIZE(items));
     if (ImGui::Button("Play effect") && currentEffect >= 0 && currentEffect < static_cast<int>(effects.size())) {
-        GET_AUDIO_ENGINE().playEffect(items[currentEffect]);
-    }
-
-    ImGui::Separator();
-
-    auto musics = GET_AUDIO_ENGINE().getAllMusics();
-    const char* musicsItems[musics.size()];
-    static int currentMusic = 0;
-    int countMusic = 0;
-    std::for_each(musics.begin(), musics.end(), [&musicsItems, &countMusic](const auto& music){
-           musicsItems[countMusic] = music.first.c_str();
-           countMusic++;
-    });
-
-    ImGui::Combo("Musics", &currentMusic, musicsItems, IM_ARRAYSIZE(musicsItems));
-    if (ImGui::Button("Play music") && currentMusic >= 0 && currentMusic < static_cast<int>(musics.size())) {
-        GET_AUDIO_ENGINE().playBackgroundMusic(musicsItems[currentMusic]);
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Stop all musics")) {
-        GET_AUDIO_ENGINE().stopBackgroundMusic();
-    }
-
-    if (ImGui::Button("Pause all musics")) {
-        GET_AUDIO_ENGINE().pauseBackgroundMusic();
-    }
-    ImGui::SameLine();
-    if (ImGui::Button("Resume all musics")) {
-        GET_AUDIO_ENGINE().resumeBackgroundMusic();
+        GET_AUDIO_ENGINE().play(items[currentEffect]);
     }
 
 

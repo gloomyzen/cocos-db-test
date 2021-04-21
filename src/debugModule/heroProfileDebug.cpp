@@ -1,14 +1,13 @@
 #ifdef DEBUG
 
 #include "heroProfileDebug.h"
-#include "CCImGuiLayer.h"
 #include "cocos2d.h"
-#include <CCIMGUI.h>
-#include <common/profileModule/profileManager.h>
-#include <databasesModule/charactersDatabase.h>
-#include <databasesModule/databaseManager.h>
-#include <imgui.h>
-#include <imgui_internal.h>
+#include "common/profileModule/profileManager.h"
+#include "common/utilityModule/stringUtility.h"
+#include "databasesModule/charactersDatabase.h"
+#include "databasesModule/databaseManager.h"
+#include "ImGuiEXT/imgui/imgui.h"
+#include "ImGuiEXT/imgui/imgui_internal.h"
 #include <localProfile/heroesProfileBlock.h>
 
 using namespace mb::debugProfile;
