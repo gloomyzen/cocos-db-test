@@ -92,7 +92,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	register_all_packages();
 	// preload sounds
-	GET_AUDIO_ENGINE().stopAllEffects();
+    GET_AUDIO_ENGINE().stopAll();
 	GET_AUDIO_ENGINE().stopBackgroundMusic();
 	// register all profile
 	GET_PROFILE().registerBlock("heroes", []() { return new mb::localProfile::heroesProfileBlock(); });
