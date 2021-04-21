@@ -28,7 +28,7 @@ void buildingsDatabase::load(const rapidjson::Document& json) {
                 auto tempId = buildIt->name.GetString();
                 auto item = new sBuildData();
                 item->id = std::atoi(tempId);
-                if (item->load(buildIt->value.GetObjectJ())) {
+                if (item->load(buildIt->value.GetObject())) {
                     buildingsDb.insert({ item->id, item });
                 }
             } else {

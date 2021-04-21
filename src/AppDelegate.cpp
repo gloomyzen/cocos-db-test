@@ -93,7 +93,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	register_all_packages();
 	// preload sounds
     GET_AUDIO_ENGINE().stopAll();
-	GET_AUDIO_ENGINE().stopBackgroundMusic();
 	// register all profile
 	GET_PROFILE().registerBlock("heroes", []() { return new mb::localProfile::heroesProfileBlock(); });
 	GET_PROFILE().executeLoad();
@@ -120,12 +119,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
 	Director::getInstance()->stopAnimation();
 
-	GET_AUDIO_ENGINE().pauseBackgroundMusic();
+	GET_AUDIO_ENGINE().pauseAll();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
 	Director::getInstance()->startAnimation();
 
-	GET_AUDIO_ENGINE().resumeBackgroundMusic();
+	GET_AUDIO_ENGINE().resumeAll();
 }

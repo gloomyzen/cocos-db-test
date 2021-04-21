@@ -4,6 +4,7 @@
 #include "common/debugModule/logManager.h"
 #include "common/coreModule/gameManager.h"
 #include "common/coreModule/scenes/mainScene.h"
+#include "common/utilityModule/stringUtility.h"
 
 #ifdef DEBUG
 #include "debugModule/heroProfileDebug.h"

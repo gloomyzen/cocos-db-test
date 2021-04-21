@@ -1,5 +1,5 @@
 #include "battleIncomeWidget.h"
-#include "json/document.h"
+#include "rapidjson//document.h"
 
 using namespace mb::battleModule;
 
@@ -18,7 +18,7 @@ void battleIncomeWidget::setIcon(battleIncomeWidget::eIconLabelTypes type) {
         case eIconLabelTypes::GOLD: icon = "gold"; break;
         case eIconLabelTypes::TROPHIES: icon = "trophies"; break;
         }
-        auto data = settings->value.GetObjectJ();
+        auto data = settings->value.GetObject();
         auto it = data.FindMember(icon.c_str());
         if (it != data.MemberEnd() && it->value.IsString()) {
             if (auto sprite = dynamic_cast<cocos2d::Sprite*>(findNode("icon"))) {
