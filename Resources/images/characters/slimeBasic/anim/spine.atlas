@@ -1,0 +1,48 @@
+
+spine.png
+size: 360,360
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+EmoteAnger
+  rotate: false
+  xy: 79, 310
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: -1
+EmoteBasic
+  rotate: false
+  xy: 132, 310
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: -1
+EmoteDeathA
+  rotate: false
+  xy: 185, 310
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: -1
+EmoteDeathB
+  rotate: false
+  xy: 238, 310
+  size: 51, 48
+  orig: 51, 48
+  offset: 0, 0
+  index: -1
+Shadow
+  rotate: false
+  xy: 2, 334
+  size: 75, 24
+  orig: 75, 24
+  offset: 0, 0
+  index: -1
+Slime
+  rotate: false
+  xy: 291, 309
+  size: 67, 49
+  orig: 67, 49
+  offset: 0, 0
+  index: -1
