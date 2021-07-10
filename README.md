@@ -3,27 +3,24 @@
 
 #### Project submodules structure:
 
-- (root) [Current game project](https://github.com/gloomyzen/cocos-mercenary-battles)
-- (src/common) [Common modules for all games](https://github.com/gloomyzen/cocos2d-common)
-- (cocos2d) [Modified core](https://github.com/gloomyzen/cocos2d)
-- (lib/dragonbones) [dragonBones for cocos2d v4](https://github.com/gloomyzen/cocos2d-dragonbones)
-- (lib/imgui) [ImGui for cocos2d v4](https://github.com/gloomyzen/cocos2d-x-imgui)
+- [src/common - Common modules for all games](https://github.com/gloomyzen/cocos2d-common)
+- [adxe/cocos2dx game engine](https://github.com/gloomyzen/engine-x)
 
 #### First of all, be sure to clone all submodules:
 ```bash
 git clone --recurse-submodules git@github.com:gloomyzen/cocos-mercenary-battles.git cocos-mercenary-battles 
-cd cocos-mercenary-battles
+cd cards-app
 ```
 
-#### Install cocos2d v4:
+#### Install cocos2dx/adxe v4:
 1. Install Boost, CMake and Python 2.7 on your system
 2. Install VS for win32 or XCode for macOS
-3. Download Cocos2d-x (cocos2d-x-4.0.zip) from www.cocos2d-x.org and unzip it in a folder that you want.
-For example, for Win32 -> unzip to C:/bin/cocos2dx, for MacOs /Application/Develpment/cocos2dx
-4. Just run `python setyp.py` in cocos2dx folder
+3. Clone `https://github.com/gloomyzen/engine-x`
+4. Just run `python setup.py` in engine folder
 
 #### Build from sources :
 ```bash
+mkdir build && cd build
 cmake .. -DDEBUG=1
 make -j$(nproc)
 ```
@@ -32,24 +29,28 @@ make -j$(nproc)
 
 For XCode - mac project
 ```bash
-cd proj.ios_mac/mac/
-cmake ../.. -GXcode -DDEBUG=1
 sudo xcode-select --reset
+cmake -S . -B build-mac -GXcode -DDEBUG=1
 ```
+Then just open solution file from `build-mac`.
 
 For XCode - ios project
 ```bash
-cd proj.ios_mac/ios/
-cmake ../.. -GXcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
 sudo xcode-select --reset
+cmake -S . -B build-ios -GXcode -DCMAKE_TOOLCHAIN_FILE=${ADXE_ROOT}/cmake/ios.mini.cmake -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos
+```
+
+For iOS distribution
+```bash
+cmake -S . -B build-ios -GXcode -DCMAKE_TOOLCHAIN_FILE=${ADXE_ROOT}/cmake/ios.mini.cmake 
+cmake --build build-ios --config Release --target cards-app -- -quiet -jobs 16
 ```
 
 For Visual Studio Community 2019
 ```bash
-mkdir build && cd build
-cmake .. -G"Visual Studio 16 2019" -Tv142 -A Win32 -DDEBUG=1
-and open .sln file from `build` folder
+cmake -S . -B build-win32 -G "Visual Studio 16 2019" -A Win32 -DDEBUG=1
 ```
+Then open $(PROJECT_NAME).sln file from `build-win32` folder and set $(PROJECT_NAME) target as "startup project" in "solution explorer"
 
 For Android studio:
 android gradle plugin version: 3.6.3
