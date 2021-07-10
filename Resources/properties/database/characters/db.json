@@ -113,34 +113,6 @@
       "craftTime": 15
     },
     "20009": {
-      "propertyPath": "properties/nodeProperties/battle/characters/orcChiefGrunt",
-      "iconPath": "images/characters/orcChiefGrunt/icon/icon.png",
-      "hp": 15.0,
-      "attackMin": 4.5,
-      "attackMax": 5.5,
-      "speed": 1.0,
-      "attackSpeed": 1.0,
-
-      "cost": 550,
-      "trophiesCost": 600,
-      "income": 50,
-      "craftTime": 20
-    },
-    "20010": {
-      "propertyPath": "properties/nodeProperties/battle/characters/orcChiefGruntB",
-      "iconPath": "images/characters/orcChiefGrunt/icon/icon.png",
-      "hp": 15.5,
-      "attackMin": 5.0,
-      "attackMax": 6.0,
-      "speed": 1.0,
-      "attackSpeed": 1.0,
-
-      "cost": 600,
-      "trophiesCost": 600,
-      "income": 100,
-      "craftTime": 20
-    },
-    "20011": {
       "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpy",
       "iconPath": "",
       "hp": 17.0,
@@ -154,7 +126,7 @@
       "income": 60,
       "craftTime": 20
     },
-    "20012": {
+    "20010": {
       "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpyB",
       "iconPath": "",
       "hp": 17.5,

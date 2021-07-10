@@ -10,10 +10,10 @@
       "pivot": [ 0.5, 0.5 ],
       "anchor": [ 0.5, 0.5 ]
     },
-    "dragonbonesComponent": {
-      "name": "SlimeBasic",
-      "texFile": "images/characters/slimeBasic/anim/bones_tex.json",
-      "skeFile": "images/characters/slimeBasic/anim/bones_ske.json",
+    "spineComponent": {
+      "scale": 1.0,
+      "file": "images/characters/slimeBasic/anim/spine",
+      "loop": true,
       "animation": "idle"
     }
   },
@@ -22,10 +22,10 @@
       "pivot": [ 0.5, 0.5 ],
       "anchor": [ 0.5, 0.5 ]
     },
-    "dragonbonesComponent": {
-      "name": "SlimeDefender",
-      "texFile": "images/characters/slimeDefender/anim/spine_tex.json",
-      "skeFile": "images/characters/slimeDefender/anim/spine_ske.json",
+    "spineComponent": {
+      "scale": 1.0,
+      "file": "images/characters/slimeDefender/anim/spine",
+      "loop": true,
       "animation": "idle"
     }
   },

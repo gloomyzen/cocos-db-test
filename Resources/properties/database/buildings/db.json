@@ -32,8 +32,8 @@
     },
     "30006": {
       "level": 6,
-      "unitIdA": 20011,
-      "unitIdB": 20012,
+      "unitIdA": 20009,
+      "unitIdB": 20010,
       "propertyPath": "properties/nodeProperties/battle/buildings/altar"
     }
   }

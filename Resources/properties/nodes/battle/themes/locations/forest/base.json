@@ -7,7 +7,7 @@
       "name": "unit1",
       "child": [
         {
-          "type": "dragonbones",
+          "type": "spine",
           "name": "anim"
         }
       ]
@@ -17,7 +17,7 @@
       "name": "unit2",
       "child": [
         {
-          "type": "dragonbones",
+          "type": "spine",
           "name": "anim2"
         }
       ]

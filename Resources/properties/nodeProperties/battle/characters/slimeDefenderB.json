@@ -5,10 +5,10 @@
       "pivot": [ 0.5, 0.5 ],
       "scale": 0.6
     },
-    "dragonbonesComponent": {
-      "name": "SlimeDefender",
-      "texFile": "images/characters/slimeDefender/anim/spine_tex.json",
-      "skeFile": "images/characters/slimeDefender/anim/spine_ske.json",
+    "spineComponent": {
+      "scale": 1.0,
+      "file": "images/characters/slimeDefender/anim/spine",
+      "loop": true,
       "animation": "idle"
     }
   }
