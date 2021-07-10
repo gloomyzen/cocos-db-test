@@ -4,6 +4,8 @@ set(APP_NAME mercenary-battles)
 
 project(${APP_NAME})
 
+add_definitions(-DCMAKE_APP_NAME="${APP_NAME}")
+
 if (${DEBUG})
     add_definitions(-DDEBUG=1)
 else ()

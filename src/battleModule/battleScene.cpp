@@ -21,10 +21,12 @@ battleScene::battleScene() {
 #ifdef DEBUG
     if (GET_GAME_MANAGER().getMainScene()->getImGuiLayer()) {
         GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->resetDebugModules();
-        GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->addDebugModules([](){
+        GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->addDebugModules({ "Hero Profile", [](){
                debugProfile::heroProfileDebug::getInstance().update();
+        }});
+        GET_GAME_MANAGER().getMainScene()->getImGuiLayer()->addDebugModules({ "Sound Debug", [](){
                debugProfile::soundLibraryDebug::getInstance().update();
-        });
+        }});
     }
 #endif
 }

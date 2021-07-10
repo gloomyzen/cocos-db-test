@@ -60,3 +60,4 @@ NDK 21.0.6011959
 
 #Credits
 - SF Pro Text Regular Font - https://fontsfree.net/sf-pro-text-regular-font-download.html
+- Horizontal Backgrounds - https://craftpix.net/freebies/free-elven-land-game-battle-backgrounds/
