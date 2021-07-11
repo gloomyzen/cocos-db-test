@@ -5,6 +5,7 @@
 #include "ImGuiEXT/imgui/imgui.h"
 #include "ImGuiEXT/imgui/imgui_internal.h"
 #include "common/audioModule/audioEngine.h"
+#include "common/debugModule/imGuiLayer.h"
 
 using namespace mb::debugProfile;
 
@@ -44,15 +45,16 @@ void soundLibraryDebug::soundWindow(bool* windowOpened) {
     ImGui::PushID("sounds");
 
     auto effects = GET_AUDIO_ENGINE().getAllSounds();
-    const char* items[effects.size()];
+    std::vector<std::string> items;
+    items.reserve(effects.size());
     static int currentEffect = 0;
     int countEffects = 0;
     std::for_each(effects.begin(), effects.end(), [&items, &countEffects](const auto& effect){
-           items[countEffects] = effect.first.c_str();
+           items.emplace_back(effect.first.c_str());
            countEffects++;
     });
 
-    ImGui::Combo("Effects", &currentEffect, items, IM_ARRAYSIZE(items));
+    common::debugModule::imGuiLayer::Combo("Effects", &currentEffect, items, static_cast<int>(items.size()));
     if (ImGui::Button("Play effect") && currentEffect >= 0 && currentEffect < static_cast<int>(effects.size())) {
         GET_AUDIO_ENGINE().play(items[currentEffect]);
     }
