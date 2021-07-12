@@ -1,7 +1,7 @@
 {
   "characters": {
     "20001": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeBasic",
+      "propertyPath": "properties/nodes/battle/characters/slimeBasic",
       "iconPath": "images/characters/slimeBasic/icon/icon.png",
       "hp": 5.0,
       "attackMin": 1.0,
@@ -15,7 +15,7 @@
       "craftTime": 10
     },
     "20002": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeBasicB",
+      "propertyPath": "properties/nodes/battle/characters/slimeBasicB",
       "iconPath": "images/characters/slimeBasic/icon/icon.png",
       "hp": 6.0,
       "attackMin": 1.5,
@@ -29,7 +29,7 @@
       "craftTime": 10
     },
     "20003": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeDefender",
+      "propertyPath": "properties/nodes/battle/characters/slimeDefender",
       "iconPath": "images/characters/slimeDefender/icon/icon.png",
       "hp": 6.0,
       "attackMin": 2.0,
@@ -43,7 +43,7 @@
       "craftTime": 10
     },
     "20004": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeDefenderB",
+      "propertyPath": "properties/nodes/battle/characters/slimeDefenderB",
       "iconPath": "images/characters/slimeDefender/icon/icon.png",
       "hp": 6.5,
       "attackMin": 2.5,
@@ -57,7 +57,7 @@
       "craftTime": 10
     },
     "20005": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeCaster",
+      "propertyPath": "properties/nodes/battle/characters/slimeCaster",
       "iconPath": "images/characters/slimeCaster/icon/icon.png",
       "hp": 7.0,
       "attackMin": 3.0,
@@ -71,7 +71,7 @@
       "craftTime": 15
     },
     "20006": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeCasterB",
+      "propertyPath": "properties/nodes/battle/characters/slimeCasterB",
       "iconPath": "images/characters/slimeCaster/icon/icon.png",
       "hp": 7.5,
       "attackMin": 3.5,
@@ -85,7 +85,7 @@
       "craftTime": 15
     },
     "20007": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeAttacker",
+      "propertyPath": "properties/nodes/battle/characters/slimeAttacker",
       "iconPath": "images/characters/slimeAttacker/icon/icon.png",
       "hp": 8.0,
       "attackMin": 4.0,
@@ -99,7 +99,7 @@
       "craftTime": 15
     },
     "20008": {
-      "propertyPath": "properties/nodeProperties/battle/characters/slimeAttackerB",
+      "propertyPath": "properties/nodes/battle/characters/slimeAttackerB",
       "iconPath": "images/characters/slimeAttacker/icon/icon.png",
       "hp": 8.5,
       "attackMin": 4.5,
@@ -113,7 +113,7 @@
       "craftTime": 15
     },
     "20009": {
-      "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpy",
+      "propertyPath": "properties/nodes/battle/characters/mountainHarpy",
       "iconPath": "",
       "hp": 17.0,
       "attackMin": 5.5,
@@ -127,7 +127,7 @@
       "craftTime": 20
     },
     "20010": {
-      "propertyPath": "properties/nodeProperties/battle/characters/mountainHarpyB",
+      "propertyPath": "properties/nodes/battle/characters/mountainHarpyB",
       "iconPath": "",
       "hp": 17.5,
       "attackMin": 7.0,

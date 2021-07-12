@@ -7,7 +7,7 @@ using namespace common::coreModule;
 battleField::battleField() {}
 
 void battleField::loadLocation(const std::string& name) {
-    const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile("properties/nodeProperties/battle/themes/locations.json");
+    const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile("properties/nodes/battle/themes/locations.json");
     rapidjson::Document doc;
     doc.Parse<0>(regionStr.c_str());
 
@@ -65,7 +65,7 @@ void battleField::initBaseData(const std::string& path) {
         LOG_ERROR("battleField::initBaseData: path is empty");
         return;
     }
-    const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile(STRING_FORMAT("properties/nodeProperties/%s.json", path.c_str()));
+    const std::string& regionStr = cocos2d::FileUtils::getInstance()->getStringFromFile(STRING_FORMAT("properties/nodes/%s.json", path.c_str()));
     rapidjson::Document doc;
     doc.Parse<0>(regionStr.c_str());
 

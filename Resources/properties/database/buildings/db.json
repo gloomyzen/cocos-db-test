@@ -4,37 +4,37 @@
       "level": 1,
       "unitIdA": 20001,
       "unitIdB": 20002,
-      "propertyPath": "properties/nodeProperties/battle/buildings/slimeTree"
+      "propertyPath": "properties/nodes/battle/buildings/slimeTree"
     },
     "30002": {
       "level": 2,
       "unitIdA": 20003,
       "unitIdB": 20004,
-      "propertyPath": "properties/nodeProperties/battle/buildings/slimeCamp"
+      "propertyPath": "properties/nodes/battle/buildings/slimeCamp"
     },
     "30003": {
       "level": 3,
       "unitIdA": 20005,
       "unitIdB": 20006,
-      "propertyPath": "properties/nodeProperties/battle/buildings/slimeSkull"
+      "propertyPath": "properties/nodes/battle/buildings/slimeSkull"
     },
     "30004": {
       "level": 4,
       "unitIdA": 20007,
       "unitIdB": 20008,
-      "propertyPath": "properties/nodeProperties/battle/buildings/altar"
+      "propertyPath": "properties/nodes/battle/buildings/altar"
     },
     "30005": {
       "level": 5,
       "unitIdA": 20009,
       "unitIdB": 20010,
-      "propertyPath": "properties/nodeProperties/battle/buildings/altar"
+      "propertyPath": "properties/nodes/battle/buildings/altar"
     },
     "30006": {
       "level": 6,
       "unitIdA": 20009,
       "unitIdB": 20010,
-      "propertyPath": "properties/nodeProperties/battle/buildings/altar"
+      "propertyPath": "properties/nodes/battle/buildings/altar"
     }
   }
 }
